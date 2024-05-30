@@ -37,7 +37,6 @@ next-env.d.ts
 
 .next
 next-env.d.ts
-yarn.lock
 package-lock.json
 docker-volumes
 .env
