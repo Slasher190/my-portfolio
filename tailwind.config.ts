@@ -9,6 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        light: {
+          background: "#ffffff",
+          surface: "#ececee",
+        },
+        dark: {
+          background: "#0d111d",
+          surface: "#20242f",
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
