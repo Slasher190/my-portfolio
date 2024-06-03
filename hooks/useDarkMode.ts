@@ -1,3 +1,4 @@
+"use client";
 // hooks/useDarkMode.ts
 import { useEffect, useState } from "react";
 
