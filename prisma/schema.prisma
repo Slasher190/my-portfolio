@@ -17,7 +17,8 @@ model Profile {
 model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
-  username String
-  password String
-  createAt DateTime @default(now())
+  username String   @db.VarChar(255)
+  password String   @db.VarChar(255)
+  createAt DateTime @default(now()) @db.Timestamptz(6)
+  updateAt DateTime @updatedAt @db.Timestamptz(6)
 }
