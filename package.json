@@ -14,7 +14,8 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "prepare": "husky install",
-    "types:check": "tsc --pretty --noEmit"
+    "types:check": "tsc --pretty --noEmit",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
@@ -34,6 +35,10 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/introspection": "^4.0.3",
+    "@graphql-codegen/typescript": "4.0.7",
+    "@graphql-codegen/typescript-resolvers": "4.1.0",
     "@next/eslint-plugin-next": "^14.2.3",
     "@types/node": "^20.14.1",
     "@types/react": "^18",

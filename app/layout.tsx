@@ -1,6 +1,7 @@
 // app/layout.tsx
 import { ReactNode } from "react";
 import StoreProvider from "@app/app/StoreProvider";
+import { ApolloClientProvider } from "@app/components/provider";
 import "./globals.css";
 
 interface RootLayoutProps {
@@ -11,7 +12,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <StoreProvider>{children}</StoreProvider>
+        <ApolloClientProvider>
+          <StoreProvider>{children}</StoreProvider>
+        </ApolloClientProvider>
       </body>
     </html>
   );

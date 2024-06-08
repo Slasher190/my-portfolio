@@ -11,6 +11,7 @@ const Authentication = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
+      username: "",
       password: "",
     },
     validationSchema: userLoginSchema,
@@ -52,7 +53,7 @@ const Authentication = () => {
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Email or Username"
               className={`my-2 w-full py-2 px-4 border ${
                 formik.touched.email && formik.errors.email
                   ? "border-red-500"
