@@ -15,10 +15,10 @@ model Profile {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  username String   @db.VarChar(255)
-  password String   @db.VarChar(255)
-  createAt DateTime @default(now()) @db.Timestamptz(6)
-  updateAt DateTime @updatedAt @db.Timestamptz(6)
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
 }

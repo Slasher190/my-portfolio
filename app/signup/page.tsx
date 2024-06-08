@@ -6,21 +6,40 @@ import { FcGoogle } from "react-icons/fc";
 import { userSignupSchema } from "@app/Validation/userSchema";
 import { FaFacebook } from "react-icons/fa";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "@app/graphql/operations/mutations/createUser";
 
 const Signup = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: userSignupSchema,
-    onSubmit: (values) => {
-      // Handle form submission
-      console.log(values);
-    },
-  });
-
+  const [createUser, { loading, error: mutationError }] =
+    useMutation(CREATE_USER);
+  const { handleBlur, handleChange, handleSubmit, touched, errors, values } =
+    useFormik({
+      initialValues: {
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: userSignupSchema,
+      onSubmit: async (values) => {
+        console.log(values);
+        try {
+          const response = await createUser({
+            variables: {
+              email: values.email,
+              password: values.password,
+              username: values.username,
+            },
+          });
+          console.log(response.data);
+        } catch (err) {
+          console.error(err);
+        }
+        console.log(values);
+      },
+    });
+  if (loading) return <div>Loading...</div>;
+  if (mutationError) return <div>mutationError</div>;
   return (
     <div className="flex justify-center items-center h-screen bg-light-surface dark:bg-dark-background">
       <div className="flex">
@@ -49,56 +68,70 @@ const Signup = () => {
               or Sign up with Email
             </span>
           </div>
-          <form onSubmit={formik.handleSubmit} className="w-full">
+          <form onSubmit={handleSubmit} className="w-full">
             <input
               type="email"
               name="email"
               placeholder="Email"
               className={`mb-4 w-full py-2 px-4 border ${
-                formik.touched.email && formik.errors.email
+                touched.email && errors.email
                   ? "border-red-500"
                   : "border-gray-300 dark:border-gray-600"
               } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
             />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 mb-4">{formik.errors.email}</div>
+            {touched.email && errors.email ? (
+              <div className="text-red-500 mb-4">{errors.email}</div>
+            ) : null}
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              className={`mb-4 w-full py-2 px-4 border ${
+                touched.username && errors.username
+                  ? "border-red-500"
+                  : "border-gray-300 dark:border-gray-600"
+              } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.username}
+            />
+            {touched.username && errors.username ? (
+              <div className="text-red-500 mb-4">{errors.username}</div>
             ) : null}
             <input
               type="password"
               name="password"
               placeholder="Enter your Password"
               className={`mb-4 w-full py-2 px-4 border ${
-                formik.touched.password && formik.errors.password
+                touched.password && errors.password
                   ? "border-red-500"
                   : "border-gray-300 dark:border-gray-600"
               } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
             />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 mb-4">{formik.errors.password}</div>
+            {touched.password && errors.password ? (
+              <div className="text-red-500 mb-4">{errors.password}</div>
             ) : null}
             <input
               type="password"
               name="confirmPassword"
               placeholder="Confirm your Password"
               className={`mb-4 w-full py-2 px-4 border ${
-                formik.touched.confirmPassword && formik.errors.confirmPassword
+                touched.confirmPassword && errors.confirmPassword
                   ? "border-red-500"
                   : "border-gray-300 dark:border-gray-600"
               } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.confirmPassword}
             />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div className="text-red-500 mb-4">
-                {formik.errors.confirmPassword}
-              </div>
+            {touched.confirmPassword && errors.confirmPassword ? (
+              <div className="text-red-500 mb-4">{errors.confirmPassword}</div>
             ) : null}
             <button
               type="submit"
