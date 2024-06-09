@@ -8,7 +8,7 @@ export const ApolloClientProvider = ({
   children: React.ReactNode;
 }) => {
   const client = new ApolloClient({
-    uri: process.env.GRAPHQL_ENDPOINT,
+    uri: process.env.GRAPHQL_ENDPOINT || "http://localhost:3000/api/graphql",
     cache: new InMemoryCache(),
   });
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

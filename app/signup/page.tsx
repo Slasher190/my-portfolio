@@ -8,12 +8,13 @@ import { FaFacebook } from "react-icons/fa";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "@app/graphql/operations/mutations/createUser";
+import { SignupInput } from "@app/graphql/graphql";
 
 const Signup = () => {
   const [createUser, { loading, error: mutationError }] =
     useMutation(CREATE_USER);
   const { handleBlur, handleChange, handleSubmit, touched, errors, values } =
-    useFormik({
+    useFormik<SignupInput>({
       initialValues: {
         username: "",
         email: "",
@@ -21,14 +22,16 @@ const Signup = () => {
         confirmPassword: "",
       },
       validationSchema: userSignupSchema,
-      onSubmit: async (values) => {
+      onSubmit: async (values: SignupInput) => {
         console.log(values);
         try {
           const response = await createUser({
             variables: {
-              email: values.email,
-              password: values.password,
-              username: values.username,
+              input: {
+                email: values.email,
+                password: values.password,
+                username: values.username,
+              },
             },
           });
           console.log(response.data);
@@ -128,7 +131,7 @@ const Signup = () => {
               } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.confirmPassword}
+              value={values.confirmPassword || ""}
             />
             {touched.confirmPassword && errors.confirmPassword ? (
               <div className="text-red-500 mb-4">{errors.confirmPassword}</div>
