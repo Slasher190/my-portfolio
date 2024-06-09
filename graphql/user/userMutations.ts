@@ -1,14 +1,19 @@
 import { Context } from "@app/pages/api/graphql";
 import { User } from "@prisma/client";
-import { LoginInput } from "@app/graphql/graphql";
+import { LoginInput, SignupInput } from "@app/graphql/graphql";
 
 export const userMutations = {
-  createUser: async (_parent: unknown, args: User, context: Context) => {
+  createUser: async (
+    _parent: unknown,
+    args: { input: SignupInput },
+    context: Context
+  ) => {
+    const { email, password, username } = args.input;
     return await context.prisma.user.create({
       data: {
-        email: args.email,
-        password: args.password,
-        username: args.username,
+        email,
+        password,
+        username,
       },
     });
   },

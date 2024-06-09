@@ -45,9 +45,7 @@ export type Mutation = {
 };
 
 export type MutationCreateUserArgs = {
-  email?: InputMaybe<Scalars["String"]["input"]>;
-  password?: InputMaybe<Scalars["String"]["input"]>;
-  username?: InputMaybe<Scalars["String"]["input"]>;
+  input: SignupInput;
 };
 
 export type MutationDeleteUserArgs = {
@@ -62,6 +60,13 @@ export type Query = {
   __typename?: "Query";
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+export type SignupInput = {
+  confirmPassword?: InputMaybe<Scalars["String"]["input"]>;
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+  username: Scalars["String"]["input"];
 };
 
 export type User = {
@@ -185,6 +190,7 @@ export type ResolversTypes = {
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  SignupInput: SignupInput;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   User: ResolverTypeWrapper<User>;
 };
@@ -196,6 +202,7 @@ export type ResolversParentTypes = {
   LoginInput: LoginInput;
   Mutation: {};
   Query: {};
+  SignupInput: SignupInput;
   String: Scalars["String"]["output"];
   User: User;
 };
@@ -209,7 +216,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    Partial<MutationCreateUserArgs>
+    RequireFields<MutationCreateUserArgs, "input">
   >;
   deleteUser?: Resolver<
     Maybe<ResolversTypes["User"]>,

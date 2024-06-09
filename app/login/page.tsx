@@ -6,21 +6,34 @@ import { FcGoogle } from "react-icons/fc";
 import { userLoginSchema } from "@app/Validation/userSchema";
 import { FaFacebook } from "react-icons/fa";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
+import { LoginInput } from "@app/graphql/graphql";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "@app/graphql/operations/mutations/loginUser";
 
 const Authentication = () => {
-  const formik = useFormik({
+  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
+  const formik = useFormik<LoginInput>({
     initialValues: {
       email: "",
       username: "",
       password: "",
     },
     validationSchema: userLoginSchema,
-    onSubmit: (values) => {
-      // Handle form submission
+    onSubmit: async (values: LoginInput) => {
+      await loginUser({
+        variables: {
+          input: {
+            email: values.email,
+            password: values.password,
+            username: values.username,
+          },
+        },
+      });
       console.log(values);
     },
   });
-
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
   return (
     <div className="flex justify-center items-center h-screen bg-light-surface dark:bg-dark-background">
       <div className="flex">
@@ -51,21 +64,31 @@ const Authentication = () => {
           </div>
           <form onSubmit={formik.handleSubmit} className="w-full">
             <input
-              type="email"
-              name="email"
+              type="text"
+              name="usernameOrEmail"
               placeholder="Email or Username"
               className={`my-2 w-full py-2 px-4 border ${
-                formik.touched.email && formik.errors.email
+                (formik.touched.email && formik.errors.email) ||
+                (formik.touched.username && formik.errors.username)
                   ? "border-red-500"
                   : "border-gray-300 dark:border-gray-600"
               } rounded-full shadow-sm bg-light-background dark:bg-dark-background text-gray-700 dark:text-gray-300`}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                const value = e.target.value;
+                formik.setFieldValue("email", value.includes("@") ? value : "");
+                formik.setFieldValue(
+                  "username",
+                  value.includes("@") ? "" : value
+                );
+                formik.handleChange(e);
+              }}
               onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={formik.values.username || formik.values.email || ""}
             />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 text-[12px] ">
-                *{formik.errors.email}
+            {(formik.touched.email && formik.errors.email) ||
+            (formik.touched.username && formik.errors.username) ? (
+              <div className="text-red-500 text-[12px]">
+                *{formik.errors.email || formik.errors.username}
               </div>
             ) : null}
             <input
@@ -86,12 +109,15 @@ const Authentication = () => {
                 *{formik.errors.password}
               </div>
             ) : null}
-            <a href="#" className="mb-4 text-blue-500 dark:text-blue-400">
-              Forgot Password?
+            <a
+              href="#"
+              className="mb-4 text-blue-500 dark:text-blue-400 w-full text-center"
+            >
+              <div>Forgot Password?</div>
             </a>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-purple-600 text-white rounded-full shadow-sm hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800"
+              className="w-full py-2 px-4 bg-purple-600 text-white rounded-full shadow-sm hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 mt-2"
             >
               Login
             </button>
@@ -99,8 +125,7 @@ const Authentication = () => {
           <h1 className="text-gray-900 mb-4 mt-4 dark:text-gray-300">
             No account?
             <a href="#" className="text-blue-500 dark:text-blue-400">
-              {" "}
-              Create one{" "}
+              Create one
             </a>
           </h1>
           <h1 className="text-sm text-gray-300 p-4">
