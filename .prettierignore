@@ -1,0 +1,5 @@
+**/docker-volumes
+**/.git
+**/.svn
+**/.hg
+**/node_modules

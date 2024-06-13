@@ -1,12 +1,11 @@
 // app/page.tsx
 import React from "react";
-import Counter from "../components/Counter";
+import Profile from "@app/components/Home/Profile";
 
 const Home: React.FC = () => {
   return (
     <div>
-      <h1>Home Page</h1>
-      <Counter />
+      <Profile />
     </div>
   );
 };
