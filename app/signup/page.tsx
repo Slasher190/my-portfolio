@@ -31,6 +31,7 @@ const Signup = () => {
                 email: values.email,
                 password: values.password,
                 username: values.username,
+                confirmPassword: values.confirmPassword,
               },
             },
           });
