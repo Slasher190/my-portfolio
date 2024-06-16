@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { FcGoogle } from "react-icons/fc";
 import { userLoginSchema } from "@app/Validation/userSchema";
@@ -9,9 +9,17 @@ import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import { LoginInput } from "@app/graphql/graphql";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "@app/graphql/operations/mutations/loginUser";
+import {
+  userMutationStart,
+  userMutationSuccess,
+  userMutationError,
+} from "@app/redux/slices/userSlice";
+import { useAppDispatch, useAppSelector } from "@app/redux/store/hooks";
 
 const Authentication = () => {
-  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
+  const [loginUser] = useMutation(LOGIN_USER);
+  const dispatch = useAppDispatch();
+  const { user, loading, error } = useAppSelector((state) => state.user);
   const formik = useFormik<LoginInput>({
     initialValues: {
       email: "",
@@ -20,18 +28,34 @@ const Authentication = () => {
     },
     validationSchema: userLoginSchema,
     onSubmit: async (values: LoginInput) => {
-      await loginUser({
-        variables: {
-          input: {
-            email: values.email,
-            password: values.password,
-            username: values.username,
+      dispatch(userMutationStart());
+      try {
+        const { data } = await loginUser({
+          variables: {
+            input: {
+              email: values.email,
+              password: values.password,
+              username: values.username,
+            },
           },
-        },
-      });
-      console.log(values);
+        });
+        if (data.createUser.user) {
+          dispatch(userMutationSuccess(data.createUser));
+        } else if (data.createUser.error) {
+          dispatch(userMutationError(data.createUser));
+        } else {
+          console.error("Unexpected error");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
+
+  useEffect(() => {
+    console.log(user, error, "from redux");
+  }, [dispatch, user, error, loading]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   return (

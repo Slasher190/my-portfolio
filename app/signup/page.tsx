@@ -1,18 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { FcGoogle } from "react-icons/fc";
-import { userSignupSchema } from "@app/Validation/userSchema";
 import { FaFacebook } from "react-icons/fa";
+import { userSignupSchema } from "@app/Validation/userSchema";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "@app/graphql/operations/mutations/createUser";
 import { SignupInput } from "@app/graphql/graphql";
+import {
+  userMutationStart,
+  userMutationSuccess,
+  userMutationError,
+} from "@app/redux/slices/userSlice";
+import { useAppDispatch, useAppSelector } from "@app/redux/store/hooks";
 
 const Signup = () => {
-  const [createUser, { loading, error: mutationError }] =
-    useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER);
+  const dispatch = useAppDispatch();
+  const { user, loading, error } = useAppSelector((state) => state.user);
   const { handleBlur, handleChange, handleSubmit, touched, errors, values } =
     useFormik<SignupInput>({
       initialValues: {
@@ -23,9 +30,9 @@ const Signup = () => {
       },
       validationSchema: userSignupSchema,
       onSubmit: async (values: SignupInput) => {
-        console.log(values);
+        dispatch(userMutationStart());
         try {
-          const response = await createUser({
+          const { data } = await createUser({
             variables: {
               input: {
                 email: values.email,
@@ -35,15 +42,25 @@ const Signup = () => {
               },
             },
           });
-          console.log(response.data);
+          if (data.createUser.user) {
+            dispatch(userMutationSuccess(data.createUser));
+          } else if (data.createUser.error) {
+            dispatch(userMutationError(data.createUser));
+          } else {
+            console.error("Unexpected error");
+          }
         } catch (err) {
           console.error(err);
         }
-        console.log(values);
       },
     });
+
+  useEffect(() => {
+    console.log(user, error, "from redux");
+  }, [dispatch, user, error, loading]);
+
   if (loading) return <div>Loading...</div>;
-  if (mutationError) return <div>mutationError</div>;
+  if (error) return <div>{JSON.stringify(error)}</div>;
   return (
     <div className="flex justify-center items-center h-screen bg-light-surface dark:bg-dark-background">
       <div className="flex">
