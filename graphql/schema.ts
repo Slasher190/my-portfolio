@@ -1,30 +1,23 @@
+import {
+  errorTypeDefs,
+  inputTypeDefs,
+  interfaceTypeDefs,
+  userTypeDefs,
+} from "@app/graphql/typedefs/indexTypeDefs";
+
 export const typeDefs = `#graphql
-  type User {
-    id: ID!,
-    email: String,
-    username: String,
-    createdAt: String,
-    updatedAt: String,
-  }
+  ${interfaceTypeDefs}
+  ${inputTypeDefs}
+  ${errorTypeDefs}
+  ${userTypeDefs}
   type Query {
     users: [User]
     user: User
   }
-  input SignupInput {
-    email: String!
-    username: String!
-    password: String!
-    confirmPassword: String
-  }
-  input LoginInput {
-    email: String
-    username: String
-    password: String!
-  }
   type Mutation {
-    createUser(input: SignupInput!): User
+    createUser(input: SignupInput!): UserRegistrationResult
     deleteUser(id: ID!): User
-    loginUser(input: LoginInput!): User
+    loginUser(input: LoginInput!): UserLoginResult
   }
 `;
 
