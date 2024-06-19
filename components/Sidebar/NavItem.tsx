@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-// Define the types for the navigation links
 interface SubLink {
   href: string;
   label: string;
@@ -49,11 +48,15 @@ const NavItem: React.FC<NavItemProps> = ({ link }) => {
           </button>
         )}
       </div>
-      {link.subLinks && isOpen && (
-        <div className="pl-4">
+      {link.subLinks && (
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
           {link.subLinks.map((subLink) => (
             <Link key={subLink.label} href={subLink.href} passHref>
-              <div className="flex items-center p-2 text-gray-700 hover:bg-gray-200 rounded-lg cursor-pointer">
+              <div className="flex items-center p-2 pl-8 text-gray-700 hover:bg-gray-200 rounded-lg cursor-pointer">
                 {subLink.icon}
                 {subLink.label}
               </div>
