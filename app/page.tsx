@@ -4,7 +4,7 @@ import Profile from "@app/components/Home/Profile";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="max-w-[80vw]">
       <Profile />
     </div>
   );

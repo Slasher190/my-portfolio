@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { MdPeople, MdStars, MdNewReleases } from "react-icons/md";
 import NavItem from "./NavItem";
+import { usePathname } from "next/navigation";
 
 // Define the types for the navigation links
 interface SubLink {
@@ -162,24 +163,30 @@ const navLinks: NavLink[] = [
 ];
 
 const Sidebar: React.FC = () => {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
-    <div className="flex w-[20vw] flex-col h-screen p-4 bg-gray-100">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl text-black font-bold">Untitled UI</h1>
-      </div>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full text-gray-700 font-bold p-2 border rounded-lg"
-        />
-      </div>
-      <nav className="flex flex-col flex-1 space-y-2">
-        {navLinks.map((link) => (
-          <NavItem key={link.label} link={link} />
-        ))}
-      </nav>
-    </div>
+    <>
+      {pathname !== "/login" && pathname !== "/signup" && (
+        <div className="flex w-[20vw] flex-col h-screen p-4 bg-white">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-xl text-black font-bold">Untitled UI</h1>
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full text-gray-700 font-bold p-2 border rounded-lg"
+            />
+          </div>
+          <nav className="flex flex-col flex-1 space-y-2">
+            {navLinks.map((link) => (
+              <NavItem key={link.label} link={link} />
+            ))}
+          </nav>
+        </div>
+      )}
+    </>
   );
 };
 
