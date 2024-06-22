@@ -10,18 +10,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Profile {
-  id Int @id @default(autoincrement())
+model User {
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
+  username      String       @unique @db.VarChar(255)
+  password      String       @db.VarChar(255)
+  emailVerified Boolean?     @default(false)
+  createdAt     DateTime     @default(now()) @db.Timestamptz(6)
+  updatedAt     DateTime     @updatedAt @db.Timestamptz(6)
+  profile       UserProfile?
 }
 
-model User {
-  id                   Int       @id @default(autoincrement())
-  email                String    @unique
-  username             String    @unique @db.VarChar(255)
-  password             String    @db.VarChar(255)
-  emailVerified        Boolean?  @default(false)
-  passwordResetToken   String?
-  passwordResetExpires DateTime?
-  createdAt            DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt            DateTime  @updatedAt @db.Timestamptz(6)
+model UserProfile {
+  id              Int          @id @default(autoincrement())
+  userId          Int          @unique
+  locationId      Int?
+  firstName       String       @db.VarChar(50)
+  middleName      String?      @db.VarChar(50)
+  lastName        String       @db.VarChar(50)
+  headline        String?      @db.VarChar(255)
+  summary         String?      @db.VarChar(255)
+  phoneNumber     String?
+  dateOfBirth     DateTime
+  currentLocation Location?
+  permission      Permission?
+  experience      Experience[]
+  education       Education[]
+  skills          Skill[]
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Experience {
+  id            Int          @id @default(autoincrement())
+  userProfileId Int?         @unique
+  title         String       @db.VarChar(255)
+  company       String       @db.VarChar(255)
+  startDate     DateTime
+  endDate       DateTime?
+  description   String       @db.VarChar(255)
+  location      Location?
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+}
+
+model Education {
+  id            Int          @id @default(autoincrement())
+  userProfileId Int?         @unique
+  institution   String       @db.VarChar(255)
+  degree        String       @db.VarChar(255)
+  fieldOfStudy  String       @db.VarChar(255)
+  startDate     DateTime
+  endDate       DateTime?
+  description   String       @db.VarChar(255)
+  location      Location?
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+}
+
+model Skill {
+  id            Int          @id @default(autoincrement())
+  userProfileId Int?
+  name          String       @db.VarChar(255)
+  proficiency   Proficiency
+  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+}
+
+model Location {
+  id               Int          @id @default(autoincrement())
+  userProfileId    Int?         @unique
+  userEducationId  Int          @unique
+  userExperienceId Int?         @unique
+  country          String       @db.VarChar(50)
+  state            String?      @db.VarChar(50)
+  city             String       @db.VarChar(50)
+  coordinates      String?      @db.VarChar(100)
+  userProfile      UserProfile? @relation(fields: [userProfileId], references: [id])
+  userExperience   Experience?  @relation(fields: [userExperienceId], references: [id])
+  userEducation    Education?   @relation(fields: [userEducationId], references: [id])
+}
+
+model Permission {
+  id                   Int         @id @default(autoincrement())
+  userProfileId        Int         @unique
+  isEmailVisible       Boolean     @default(false)
+  isPhoneVisible       Boolean     @default(false)
+  isDateOfBirthVisible Boolean     @default(false)
+  userProfile          UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+}
+
+enum Proficiency {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
 }
