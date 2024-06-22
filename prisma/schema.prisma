@@ -76,7 +76,7 @@ model Skill {
 model Location {
   id               Int          @id @default(autoincrement())
   userProfileId    Int?         @unique
-  userEducationId  Int          @unique
+  userEducationId  Int?         @unique
   userExperienceId Int?         @unique
   country          String       @db.VarChar(50)
   state            String?      @db.VarChar(50)
