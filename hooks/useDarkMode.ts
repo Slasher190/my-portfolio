@@ -1,11 +1,13 @@
 "use client";
-// hooks/useDarkMode.ts
-import { useEffect, useState } from "react";
 
-export default function useDarkMode() {
-  const [theme, setTheme] = useState(
-    typeof window !== "undefined" ? localStorage.theme : "light"
-  );
+import { useAppDispatch, useAppSelector } from "@app/redux/store/hooks";
+import { RootState } from "@app/redux/store/store";
+import { useEffect } from "react";
+import { setTheme } from "@app/redux/slices/themeSlice";
+
+export function useDarkMode() {
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state: RootState) => state.theme.theme);
   const colorTheme = theme === "dark" ? "light" : "dark";
 
   useEffect(() => {
@@ -15,5 +17,11 @@ export default function useDarkMode() {
     localStorage.setItem("theme", theme);
   }, [theme, colorTheme]);
 
-  return [colorTheme, setTheme] as const;
+  const toggleTheme = () => {
+    const newTheme = colorTheme;
+    dispatch(setTheme(newTheme));
+  };
+
+  return [colorTheme, toggleTheme] as const;
 }
+export default useDarkMode;

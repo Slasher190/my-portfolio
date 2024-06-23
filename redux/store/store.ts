@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "@app/redux/slices/userSlice";
+import themeSlice from "@app/redux/slices/themeSlice";
+import nightmodeSlice from "@app/redux/slices/nightmodeSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       user: userSlice,
+      theme: themeSlice,
+      nightMode: nightmodeSlice,
     },
   });
 };
