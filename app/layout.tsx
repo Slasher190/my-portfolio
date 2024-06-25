@@ -24,7 +24,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <StoreProvider>
               <div className="flex w-[100vw] overflow-hidden bg-white">
                 <Sidebar />
-                {children}
+                <div className="relative left-[260px]">{children}</div>
               </div>
             </StoreProvider>
           </ApolloClientProvider>
