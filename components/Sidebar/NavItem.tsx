@@ -32,7 +32,7 @@ const NavItem: React.FC<NavItemProps> = ({ link }) => {
     <>
       <div
         onClick={toggleMenu}
-        className="flex cursor-pointer items-center justify-between p-2 text-gray-700 hover:bg-gray-200 rounded-lg"
+        className="flex cursor-pointer items-center justify-between p-2 text-gray-700 hover:bg-gray-200 hover:shadow-xl rounded-lg"
       >
         <Link href={link.href} passHref>
           <div className="flex font-bold items-center flex-grow cursor-pointer">
@@ -56,7 +56,7 @@ const NavItem: React.FC<NavItemProps> = ({ link }) => {
         >
           {link.subLinks.map((subLink) => (
             <Link key={subLink.label} href={subLink.href} passHref>
-              <div className="flex items-center p-2 pl-8 text-gray-700 hover:bg-gray-200 rounded-lg cursor-pointer">
+              <div className="flex items-center p-2 pl-8 text-gray-700 hover:shadow-lg hover:bg-gray-200 rounded-lg cursor-pointer">
                 {subLink.icon}
                 {subLink.label}
               </div>
