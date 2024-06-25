@@ -168,7 +168,7 @@ const Sidebar: React.FC = () => {
   return (
     <>
       {pathname !== "/login" && pathname !== "/signup" && (
-        <div className="flex w-[20vw] flex-col h-screen p-4 bg-white">
+        <div className="flex w-[20vw] flex-col h-screen p-4 bg-white shadow-lg">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-xl text-black font-bold">Untitled UI</h1>
           </div>
