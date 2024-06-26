@@ -26,7 +26,7 @@ export default function Profile({ cover_image }) {
             : "linear-gradient(to left top, #ff7e5f, #feb47b)",
           backgroundSize: "100% 100%",
         }}
-        className="h-[300px] w-[80vw] flex flex-col gap-[40px] items-start relative"
+        className="h-[300px] w-[75vw] flex flex-col gap-[40px] items-start relative"
       ></div>
       <div className="pl-4 flex flex-col gap-[50px]">
         <div className="flex w-full gap-[40px] items-center relative ">
