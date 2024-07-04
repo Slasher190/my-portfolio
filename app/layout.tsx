@@ -6,6 +6,7 @@ import { ApolloClientProvider } from "@app/components/provider";
 import "./globals.css";
 import Sidebar from "@app/components/Sidebar/Sidebar";
 import { HelmetProvider } from "react-helmet-async";
+import Navbar from "@app/components/Navbar/Navbar";
 // import { useAutoNightMode } from "@app/hooks/useAutoNightMode";
 // import useDarkMode from "@app/hooks/useDarkMode";
 
@@ -22,9 +23,14 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <HelmetProvider>
           <ApolloClientProvider>
             <StoreProvider>
-              <div className="flex w-[100vw] overflow-hidden bg-white">
+              <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-white">
                 <Sidebar />
-                <div className="relative left-[260px] px-[5vw]">{children}</div>
+                <div className="flex h-full flex-col w-full">
+                  <Navbar />
+                  <div className="max-h-full w-full min-h-full bg-[#1e2142] overflow-auto ">
+                    {children}
+                  </div>
+                </div>
               </div>
             </StoreProvider>
           </ApolloClientProvider>
