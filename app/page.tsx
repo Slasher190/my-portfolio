@@ -1,13 +1,8 @@
 // app/page.tsx
 import React from "react";
-import Profile from "@app/components/Home/Profile";
 
 const Home: React.FC = () => {
-  return (
-    <div className="max-w-[80vw]">
-      <Profile cover_image={""} />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Home;

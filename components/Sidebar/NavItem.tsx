@@ -1,70 +1,43 @@
-"use client";
-
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, ReactNode, FC } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-interface SubLink {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
-interface NavLink {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-  subLinks?: SubLink[];
-}
-
 interface NavItemProps {
-  link: NavLink;
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  children?: ReactNode;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ link }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children }) => {
+  const [open, setOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setOpen(!open);
   };
 
   return (
-    <>
+    <li className="mb-4">
       <div
+        className="group flex items-center justify-between p-2 text-gray-400 rounded-md cursor-pointer hover:text-blue-600"
         onClick={toggleMenu}
-        className="flex cursor-pointer items-center justify-between p-2 text-gray-700 hover:bg-gray-200 hover:shadow-xl rounded-lg"
       >
-        <Link href={link.href} passHref>
-          <div className="flex font-bold items-center flex-grow cursor-pointer">
-            {link.icon}
-            {link.label}
-          </div>
-        </Link>
-        {link.subLinks && (
-          <button className="focus:outline-none">
-            <MdKeyboardArrowDown
-              className={`transition-transform font-bold transform ${isOpen ? "rotate-180" : ""}`}
-            />
-          </button>
+        <div className="flex items-center">
+          <Icon className="mr-3 text-[24px] text-gray-500 group-hover:text-blue-600" />
+          {label}
+        </div>
+        {children && (
+          <MdKeyboardArrowDown
+            className={`transform transition-transform group-hover:text-blue-600 ${open ? "rotate-180" : ""}`}
+          />
         )}
       </div>
-      {link.subLinks && (
+      {children && (
         <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`overflow-hidden transition-all duration-300 ${open ? "max-h-40" : "max-h-0"}`}
         >
-          {link.subLinks.map((subLink) => (
-            <Link key={subLink.label} href={subLink.href} passHref>
-              <div className="flex items-center p-2 pl-8 text-gray-700 hover:shadow-lg hover:bg-gray-200 rounded-lg cursor-pointer">
-                {subLink.icon}
-                {subLink.label}
-              </div>
-            </Link>
-          ))}
+          <ul className="pl-8 mt-2">{children}</ul>
         </div>
       )}
-    </>
+    </li>
   );
 };
 
