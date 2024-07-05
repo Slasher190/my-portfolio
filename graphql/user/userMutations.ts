@@ -97,6 +97,9 @@ export const userMutations = {
 
       const user = await context.prisma.user.findUnique({
         where: email ? { email } : { username },
+        include: {
+          profile: true,
+        },
       });
 
       if (!user) {

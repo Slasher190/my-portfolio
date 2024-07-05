@@ -11,6 +11,10 @@ const inputTypeDefs = `#graphql
     username: String
     password: String!
   }
+
+  input UserInput {
+    id: ID!
+  }
 `;
 
 export default inputTypeDefs;
