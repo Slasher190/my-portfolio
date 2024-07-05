@@ -13,6 +13,8 @@ export const typeDefs = `#graphql
   type Query {
     users: [User]
     user: User
+    getUserById(input: UserInput!): UserResult
+    getAllSkillSet: SkillResponse
   }
   type Mutation {
     createUser(input: SignupInput!): UserRegistrationResult
