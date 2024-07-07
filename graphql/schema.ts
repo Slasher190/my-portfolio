@@ -20,6 +20,7 @@ export const typeDefs = `#graphql
     createUser(input: SignupInput!): UserRegistrationResult
     deleteUser(id: ID!): User
     loginUser(input: LoginInput!): UserLoginResult
+    updateUserProfile(input: UserProfileInput!): UserProfileResult
   }
 `;
 
