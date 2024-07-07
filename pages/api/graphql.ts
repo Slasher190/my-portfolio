@@ -6,9 +6,15 @@ import { typeDefs } from "@app/graphql/schema";
 import { resolvers } from "@app/graphql/resolvers";
 import { CustomError } from "@app/graphql/error";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { verifyToken } from "@app/pages/utils/tokenUtils";
+import { JwtPayload } from "jsonwebtoken";
 
 export type Context = {
   prisma: PrismaClient;
+  req: NextApiRequest;
+  res: NextApiResponse;
+  userId?: string | number | JwtPayload;
 };
 
 const formatError = (
@@ -39,5 +45,9 @@ const apolloServer = new ApolloServer<Context>({
 });
 
 export default startServerAndCreateNextHandler(apolloServer, {
-  context: async (req, res) => ({ req, res, prisma }),
+  context: async (req, res) => {
+    const { user: userId } = verifyToken(req);
+    if (userId) return { req, res, prisma, userId };
+    else return { req, res, prisma };
+  },
 });

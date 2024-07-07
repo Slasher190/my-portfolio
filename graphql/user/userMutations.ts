@@ -1,8 +1,13 @@
 import { Context } from "@app/pages/api/graphql";
 import { User } from "@prisma/client";
-import { LoginInput, SignupInput } from "@app/graphql/graphql";
+import {
+  LoginInput,
+  SignupInput,
+  // UserProfileInput,
+} from "@app/graphql/graphql";
 import { CustomError, ErrorType } from "@app/graphql/error";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const userMutations = {
   createUser: async (
@@ -11,6 +16,7 @@ export const userMutations = {
     context: Context
   ) => {
     const { email, password, username, confirmPassword } = args.input;
+    const { res } = context;
     try {
       if (!email && !username) {
         return {
@@ -58,6 +64,19 @@ export const userMutations = {
         data: { email, username, password: hashedPassword },
       });
 
+      const token = jwt.sign(
+        { userId: user.id },
+        process.env.JWT_SECRET || "kgfjlkrg2gt412g45k4g51%",
+        {
+          expiresIn: process.env.JWT_EXPIRATION,
+        }
+      );
+
+      res.setHeader(
+        "Set-Cookie",
+        `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
+      );
+
       return {
         __typename: "UserRegistrationSuccess",
         user,
@@ -82,6 +101,7 @@ export const userMutations = {
     context: Context
   ) => {
     const { email, username, password } = args.input;
+    const { res } = context;
     try {
       if (!email && !username) {
         return {
@@ -98,10 +118,26 @@ export const userMutations = {
       const user = await context.prisma.user.findUnique({
         where: email ? { email } : { username },
         include: {
-          profile: true,
+          profile: {
+            include: {
+              currentLocation: true,
+              permission: true,
+              experience: {
+                include: {
+                  location: true,
+                },
+              },
+              education: {
+                include: {
+                  location: true,
+                },
+              },
+              skills: true,
+            },
+          },
         },
       });
-
+      console.log(user, "user");
       if (!user) {
         return {
           error: {
@@ -133,6 +169,18 @@ export const userMutations = {
       // if (user.blocked) {
       //   throw new CustomError("User is blocked.", ErrorType.USER_BLOCKED);
       // }
+      const token = jwt.sign(
+        { userId: user.id },
+        process.env.JWT_SECRET || "kgfjlkrg2gt412g45k4g51%",
+        {
+          expiresIn: process.env.JWT_EXPIRATION,
+        }
+      );
+
+      res.setHeader(
+        "Set-Cookie",
+        `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
+      );
 
       return {
         __typename: "UserLoginSuccess",
@@ -145,4 +193,28 @@ export const userMutations = {
       );
     }
   },
+  // updateUserProfile: async (
+  //   _parent: unknown,
+  //   args: { input: UserProfileInput },
+  //   context: Context
+  // ) => {
+  //   const {
+  //     firstName,
+  //     middleName,
+  //     lastName,
+  //     education,
+  //     experience,
+  //     permission,
+  //     summary,
+  //     headline,
+  //     phoneNumber,
+  //     skills,
+  //     dateOfBirth,
+  //     currentLocation,
+  //   } = args.input;
+  //   const id = context.userId;
+  //   if (!id) {
+
+  //   }
+  // },
 };

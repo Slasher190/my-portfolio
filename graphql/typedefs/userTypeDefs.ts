@@ -88,10 +88,15 @@ const userTypeDefs = `#graphql
   type SkillResponse {
     skills: [Skill!]
   }
+
+  type UserProfileResponse {
+    userProfile: UserProfile!
+  }
   
   union UserRegistrationResult = UserRegistrationSuccess | UserInputError | UserAlreadyExistError
   union UserLoginResult = UserLoginSuccess | UserInputError | UserSuspendedError | UserBlockedError | UserNotFoundError
   union UserResult = UserResponse | UserNotFoundError | UserSuspendedError | UserBlockedError
+  union UserProfileResult = UserProfileResponse | UserInputError | UserSuspendedError | UserBlockedError | UserNotFoundError
 `;
 
 export default userTypeDefs;
