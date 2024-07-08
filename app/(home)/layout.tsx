@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import StoreProvider from "@app/app/StoreProvider";
 import { ApolloClientProvider } from "@app/components/provider";
-import "./globals.css";
+import "../globals.css";
 import Sidebar from "@app/components/Sidebar/Sidebar";
 import { HelmetProvider } from "react-helmet-async";
 import Navbar from "@app/components/Navbar/Navbar";

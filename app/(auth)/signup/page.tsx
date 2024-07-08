@@ -62,7 +62,7 @@ const Signup = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{JSON.stringify(error)}</div>;
   return (
-    <div className="flex flex-col justify-center items-center h-full bg-light-surface dark:bg-dark-background">
+    <div className="flex flex-col justify-center items-center h-[100vh] bg-light-surface dark:bg-dark-background">
       <div className="flex">
         <div className="w max-w-[400px] flex flex-col justify-center items-center bg-light-background dark:bg-dark-surface p-10 rounded-3xl">
           <div className="flex justify-between items-center w-full mb-6">

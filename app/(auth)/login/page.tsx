@@ -59,7 +59,7 @@ const Authentication = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   return (
-    <div className="flex justify-center items-center h-full w-full bg-light-surface dark:bg-dark-background">
+    <div className="flex justify-center items-center h-[100vh] w-full bg-light-surface dark:bg-dark-background">
       <div className="flex">
         <div className="w max-w-[400px] flex flex-col justify-center items-center bg-light-background dark:bg-dark-surface p-10 rounded-3xl">
           <div className="flex justify-between items-center w-full mb-6">
