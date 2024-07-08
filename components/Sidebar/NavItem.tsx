@@ -5,9 +5,10 @@ interface NavItemProps {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   children?: ReactNode;
+  open1: boolean;
 }
 
-const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children }) => {
+const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children, open1 }) => {
   const [open, setOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -22,7 +23,7 @@ const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children }) => {
       >
         <div className="flex items-center">
           <Icon className="mr-3 text-[24px] text-gray-500 group-hover:text-blue-600" />
-          {label}
+          {open1 && label}
         </div>
         {children && (
           <MdKeyboardArrowDown
