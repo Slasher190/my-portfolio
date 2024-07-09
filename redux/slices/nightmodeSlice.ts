@@ -7,15 +7,20 @@ interface NightModeState {
   nightTime: number[];
 }
 
-const currentNightTimeJSON = localStorage.getItem("nightTime");
-const currentNightTime: number[] = currentNightTimeJSON
-  ? (JSON.parse(currentNightTimeJSON) as number[])
-  : DEFAULT_NIGHT_MODE_INTERVAL;
+let currentNightTime: number[] = DEFAULT_NIGHT_MODE_INTERVAL;
+let isNightMode = false;
 
-const isNightMode = localStorage.getItem("nightMode") === "true";
+if (typeof window !== "undefined") {
+  const currentNightTimeJSON = localStorage.getItem("nightTime");
+  currentNightTime = currentNightTimeJSON
+    ? (JSON.parse(currentNightTimeJSON) as number[])
+    : DEFAULT_NIGHT_MODE_INTERVAL;
 
-localStorage.setItem("nightTime", JSON.stringify(currentNightTime));
-localStorage.setItem("nightMode", JSON.stringify(isNightMode));
+  isNightMode = localStorage.getItem("nightMode") === "true";
+
+  localStorage.setItem("nightTime", JSON.stringify(currentNightTime));
+  localStorage.setItem("nightMode", JSON.stringify(isNightMode));
+}
 
 const initialState: NightModeState = {
   isNightMode,
