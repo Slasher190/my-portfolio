@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import StoreProvider from "@app/app/StoreProvider";
 import { ApolloClientProvider } from "@app/components/provider";
-import "./globals.css";
+import "../globals.css";
 import Sidebar from "@app/components/Sidebar/Sidebar";
 import { HelmetProvider } from "react-helmet-async";
 import Navbar from "@app/components/Navbar/Navbar";
@@ -25,9 +25,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
             <StoreProvider>
               <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-white">
                 <Sidebar />
-                <div className="flex h-full flex-col w-full">
+                <div className="flex flex-col w-full">
                   <Navbar />
-                  <div className="max-h-full w-full min-h-full bg-[#1e2142] overflow-auto ">
+                  <div className="grid h-full w-full bg-light-surface dark:bg-dark-background overflow-auto">
                     {children}
                   </div>
                 </div>
