@@ -1,5 +1,3 @@
-"use client";
-
 import { createSlice, createAction, PrepareAction } from "@reduxjs/toolkit";
 
 type ThemeType = "light" | "dark";
@@ -8,14 +6,20 @@ interface ThemeState {
   theme: ThemeType;
 }
 
-const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-  ? "dark"
-  : "light";
+let preferredTheme: ThemeType = "light";
 
-export const defaultTheme =
-  (localStorage.getItem("theme") as ThemeType) || preferredTheme;
+if (typeof window !== "undefined") {
+  preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
 
-localStorage.setItem("theme", defaultTheme);
+let defaultTheme: ThemeType = preferredTheme;
+
+if (typeof window !== "undefined" && localStorage.getItem("theme")) {
+  defaultTheme = localStorage.getItem("theme") as ThemeType;
+  localStorage.setItem("theme", defaultTheme);
+}
 
 const initialState: ThemeState = {
   theme: defaultTheme,
