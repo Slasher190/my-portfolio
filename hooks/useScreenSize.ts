@@ -1,7 +1,9 @@
 // hooks/useScreenSize.ts
 import { useState, useEffect } from "react";
 
-const getDeviceConfig = (width: number): "mobile" | "tablet" | "desktop" => {
+export type Device = "mobile" | "tablet" | "desktop";
+
+const getDeviceConfig = (width: number): Device => {
   if (width < 768) {
     return "mobile";
   } else if (width >= 768 && width <= 1024) {
@@ -11,10 +13,11 @@ const getDeviceConfig = (width: number): "mobile" | "tablet" | "desktop" => {
   }
 };
 
-const useScreenSize = (): "mobile" | "tablet" | "desktop" => {
-  const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">(
-    () => getDeviceConfig(window.innerWidth)
-  );
+const useScreenSize = (): Device => {
+  const [screenSize, setScreenSize] = useState<Device>(() => {
+    if (window) return getDeviceConfig(window.innerWidth);
+    return "desktop";
+  });
 
   useEffect(() => {
     const handleResize = () => {
