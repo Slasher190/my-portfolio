@@ -1,3 +1,4 @@
+import useScreenSize from "@app/hooks/useScreenSize";
 import React, { useState, ReactNode, FC } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -10,6 +11,7 @@ interface NavItemProps {
 
 const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children, open1 }) => {
   const [open, setOpen] = useState(false);
+  const screen = useScreenSize();
 
   const toggleMenu = () => {
     setOpen(!open);
@@ -23,7 +25,7 @@ const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children, open1 }) => {
       >
         <div className="flex items-center">
           <Icon className="mr-3 text-[24px] text-gray-500 group-hover:text-blue-600" />
-          {open1 && label}
+          {(open1 || screen === "desktop") && label}
         </div>
         {children && (
           <MdKeyboardArrowDown
