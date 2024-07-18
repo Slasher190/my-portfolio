@@ -9,7 +9,7 @@ const ProfileProgressBar: React.FC<{ progressState?: number }> = ({
     if (progressState) setProgress(progressState);
   }, [progressState]);
   return (
-    <div className="flex flex-col items-center space-y-2 w-full">
+    <div className="flex flex-col items-start space-y-2 w-[calc(100%-80px)]">
       <div className="relative w-full h-8 rounded-full bg-gradient-to-r from-[#ffb15580] via-[#ffb15580] to-[#ffb15580]">
         <div
           className="absolute top-0 left-0 h-8 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-orange-500"
@@ -23,7 +23,7 @@ const ProfileProgressBar: React.FC<{ progressState?: number }> = ({
           </div>
         </div>
       </div>
-      <span className="text-sm font-medium  text-gray-700 dark:text-gray-100">
+      <span className="text-sm font-semibold pt-2 pl-2  text-gray-700 dark:text-gray-100">
         fullness of your profile
       </span>
     </div>

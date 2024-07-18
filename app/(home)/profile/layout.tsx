@@ -28,7 +28,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <div className="col-span-1 text-black bg-surface rounded-lg shadow-flat self-start">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 max-h-fit">
           <div
-            className={`p-10 lg:px-20 ${screenSize === "tablet" && "p-10"} rounded-lg col-span-1 flex flex-col items-center`}
+            className={`py-10 ${screenSize === "tablet" && "p-10"} rounded-lg col-span-1 flex flex-col items-center`}
           >
             <div
               className="relative lg:w-[174px] lg:h-[174px] w-[111px] h-[111px] rounded-full flex items-center justify-center lg:p-[8px] p-[5px] m-0 mx-auto mb-8"
@@ -51,7 +51,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               <h1 className="text-lg font-bold">Nancy</h1>
               <h2 className="font-semibold">nancy@190</h2>
             </div>
-            <div className="w-[100%]">
+            <div className="w-[100%] flex justify-center">
               <ProfileProgressBar />
               {/* <LinearProgressBar />
               <CircularProgressBar /> */}
@@ -59,9 +59,9 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             {/* Menu Items */}
           </div>
           <div
-            className={`pb-10 lg:px-20 ${(screenSize === "mobile" || screenSize === "tablet") && "p-10"} col-span-1 flex justify-center`}
+            className={`pb-10  ${(screenSize === "mobile" || screenSize === "tablet") && "p-10"} col-span-1 flex px-10`}
           >
-            <div className="w-[100%] ">
+            <div className="w-fit ">
               {menuItems.map((item, index) => (
                 <MenuItem
                   key={index}
