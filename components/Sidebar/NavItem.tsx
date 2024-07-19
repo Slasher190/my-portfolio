@@ -5,11 +5,18 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 interface NavItemProps {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
+  mobile: boolean;
   children?: ReactNode;
   open1: boolean;
 }
 
-const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children, open1 }) => {
+const NavItem: FC<NavItemProps> = ({
+  icon: Icon,
+  label,
+  children,
+  open1,
+  mobile,
+}) => {
   const [open, setOpen] = useState(false);
   const screen = useScreenSize();
 
@@ -25,7 +32,7 @@ const NavItem: FC<NavItemProps> = ({ icon: Icon, label, children, open1 }) => {
       >
         <div className="flex items-center">
           <Icon className="mr-3 text-[24px] text-gray-500 group-hover:text-blue-600" />
-          {(open1 || screen === "desktop") && label}
+          {(open1 || screen === "desktop" || mobile) && label}
         </div>
         {children && (
           <MdKeyboardArrowDown
