@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  AiOutlineGithub,
   AiOutlineBell,
   AiOutlineSetting,
   AiOutlineUser,
@@ -47,10 +46,6 @@ const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
         <NavbarIcon Icon={AiOutlineSetting} />
       </div>
       <div className="hidden md:flex ml-auto items-center gap-4">
-        <button className="flex items-center gap-2 px-4 py-3 bg-black border-white border-2 rounded-full hover:bg-[#3c3f68]">
-          <AiOutlineGithub />
-          <span>GitHub</span>
-        </button>
         <NavbarIcon Icon={AiOutlineFullscreen} />
         <NavbarIcon Icon={AiOutlineBell} />
         <NavbarIcon Icon={AiOutlineSetting} />

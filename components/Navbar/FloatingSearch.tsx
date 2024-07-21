@@ -10,7 +10,7 @@ interface SearchProps {
 const FloatingSearch: React.FC<SearchProps> = ({ isModalOpen, closeModal }) => {
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>
-      <div className="flex-[1] px-4 py-2 rounded-[40px] bg-[#2c2f58] flex items-center">
+      <div className="flex-[1]  px-4 py-2 rounded-[40px] bg-[#2c2f58] flex items-center">
         <AiOutlineSearch />
         <input
           type="text"

@@ -20,7 +20,7 @@ const Sidebar: React.FC<Props> = ({ mobile, setMobile }) => {
 
   return (
     <div
-      className={`bg-[#121430] h-screen ${
+      className={`bg-[#121430] ${screen === "mobile" ? "absolute z-[2]" : "block"} h-screen ${
         open || screen === "desktop" || mobile
           ? "w-[300px]"
           : screen === "mobile"

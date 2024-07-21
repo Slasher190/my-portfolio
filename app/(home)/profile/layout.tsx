@@ -51,26 +51,28 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               <h1 className="text-lg font-bold">Nancy</h1>
               <h2 className="font-semibold">nancy@190</h2>
             </div>
-            <div className="w-[100%] flex justify-center">
+            <div className="w-[80%] flex justify-center">
               <ProfileProgressBar />
               {/* <LinearProgressBar />
               <CircularProgressBar /> */}
             </div>
             {/* Menu Items */}
           </div>
-          <div
-            className={`pb-10  ${(screenSize === "mobile" || screenSize === "tablet") && "p-10"} col-span-1 flex px-10`}
-          >
-            <div className="w-fit ">
-              {menuItems.map((item, index) => (
-                <MenuItem
-                  key={index}
-                  icon={item.icon}
-                  text={item.text}
-                  active={item.link === path}
-                  link={item.link}
-                />
-              ))}
+          <div className="max-w-[100%] flex justify-center">
+            <div
+              className={`pb-10  w-[80%] ${(screenSize === "mobile" || screenSize === "tablet") && "p-0 md:p-10"} col-span-1  flex  md:px-10`}
+            >
+              <div className="w-[100%] ">
+                {menuItems.map((item, index) => (
+                  <MenuItem
+                    key={index}
+                    icon={item.icon}
+                    text={item.text}
+                    active={item.link === path}
+                    link={item.link}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
