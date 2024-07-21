@@ -9,7 +9,7 @@ const ProfileProgressBar: React.FC<{ progressState?: number }> = ({
     if (progressState) setProgress(progressState);
   }, [progressState]);
   return (
-    <div className="flex flex-col items-start space-y-2 w-[calc(100%-80px)]">
+    <div className="flex flex-col w-full items-start space-y-2 xl:w-[calc(100%-80px)]">
       <div className="relative w-full h-8 rounded-full bg-gradient-to-r from-[#ffb15580] via-[#ffb15580] to-[#ffb15580]">
         <div
           className="absolute top-0 left-0 h-8 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-orange-500"

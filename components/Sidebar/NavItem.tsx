@@ -34,7 +34,7 @@ const NavItem: FC<NavItemProps> = ({
           <Icon className="mr-3 text-[24px] text-gray-500 group-hover:text-blue-600" />
           {(open1 || screen === "desktop" || mobile) && label}
         </div>
-        {children && (
+        {children && (open1 || screen === "desktop") && (
           <MdKeyboardArrowDown
             className={`transform transition-transform group-hover:text-blue-600 ${open ? "rotate-180" : ""}`}
           />
