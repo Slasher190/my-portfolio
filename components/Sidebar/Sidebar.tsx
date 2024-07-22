@@ -26,7 +26,7 @@ const Sidebar: React.FC<Props> = ({ mobile, setMobile }) => {
           : screen === "mobile"
             ? "w-0 hidden"
             : "min-w-[80px] !w-[80px]"
-      } p-5 text-gray-400 min-w-fit transition-all duration-300`}
+      } p-5 text-gray-400 transition-all duration-300`}
     >
       <div className="flex items-center gap-[20px] mb-6 relative">
         <Image
