@@ -146,7 +146,7 @@ const Authentication = () => {
               Login
             </button>
           </form>
-          <h1 className="text-gray-900 mb-4 mt-4 dark:text-gray-300">
+          <h1 className="text-gray-900 dark:text-gray-300 mb-4 mt-4 ">
             No account?
             <a href="#" className="text-blue-500 dark:text-blue-400">
               Create one

@@ -24,8 +24,8 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     { icon: <FaDollarSign />, text: "Payments", link: "/profile/payment" },
   ];
   return (
-    <div className="grid lg:grid-cols-3 gap-8 p-8 h[100%] grid-cols-1">
-      <div className="col-span-1 text-black bg-surface rounded-lg shadow-flat self-start">
+    <div className="grid lg:grid-cols-3 gap-8 p-8 h[100%] grid-cols-1 bg-light-surface dark:bg-dark-background">
+      <div className="col-span-1 text-gray-900 dark:text-gray-300 bg-light-background dark:bg-dark-surface rounded-lg shadow-flat self-start">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 max-h-fit">
           <div
             className={`py-10 ${screenSize === "tablet" && "p-10"} rounded-lg col-span-1 flex flex-col items-center`}
@@ -37,7 +37,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                   "conic-gradient(from -35.18deg at 50% 50%, rgb(0, 108, 207) -154.36deg, rgb(255, 82, 82) 24.13deg, rgb(255, 177, 85) 118.76deg, rgb(0, 108, 207) 205.64deg, rgb(255, 82, 82) 384.13deg)",
               }}
             >
-              <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-light-surface dark:bg-dark-background flex items-center justify-center">
                 <Image
                   src={profilePic.src}
                   alt="profile"
@@ -62,7 +62,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             <div
               className={`pb-10  w-[80%] ${(screenSize === "mobile" || screenSize === "tablet") && "p-0 md:p-10"} col-span-1  flex  md:px-10`}
             >
-              <div className="w-[100%] ">
+              <div className="w-[100%] text-gray-600 dark:text-gray-400">
                 {menuItems.map((item, index) => (
                   <MenuItem
                     key={index}
@@ -77,7 +77,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className="p-10 lg:col-span-2 col-span-1 row-auto max-h-fit text-black bg-surface rounded-lg shadow-flat h-auto">
+      <div className="p-10 lg:col-span-2 col-span-1 row-auto max-h-fit text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat h-auto">
         {children}
       </div>
     </div>

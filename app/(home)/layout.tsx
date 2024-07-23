@@ -17,11 +17,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-white">
+        <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-light-background dark:bg-dark-surface">
           <Sidebar setMobile={setMobile} mobile={mobile} />
           <div className="flex flex-col w-full">
             <Navbar setMobile={setMobile} mobile={mobile} />
-            <div className="grid h-full w-full bg-light-surface dark:bg-dark-background overflow-auto">
+            <div className="grid h-full w-full bg-light-background dark:bg-dark-surface overflow-auto">
               {children}
             </div>
           </div>

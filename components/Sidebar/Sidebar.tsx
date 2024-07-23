@@ -20,7 +20,7 @@ const Sidebar: React.FC<Props> = ({ mobile, setMobile }) => {
 
   return (
     <div
-      className={`bg-[#121430] ${screen === "mobile" ? "absolute z-[2]" : "block"} h-screen ${
+      className={`bg-dark-surface ${screen === "mobile" ? "absolute z-[2]" : "block"} h-screen ${
         open || screen === "desktop" || mobile
           ? "w-[300px]"
           : screen === "mobile"
@@ -36,11 +36,11 @@ const Sidebar: React.FC<Props> = ({ mobile, setMobile }) => {
           alt="Logo"
         />
         {(screen === "desktop" || open || mobile) && (
-          <p className="text-[28px] font-semibold text-white">Lightence</p>
+          <p className="text-[28px] font-semibold text-gray-400">Parichayam</p>
         )}
         <FaXmark
           onClick={() => setMobile(!mobile)}
-          className="text-[24px] md:hidden text-white"
+          className="text-[24px] md:hidden text-gray-400"
         />
         {screen !== "desktop" && !mobile && (
           <div
@@ -50,9 +50,9 @@ const Sidebar: React.FC<Props> = ({ mobile, setMobile }) => {
             onClick={() => setOpen(!open)}
           >
             {open ? (
-              <FaChevronLeft className="text-white" />
+              <FaChevronLeft className="text-gray-400" />
             ) : (
-              <FaChevronRight className="text-white" />
+              <FaChevronRight className="text-gray-400" />
             )}
           </div>
         )}

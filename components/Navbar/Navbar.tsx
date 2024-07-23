@@ -5,11 +5,12 @@ import {
   AiOutlineBell,
   AiOutlineSetting,
   AiOutlineUser,
-  AiOutlineFullscreen,
+  // AiOutlineFullscreen,
   AiOutlineFilter,
   AiOutlineSearch,
 } from "react-icons/ai";
 import { FaBars } from "react-icons/fa";
+import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import FloatingSearch from "./FloatingSearch"; // Adjust the import path as needed
 
 interface NavbarProps {
@@ -21,19 +22,19 @@ const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <nav className="flex justify-between items-center h-[100px] w-full p-3 gap-3 md:p-8 bg-[#1e2142] text-white">
+    <nav className="flex justify-between items-center h-[80px] w-full p-2 gap-3 md:p-8 bg-light-background dark:bg-dark-surface text-gray-600 dark:text-gray-400">
       <div
         className={`text-[24px] ${mobile ? "hidden" : ""} md:hidden cursor-pointer`}
         onClick={() => setMobile(!mobile)}
       >
         <FaBars />
       </div>
-      <div className="hidden md:flex-[0.5] px-4 py-2 rounded-[40px] bg-[#2c2f58] md:flex items-center">
+      <div className="hidden md:flex-[0.5] px-4 py-2 rounded-[40px] bg-light-surface dark:bg-dark-background md:flex items-center">
         <AiOutlineSearch />
         <input
           type="text"
           placeholder="Search"
-          className="w-full p-2 px-4 rounded-full bg-transparent text-white placeholder-white focus:outline-none"
+          className="w-full p-1 px-4 rounded-full bg-transparent text-gray-600 dark:text-gray-400 placeholder-gray-600 dark:placeholder-gray-400 focus:outline-none"
         />
         <AiOutlineFilter className="ml-2 text-xl" />
       </div>
@@ -46,7 +47,8 @@ const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
         <NavbarIcon Icon={AiOutlineSetting} />
       </div>
       <div className="hidden md:flex ml-auto items-center gap-4">
-        <NavbarIcon Icon={AiOutlineFullscreen} />
+        {/* <NavbarIcon Icon={AiOutlineFullscreen} /> */}
+        <ThemeToggleIcon />
         <NavbarIcon Icon={AiOutlineBell} />
         <NavbarIcon Icon={AiOutlineSetting} />
         <NavbarIcon Icon={AiOutlineUser} />
