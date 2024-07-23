@@ -23,9 +23,9 @@ const ProfileProgressBar: React.FC<{ progressState?: number }> = ({
           </div>
         </div>
       </div>
-      <span className="text-sm font-semibold pt-2 pl-2  text-gray-700 dark:text-gray-100">
-        fullness of your profile
-      </span>
+      <h1 className="text-sm text-center w-full font-semibold text-gray-700 dark:text-gray-100">
+        Fullness of your profile
+      </h1>
     </div>
   );
 };
