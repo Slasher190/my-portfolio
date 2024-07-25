@@ -15,19 +15,15 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const [mobile, setMobile] = useState(false);
 
   return (
-    <html lang="en">
-      <body>
-        <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-white">
-          <Sidebar setMobile={setMobile} mobile={mobile} />
-          <div className="flex flex-col w-full">
-            <Navbar setMobile={setMobile} mobile={mobile} />
-            <div className="grid h-full w-full bg-light-surface dark:bg-dark-background overflow-auto">
-              {children}
-            </div>
-          </div>
+    <div className="flex w-[100vw] h-[100vh] overflow-hidden bg-light-background dark:bg-dark-surface">
+      <Sidebar setMobile={setMobile} mobile={mobile} />
+      <div className="flex flex-col w-full">
+        <Navbar setMobile={setMobile} mobile={mobile} />
+        <div className="grid h-full w-full bg-light-background dark:bg-dark-surface overflow-auto">
+          {children}
         </div>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 };
 
