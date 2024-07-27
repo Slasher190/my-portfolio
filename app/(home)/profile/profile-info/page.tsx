@@ -1,5 +1,5 @@
 "use client";
-import Input from "@app/components/Input";
+import Input from "@app/components/Ui/Input";
 import React from "react";
 
 interface ProfileInput {
@@ -8,33 +8,56 @@ interface ProfileInput {
     label: string;
     name: string;
     placeHolder: string;
+    type: string;
   }[];
 }
 
 const ProfileInfo = () => {
   const profileData: ProfileInput[] = [
     {
-      heading: "Heading1",
+      heading: "Profile Info",
       inputs: [
         {
-          label: "Account",
-          name: "Account",
-          placeHolder: "Account",
+          label: "First Name",
+          name: "firstName",
+          placeHolder: "First Name",
+          type: "text",
         },
         {
-          label: "Name",
-          name: "",
-          placeHolder: "",
+          label: "Middle Name",
+          name: "middleName",
+          placeHolder: "Middle Name",
+          type: "text",
         },
         {
-          label: "Skills",
-          name: "",
-          placeHolder: "",
+          label: "Last Name",
+          name: "lastName",
+          placeHolder: "Last Name",
+          type: "text",
         },
         {
-          label: "Nothing",
-          name: "",
-          placeHolder: "",
+          label: "User Name",
+          name: "userName",
+          placeHolder: "User Name",
+          type: "text",
+        },
+        {
+          label: "Date Of Birth",
+          name: "dateOfBirth",
+          placeHolder: "DateOfBirth",
+          type: "Date",
+        },
+        {
+          label: "Sex",
+          name: "sex",
+          placeHolder: "sex",
+          type: "text",
+        },
+        {
+          label: "Summary",
+          name: "summary",
+          placeHolder: "summary",
+          type: "textarea",
         },
       ],
     },
@@ -45,16 +68,7 @@ const ProfileInfo = () => {
           label: "Failed",
           name: "",
           placeHolder: "",
-        },
-        {
-          label: "Pass",
-          name: "",
-          placeHolder: "",
-        },
-        {
-          label: "Key",
-          name: "",
-          placeHolder: "",
+          type: "",
         },
       ],
     },
@@ -62,17 +76,14 @@ const ProfileInfo = () => {
   return (
     <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
       {profileData.map((profile: ProfileInput) => (
-        <>
-          <h1
-            key={profile.heading}
-            className="text-2xl text-black dark:text-white col-span-1 md:col-span-2"
-          >
+        <React.Fragment key={profile.heading}>
+          <h1 className="text-2xl text-black dark:text-white col-span-1 md:col-span-2">
             {profile.heading}
           </h1>
           {profile.inputs.map((input, idx) => (
             <div className="col-span-1" key={idx}>
               <Input
-                type="text"
+                type={input.type}
                 onChange={(e) => console.log(e.target.value)}
                 onBlur={(e) => console.log(e.target.value)}
                 name={input.name}
@@ -82,7 +93,7 @@ const ProfileInfo = () => {
               />
             </div>
           ))}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
