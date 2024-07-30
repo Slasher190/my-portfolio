@@ -24,7 +24,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     { icon: <FaDollarSign />, text: "Payments", link: "/profile/payment" },
   ];
   return (
-    <div className="grid lg:grid-cols-3 gap-8 p-8 h[100%] grid-cols-1 bg-light-surface dark:bg-dark-background">
+    <div className="grid lg:grid-cols-3 gap-8 p-4 md:p-8 h[100%] grid-cols-1 bg-light-surface dark:bg-dark-background">
       <div className="col-span-1 text-gray-900 dark:text-gray-300 bg-light-background dark:bg-dark-surface rounded-lg shadow-flat self-start">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 max-h-fit">
           <div
@@ -60,7 +60,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           </div>
           <div className="max-w-[100%] flex justify-center">
             <div
-              className={`pb-10  w-[80%] ${(screenSize === "mobile" || screenSize === "tablet") && "p-0 md:p-10"} col-span-1  flex  md:px-10`}
+              className={`pb-10  w-[80%] ${(screenSize === "mobile" || screenSize === "tablet") && "p-0 md:p-10"} col-span-1  flex  xl:px-10`}
             >
               <div className="w-[100%] text-gray-600 dark:text-gray-400">
                 {menuItems.map((item, index) => (
