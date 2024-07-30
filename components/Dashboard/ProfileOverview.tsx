@@ -10,31 +10,39 @@ const ProfileOverview: React.FC = () => {
           <img
             className="h-[140px] min-h-[140px] rounded-[50%] w-[140px] min-w-[140px] "
             src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-            alt=""
+            alt="Profile"
           />
         </div>
         <div className="pt-3">
-          <p className="text-[32px] font-semibold ">Abhishek Kumar Sharma</p>
-          <p>I&apos;m a Full stack developer with zero knowledge.</p>
+          <p className="text-[32px] font-semibold text-gray-900 dark:text-gray-100">
+            Abhishek Kumar Sharma
+          </p>
+          <p className="text-gray-700 dark:text-gray-300">
+            I&aposm a Full stack developer with zero knowledge.
+          </p>
         </div>
         <div className="flex md:ml-auto pt-3 gap-6">
           <div className="w-[150px] cursor-pointer border-white border-[1.5px] bg-gray-600 gap-4 font-semibold py-2 rounded-[8px] flex justify-center items-center">
             <FaVideo className="text-gray-800 text-[20px]" />
-            <p>Video Call</p>
+            <p className="text-white">Video Call</p>
           </div>
           <div className="w-[150px] cursor-pointer border-white border-[1.5px] bg-gray-600 gap-4 font-semibold py-2 rounded-[8px] flex justify-center items-center">
             <FaMessage className="text-gray-800 text-[20px]" />
-            <p>Message</p>
+            <p className="text-white">Message</p>
           </div>
         </div>
       </div>
       <div className="flex items-center">
         <div className="flex max-w-[70%] flex-col gap-2">
-          <p className="text-[28px] font-semibold ">Experience</p>
-          <p>I&apos;m Specialized in coding after smoking lots of weed.</p>
+          <p className="text-[28px] font-semibold text-gray-900 dark:text-gray-100">
+            Experience
+          </p>
+          <p className="text-gray-700 dark:text-gray-300">
+            I&aposm Specialized in coding after smoking lots of weed.
+          </p>
         </div>
         <div className="ml-auto cursor-pointer">
-          <FaBars />
+          <FaBars className="text-gray-900 dark:text-gray-100" />
         </div>
       </div>
     </div>

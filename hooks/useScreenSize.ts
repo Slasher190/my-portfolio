@@ -1,5 +1,3 @@
-"use client";
-// hooks/useScreenSize.ts
 import { useState, useEffect } from "react";
 
 export type Device = "mobile" | "tablet" | "desktop";
@@ -15,19 +13,19 @@ const getDeviceConfig = (width: number): Device => {
 };
 
 const useScreenSize = (): Device => {
-  const [screenSize, setScreenSize] = useState<Device>(() => {
-    if (window) return getDeviceConfig(window.innerWidth);
-    return "desktop";
-  });
+  const [screenSize, setScreenSize] = useState<Device>("desktop");
 
   useEffect(() => {
-    const handleResize = () => {
-      setScreenSize(getDeviceConfig(window.innerWidth));
-    };
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        setScreenSize(getDeviceConfig(window.innerWidth));
+      };
 
-    window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
+      handleResize(); // Set initial screen size
 
-    return () => window.removeEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return screenSize;

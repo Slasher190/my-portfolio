@@ -44,7 +44,7 @@ const NavItem: FC<NavItemProps> = ({
         <div
           className={`overflow-hidden transition-all duration-300 ${open ? "max-h-40" : "max-h-0"}`}
         >
-          <ul className="pl-8 mt-2">{children}</ul>
+          <ul className="pl-9 mt-2 ">{children}</ul>
         </div>
       )}
     </li>
