@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const LinearProgressBar = () => {
+const LinearProgressBar: React.FC<{ totalProgress?: number }> = ({
+  totalProgress,
+}) => {
   const [progress, setProgress] = useState(40);
 
   const increaseProgress = () => {
@@ -11,6 +13,15 @@ const LinearProgressBar = () => {
   const decreaseProgress = () => {
     setProgress((prev) => (prev > 0 ? prev - 10 : 0));
   };
+
+  useEffect(() => {
+    if (typeof totalProgress === "number" && totalProgress >= 0) {
+      if (totalProgress > 100) {
+        setProgress(100);
+      }
+      setProgress(totalProgress);
+    }
+  }, [progress, totalProgress]);
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -26,20 +37,22 @@ const LinearProgressBar = () => {
         </div>
         <span className="text-sm font-medium">{progress}%</span>
       </div>
-      <div className="flex space-x-2">
-        <button
-          onClick={decreaseProgress}
-          className="px-4 py-2 bg-gray-200 rounded-lg border border-blue-600 text-blue-600"
-        >
-          -
-        </button>
-        <button
-          onClick={increaseProgress}
-          className="px-4 py-2 bg-gray-200 rounded-lg border border-blue-600 text-blue-600"
-        >
-          +
-        </button>
-      </div>
+      {!totalProgress && totalProgress !== 0 && (
+        <div className="flex space-x-2">
+          <button
+            onClick={decreaseProgress}
+            className="px-4 py-2 bg-gray-200 rounded-lg border border-blue-600 text-blue-600"
+          >
+            -
+          </button>
+          <button
+            onClick={increaseProgress}
+            className="px-4 py-2 bg-gray-200 rounded-lg border border-blue-600 text-blue-600"
+          >
+            +
+          </button>
+        </div>
+      )}
     </div>
   );
 };

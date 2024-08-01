@@ -3,7 +3,8 @@ import Image from "next/image";
 import React, { ReactNode } from "react";
 import profilePic from "@app/Assets/Images/nancy.png";
 import useScreenSize, { Device } from "@app/hooks/useScreenSize";
-// import LinearProgressBar from "@app/components/ProgressBar/LinearProgressBar";
+import { RiContactsFill } from "react-icons/ri";
+import LinearProgressBar from "@app/components/ProgressBar/LinearProgressBar";
 // import CircularProgressBar from "@app/components/ProgressBar/CircularProgressBar";
 import ProfileProgressBar from "@app/components/ProgressBar/ProfileProgressBar";
 import MenuItem from "@app/components/Ui/MenuItem";
@@ -15,6 +16,11 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const path = usePathname();
   const menuItems = [
     { icon: <FaUser />, text: "Personal Info", link: "/profile/profile-info" },
+    {
+      icon: <RiContactsFill />,
+      text: "Contact Info",
+      link: "/profile/contact-info",
+    },
     {
       icon: <FaLock />,
       text: "Security Settings",
@@ -68,7 +74,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                     key={index}
                     icon={item.icon}
                     text={item.text}
-                    active={item.link === path}
+                    active={!!RegExp(path as string).exec(item.link)}
                     link={item.link}
                   />
                 ))}
@@ -77,8 +83,15 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className="p-10 lg:col-span-2 col-span-1 row-auto max-h-fit text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat h-auto">
-        {children}
+      <div className="lg:col-span-2 col-span-1">
+        {!!path?.match("/profile/profile-info") && (
+          <div className="p-10 row-auto mb-5 text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat">
+            <LinearProgressBar totalProgress={2} />
+          </div>
+        )}
+        <div className="p-10 row-auto max-h-fit h-auto text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat">
+          {children}
+        </div>
       </div>
     </div>
   );

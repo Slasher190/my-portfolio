@@ -104,8 +104,6 @@
 //   ],
 // };
 
-type Heading = string;
-
 type FieldType =
   | "text"
   | "checkbox"
@@ -162,125 +160,122 @@ type FormField =
   | NestedField;
 
 interface UserFields {
-  heading: Heading;
+  heading: string;
   dynamic?: boolean;
   optional?: boolean;
   fields: FormField[];
 }
 
-interface UserProfileFormInput {
-  sections: UserFields[];
-}
+export const personalInformationSection: UserFields = {
+  heading: "Personal Information",
+  fields: [
+    { name: "firstName", type: "text", label: "First Name" },
+    { name: "middleName", type: "text", label: "Middle Name" },
+    { name: "lastName", type: "text", label: "Last Name" },
+    { name: "dateOfBirth", type: "date", label: "Date Of Birth" },
+    { name: "username", type: "text", label: "Username" },
+    {
+      name: "language",
+      type: "multiselect",
+      label: "Language",
+      options: ["English", "Hindi"],
+    },
+    {
+      name: "sex",
+      type: "select",
+      label: "Sex",
+      options: ["Male", "Female", "Other"],
+    },
+    {
+      name: "location",
+      type: "nested",
+      label: "Location",
+      fields: [
+        { name: "country", type: "select", label: "Country", options: [] },
+        { name: "state", type: "select", label: "State", options: [] },
+        { name: "city", type: "select", label: "City", options: [] },
+        { name: "zipcode", type: "text", label: "ZipCode" },
+      ],
+    },
+    { name: "summary", type: "textarea", label: "Summary" },
+    { name: "headline", type: "textarea", label: "Headline" },
+  ],
+};
 
-export const userForm: UserProfileFormInput = {
-  sections: [
+export const contactInformationSection: UserFields = {
+  heading: "Contact Information",
+  fields: [
+    { name: "email", type: "email", label: "Email", verification: false },
     {
-      heading: "Personal Information",
-      fields: [
-        { name: "firstName", type: "text", label: "First Name" },
-        { name: "middleName", type: "text", label: "Middle Name" },
-        { name: "lastName", type: "text", label: "Last Name" },
-        { name: "dateOfBirth", type: "date", label: "Date Of Birth" },
-        { name: "username", type: "text", label: "Username" },
-        {
-          name: "language",
-          type: "multiselect",
-          label: "Language",
-          options: ["English", "Hindi"],
-        },
-        {
-          name: "sex",
-          type: "select",
-          label: "Sex",
-          options: ["Male", "Female", "Other"],
-        },
-        {
-          name: "location",
-          type: "nested",
-          label: "Location",
-          fields: [
-            { name: "country", type: "select", label: "Country", options: [] },
-            { name: "state", type: "select", label: "State", options: [] },
-            { name: "city", type: "select", label: "City", options: [] },
-            { name: "zipcode", type: "text", label: "ZipCode" },
-          ],
-        },
-        { name: "summary", type: "textarea", label: "Summary" },
-        { name: "headline", type: "textarea", label: "Headline" },
-      ],
-    },
-    {
-      heading: "Contact Information",
-      fields: [
-        { name: "email", type: "email", label: "Email", verification: false },
-        {
-          name: "phoneNumber",
-          type: "text",
-          label: "Phone Number",
-          verification: false,
-        },
-      ],
-    },
-    {
-      heading: "Experience",
-      dynamic: true,
-      fields: [
-        { name: "title", type: "text", label: "Title" },
-        { name: "company", type: "text", label: "Company" },
-        { name: "startDate", type: "date", label: "Start Date" },
-        { name: "endDate", type: "date", label: "End Date" },
-        {
-          name: "location",
-          type: "nested",
-          label: "Location",
-          fields: [
-            { name: "country", type: "select", label: "Country", options: [] },
-            { name: "state", type: "select", label: "State", options: [] },
-            { name: "city", type: "select", label: "City", options: [] },
-            { name: "zipcode", type: "text", label: "ZipCode" },
-          ],
-        },
-      ],
-    },
-    {
-      heading: "Education",
-      dynamic: true,
-      fields: [
-        { name: "institution", type: "text", label: "Institution" },
-        { name: "degree", type: "text", label: "Degree" },
-        { name: "fieldOfStudy", type: "text", label: "Field Of Study" },
-        { name: "startDate", type: "date", label: "Start Date" },
-        { name: "endDate", type: "date", label: "End Date" },
-        {
-          name: "location",
-          type: "nested",
-          label: "Location",
-          fields: [
-            { name: "country", type: "select", label: "Country", options: [] },
-            { name: "state", type: "select", label: "State", options: [] },
-            { name: "city", type: "select", label: "City", options: [] },
-            { name: "zipcode", type: "text", label: "ZipCode" },
-          ],
-        },
-        { name: "description", type: "textarea", label: "Description" },
-      ],
-    },
-    {
-      heading: "Skills",
-      fields: [
-        { name: "name", type: "text", label: "Name" },
-        {
-          name: "proficiency",
-          type: "select",
-          label: "Proficiency",
-          options: ["Beginner", "Intermediate", "Advanced"],
-        },
-      ],
-    },
-    {
-      heading: "Permissions",
-      optional: true,
-      fields: [{ name: "attribute", type: "checkbox", label: "Attribute" }],
+      name: "phoneNumber",
+      type: "text",
+      label: "Phone Number",
+      verification: false,
     },
   ],
+};
+
+export const experienceSection: UserFields = {
+  heading: "Experience",
+  dynamic: true,
+  fields: [
+    { name: "title", type: "text", label: "Title" },
+    { name: "company", type: "text", label: "Company" },
+    { name: "startDate", type: "date", label: "Start Date" },
+    { name: "endDate", type: "date", label: "End Date" },
+    {
+      name: "location",
+      type: "nested",
+      label: "Location",
+      fields: [
+        { name: "country", type: "select", label: "Country", options: [] },
+        { name: "state", type: "select", label: "State", options: [] },
+        { name: "city", type: "select", label: "City", options: [] },
+        { name: "zipcode", type: "text", label: "ZipCode" },
+      ],
+    },
+  ],
+};
+
+export const educationSection: UserFields = {
+  heading: "Education",
+  dynamic: true,
+  fields: [
+    { name: "institution", type: "text", label: "Institution" },
+    { name: "degree", type: "text", label: "Degree" },
+    { name: "fieldOfStudy", type: "text", label: "Field Of Study" },
+    { name: "startDate", type: "date", label: "Start Date" },
+    { name: "endDate", type: "date", label: "End Date" },
+    {
+      name: "location",
+      type: "nested",
+      label: "Location",
+      fields: [
+        { name: "country", type: "select", label: "Country", options: [] },
+        { name: "state", type: "select", label: "State", options: [] },
+        { name: "city", type: "select", label: "City", options: [] },
+        { name: "zipcode", type: "text", label: "ZipCode" },
+      ],
+    },
+    { name: "description", type: "textarea", label: "Description" },
+  ],
+};
+
+export const skillsSection: UserFields = {
+  heading: "Skills",
+  fields: [
+    { name: "name", type: "text", label: "Name" },
+    {
+      name: "proficiency",
+      type: "select",
+      label: "Proficiency",
+      options: ["Beginner", "Intermediate", "Advanced"],
+    },
+  ],
+};
+
+export const permissionsSection: UserFields = {
+  heading: "Permissions",
+  optional: true,
+  fields: [{ name: "attribute", type: "checkbox", label: "Attribute" }],
 };
