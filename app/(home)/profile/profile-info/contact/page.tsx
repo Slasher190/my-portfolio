@@ -2,7 +2,7 @@
 import Input from "@app/components/Ui/Input";
 import React from "react";
 
-interface ProfileInput {
+interface ContactInput {
   heading: string;
   inputs: {
     label: string;
@@ -13,7 +13,7 @@ interface ProfileInput {
 }
 
 const ProfileInfo = () => {
-  const profileData: ProfileInput[] = [
+  const profileData: ContactInput[] = [
     {
       heading: "Profile Info",
       inputs: [
@@ -75,7 +75,7 @@ const ProfileInfo = () => {
   ];
   return (
     <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
-      {profileData.map((profile: ProfileInput) => (
+      {profileData.map((profile: ContactInput) => (
         <React.Fragment key={profile.heading}>
           <h1 className="text-2xl text-black dark:text-white col-span-1 md:col-span-2">
             {profile.heading}

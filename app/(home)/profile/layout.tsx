@@ -4,12 +4,15 @@ import React, { ReactNode } from "react";
 import profilePic from "@app/Assets/Images/nancy.png";
 import useScreenSize, { Device } from "@app/hooks/useScreenSize";
 import { RiContactsFill } from "react-icons/ri";
-import LinearProgressBar from "@app/components/ProgressBar/LinearProgressBar";
+// import LinearProgressBar from "@app/components/ProgressBar/LinearProgressBar";
 // import CircularProgressBar from "@app/components/ProgressBar/CircularProgressBar";
 import ProfileProgressBar from "@app/components/ProgressBar/ProfileProgressBar";
 import MenuItem from "@app/components/Ui/MenuItem";
 import { FaUser, FaLock, FaBell, FaDollarSign } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import ProgressTab from "@app/components/ProgressTab";
+import CircularProgressBarButton from "@app/components/ButtonProgress";
+// import SlideButton from "@app/components/SlideFlipper";
 
 const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const screenSize: Device = useScreenSize();
@@ -28,6 +31,39 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     },
     { icon: <FaBell />, text: "Notifications", link: "/profile/notification" },
     { icon: <FaDollarSign />, text: "Payments", link: "/profile/payment" },
+  ];
+
+  const userFormTabs = [
+    {
+      label: "Profile",
+      progress: 10,
+      link: "/profile/profile-info",
+    },
+    {
+      label: "Contact",
+      progress: 20,
+      link: "/profile/profile-info/contact",
+    },
+    {
+      label: "Education",
+      progress: 30,
+      link: "/profile/profile-info/education",
+    },
+    {
+      label: "Experience",
+      progress: 40,
+      link: "/profile/profile-info/experience",
+    },
+    {
+      label: "Skills",
+      progress: 50,
+      link: "/profile/profile-info/skills",
+    },
+    {
+      label: "Permission",
+      progress: 60,
+      link: "/profile/profile-info/permissions",
+    },
   ];
   return (
     <div className="grid lg:grid-cols-3 gap-8 p-4 md:p-8 h[100%] grid-cols-1 bg-light-surface dark:bg-dark-background">
@@ -71,7 +107,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               <div className="w-[100%] text-gray-600 dark:text-gray-400">
                 {menuItems.map((item, index) => (
                   <MenuItem
-                    key={index}
+                    key={item.link}
                     icon={item.icon}
                     text={item.text}
                     active={!!RegExp(path as string).exec(item.link)}
@@ -86,7 +122,19 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <div className="lg:col-span-2 col-span-1">
         {!!path?.match("/profile/profile-info") && (
           <div className="p-10 row-auto mb-5 text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat">
-            <LinearProgressBar totalProgress={2} />
+            {/* <LinearProgressBar totalProgress={20} /> */}
+            <div className="flex gap-2 justify-around flex-wrap">
+              {userFormTabs.map((tab) => (
+                <ProgressTab
+                  key={tab.link}
+                  label={tab.label}
+                  link={tab.link}
+                  progress={tab.progress}
+                />
+              ))}
+            </div>
+            <CircularProgressBarButton />
+            {/* <SlideButton direction="vertical" icon="fa-dribbble" label="Dribbble" /> */}
           </div>
         )}
         <div className="p-10 row-auto max-h-fit h-auto text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat">

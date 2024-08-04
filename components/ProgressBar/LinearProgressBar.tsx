@@ -26,16 +26,18 @@ const LinearProgressBar: React.FC<{ totalProgress?: number }> = ({
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="w-full flex items-center space-x-2 max-w-[380px]">
-        <div className="w-full bg-gray-300 rounded-full h-2.5">
+        <div className="w-full bg-gray-300 h-1">
           <div
-            className="bg-blue-600 h-2.5 rounded-full"
+            className="bg-blue-600 h-1"
             style={{
               width: `${progress}%`,
               transition: "width 0.3s ease-in-out",
             }}
           ></div>
         </div>
-        <span className="text-sm font-medium">{progress}%</span>
+        {!totalProgress && totalProgress !== 0 && (
+          <span className="text-sm font-medium">{progress}%</span>
+        )}
       </div>
       {!totalProgress && totalProgress !== 0 && (
         <div className="flex space-x-2">
