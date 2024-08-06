@@ -1,5 +1,6 @@
 "use client";
 import Input from "@app/components/Ui/Input";
+import { FieldType } from "@app/types/userInformationForm";
 import React from "react";
 
 interface ContactInput {
@@ -8,7 +9,7 @@ interface ContactInput {
     label: string;
     name: string;
     placeHolder: string;
-    type: string;
+    type: FieldType;
   }[];
 }
 
@@ -80,7 +81,7 @@ const ProfileInfo = () => {
           <h1 className="text-2xl text-black dark:text-white col-span-1 md:col-span-2">
             {profile.heading}
           </h1>
-          {profile.inputs.map((input, idx) => (
+          {profile.inputs.map((input) => (
             <div className="col-span-1" key={input.name}>
               <Input
                 type={input.type}

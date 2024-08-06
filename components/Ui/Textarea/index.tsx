@@ -1,22 +1,6 @@
-import React, { ChangeEventHandler, FocusEventHandler } from "react";
+import { TextareaProps } from "@app/types/inputFormatProps";
 
-interface TextareaProps {
-  placeholder?: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLTextAreaElement>;
-  onBlur: FocusEventHandler<HTMLTextAreaElement>;
-  label: string;
-  name: string;
-}
-
-const Textarea: React.FC<TextareaProps> = ({
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  label,
-  name,
-}) => {
+const Textarea: React.FC<TextareaProps> = ({ label, ...rest }) => {
   return (
     <div className="mb-4 w-full">
       <label
@@ -27,13 +11,9 @@ const Textarea: React.FC<TextareaProps> = ({
       </label>
       <textarea
         id={label}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        name={name}
-        onBlur={onBlur}
         className="w-full border border-slate-600 appearance-none focus:shadow-outline focus:outline-none rounded-[7px] px-3 py-4 bg-light-background dark:bg-dark-surface text-gray-700 dark:text-gray-300"
         rows={4}
+        {...rest}
       />
     </div>
   );

@@ -1,24 +1,7 @@
-import React, { ChangeEventHandler, FocusEventHandler } from "react";
+import { InputProps } from "@app/types/inputFormatProps";
+import React from "react";
 
-interface InputProps {
-  type: string;
-  placeholder?: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  onBlur: FocusEventHandler<HTMLInputElement>;
-  label: string;
-  name: string;
-}
-
-const Input: React.FC<InputProps> = ({
-  type,
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  label,
-  name,
-}) => {
+const Input: React.FC<InputProps> = ({ label, ...rest }) => {
   return (
     <div className="mb-4 w-full">
       <label
@@ -28,13 +11,7 @@ const Input: React.FC<InputProps> = ({
         {label}
       </label>
       <input
-        id={label}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        name={name}
-        onBlur={onBlur}
+        {...rest}
         className="w-full border border-slate-600 appearance-none focus:shadow-outline focus:outline-none rounded-[7px] px-3 py-4 bg-light-background dark:bg-dark-surface text-gray-700 dark:text-gray-300"
       />
     </div>

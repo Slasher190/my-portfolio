@@ -105,7 +105,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               className={`pb-10  w-[80%] ${(screenSize === "mobile" || screenSize === "tablet") && "p-0 md:p-10"} col-span-1  flex  xl:px-10`}
             >
               <div className="w-[100%] text-gray-600 dark:text-gray-400">
-                {menuItems.map((item, index) => (
+                {menuItems.map((item) => (
                   <MenuItem
                     key={item.link}
                     icon={item.icon}

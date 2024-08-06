@@ -1,22 +1,6 @@
-import React, { ChangeEventHandler, FocusEventHandler } from "react";
+import { SelectProps } from "@app/types/inputFormatProps";
 
-interface SelectProps {
-  value: string;
-  onChange: ChangeEventHandler<HTMLSelectElement>;
-  onBlur: FocusEventHandler<HTMLSelectElement>;
-  label: string;
-  name: string;
-  options: { value: string; label: string }[];
-}
-
-const Select: React.FC<SelectProps> = ({
-  value,
-  onChange,
-  onBlur,
-  label,
-  name,
-  options,
-}) => {
+const Select: React.FC<SelectProps> = ({ label, options, ...rest }) => {
   return (
     <div className="mb-4 w-full">
       <label
@@ -27,10 +11,7 @@ const Select: React.FC<SelectProps> = ({
       </label>
       <select
         id={label}
-        value={value}
-        onChange={onChange}
-        name={name}
-        onBlur={onBlur}
+        {...rest}
         className="w-full border border-slate-600 appearance-none focus:shadow-outline focus:outline-none rounded-[7px] px-3 py-4 bg-light-background dark:bg-dark-surface text-gray-700 dark:text-gray-300"
       >
         {options.map((option) => (

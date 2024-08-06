@@ -1,21 +1,9 @@
-import React, { ChangeEventHandler, FocusEventHandler } from "react";
-
-interface MultiSelectProps {
-  values: string[];
-  onChange: ChangeEventHandler<HTMLSelectElement>;
-  onBlur: FocusEventHandler<HTMLSelectElement>;
-  label: string;
-  name: string;
-  options: { value: string; label: string }[];
-}
+import { MultiSelectProps } from "@app/types/inputFormatProps";
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
-  values,
-  onChange,
-  onBlur,
   label,
-  name,
   options,
+  ...rest
 }) => {
   return (
     <div className="mb-4 w-full">
@@ -27,11 +15,8 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       </label>
       <select
         id={label}
-        value={values}
-        onChange={onChange}
-        name={name}
-        onBlur={onBlur}
         multiple
+        {...rest}
         className="w-full border border-slate-600 appearance-none focus:shadow-outline focus:outline-none rounded-[7px] px-3 py-4 bg-light-background dark:bg-dark-surface text-gray-700 dark:text-gray-300"
       >
         {options.map((option) => (
