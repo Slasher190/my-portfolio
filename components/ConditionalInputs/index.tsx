@@ -8,7 +8,7 @@ import { Input, Textarea, Select, MultiSelect } from "@app/components/Ui";
 
 type InputType = InputProps | TextareaProps | SelectProps | MultiSelectProps;
 
-export default ({ type, label, name, options, ...rest }: InputType) => {
+const FormField = ({ type, label, name, options, ...rest }: InputType) => {
   switch (type) {
     case "text":
     case "email":
@@ -40,3 +40,7 @@ export default ({ type, label, name, options, ...rest }: InputType) => {
       return null;
   }
 };
+
+FormField.displayName = "FormField";
+
+export default FormField;

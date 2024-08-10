@@ -1,21 +1,68 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Proficiency } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create users with their profiles, experiences, educations, skills, locations, and permissions
+  const skills = await prisma.skill.createMany({
+    data: [
+      { name: "JavaScript" },
+      { name: "TypeScript" },
+      { name: "Python" },
+      { name: "Machine Learning" },
+    ],
+    skipDuplicates: true,
+  });
+
+  const languages = await prisma.language.createMany({
+    data: [{ name: "Hindi" }, { name: "English" }, { name: "Marathi" }],
+    skipDuplicates: true,
+  });
+  console.log(skills, languages);
+  const fetchedSkills = await prisma.skill.findMany({
+    where: {
+      name: {
+        in: ["JavaScript", "TypeScript", "Python", "Machine Learning"],
+      },
+    },
+  });
+
+  const fetchedLanguages = await prisma.language.findMany({});
+
+  const skillMap = fetchedSkills.reduce(
+    (map, skill) => {
+      map[skill.name] = skill.id;
+      return map;
+    },
+    {} as Record<string, number>
+  );
+
+  const languageMap = fetchedLanguages.reduce(
+    (map, skill) => {
+      map[skill.name] = skill.id;
+      return map;
+    },
+    {} as Record<string, number>
+  );
+
   await prisma.user.create({
     data: {
       email: "admin@myportfolio.com",
       username: "admin",
       password: await bcrypt.hash("admin", 10),
+      permission: {
+        create: {
+          isEmailVisible: true,
+          isPhoneVisible: false,
+          isDateOfBirthVisible: true,
+        },
+      },
       profile: {
         create: {
           firstName: "Admin",
           lastName: "User",
           dateOfBirth: new Date("1980-01-01"),
-          locationId: 1, // This should be a valid location ID or handled properly
+          sex: "FEMALE",
           experience: {
             create: [
               {
@@ -25,6 +72,7 @@ async function main() {
                 endDate: new Date("2020-01-01"),
                 description:
                   "Worked on various projects as a senior developer.",
+                employmentType: "FREELANCE",
                 location: {
                   create: {
                     country: "USA",
@@ -57,21 +105,26 @@ async function main() {
           skills: {
             create: [
               {
-                name: "JavaScript",
-                proficiency: "EXPERT",
+                skillId: skillMap["JavaScript"],
+                proficiency: Proficiency.EXPERT,
               },
               {
-                name: "TypeScript",
-                proficiency: "ADVANCED",
+                skillId: skillMap["TypeScript"],
+                proficiency: Proficiency.ADVANCED,
               },
             ],
           },
-          permission: {
-            create: {
-              isEmailVisible: true,
-              isPhoneVisible: false,
-              isDateOfBirthVisible: true,
-            },
+          languages: {
+            create: [
+              {
+                languageId: languageMap["Hindi"],
+                proficiency: "EXPERT",
+              },
+              {
+                languageId: languageMap["English"],
+                proficiency: "INTERMEDIATE",
+              },
+            ],
           },
         },
       },
@@ -83,12 +136,19 @@ async function main() {
       email: "user1@myportfolio.com",
       password: await bcrypt.hash("user1password", 10),
       username: "user1",
+      permission: {
+        create: {
+          isEmailVisible: true,
+          isPhoneVisible: true,
+          isDateOfBirthVisible: false,
+        },
+      },
       profile: {
         create: {
           firstName: "John",
           lastName: "Doe",
           dateOfBirth: new Date("1990-05-15"),
-          locationId: 2, // This should be a valid location ID or handled properly
+          sex: "MALE",
           experience: {
             create: [
               {
@@ -96,6 +156,7 @@ async function main() {
                 company: "Startup Inc.",
                 startDate: new Date("2018-01-01"),
                 description: "Developed full-stack applications.",
+                employmentType: "FULL_TIME",
                 location: {
                   create: {
                     country: "USA",
@@ -128,28 +189,31 @@ async function main() {
           skills: {
             create: [
               {
-                name: "Python",
-                proficiency: "ADVANCED",
+                skillId: skillMap["Python"],
+                proficiency: Proficiency.ADVANCED,
               },
               {
-                name: "Machine Learning",
-                proficiency: "INTERMEDIATE",
+                skillId: skillMap["Machine Learning"],
+                proficiency: Proficiency.INTERMEDIATE,
               },
             ],
           },
-          permission: {
-            create: {
-              isEmailVisible: true,
-              isPhoneVisible: true,
-              isDateOfBirthVisible: false,
-            },
+          languages: {
+            create: [
+              {
+                languageId: languageMap["Marathi"],
+                proficiency: "EXPERT",
+              },
+              {
+                languageId: languageMap["Hindi"],
+                proficiency: "ADVANCED",
+              },
+            ],
           },
         },
       },
     },
   });
-
-  // Add more users as needed
 }
 
 main()

@@ -11,45 +11,49 @@ datasource db {
 }
 
 model User {
-  id            Int          @id @default(autoincrement())
-  email         String       @unique
-  username      String       @unique @db.VarChar(255)
-  password      String       @db.VarChar(255)
-  emailVerified Boolean?     @default(false)
-  createdAt     DateTime     @default(now()) @db.Timestamptz(6)
-  updatedAt     DateTime     @updatedAt @db.Timestamptz(6)
-  profile       UserProfile?
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  username   String       @unique @db.VarChar(255)
+  password   String       @db.VarChar(255)
+  createdAt  DateTime     @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime     @updatedAt @db.Timestamptz(6)
+  permission Permission?
+  profile    UserProfile?
 }
 
 model UserProfile {
-  id              Int          @id @default(autoincrement())
-  userId          Int          @unique
-  locationId      Int?
-  firstName       String       @db.VarChar(50)
-  middleName      String?      @db.VarChar(50)
-  lastName        String       @db.VarChar(50)
-  headline        String?      @db.VarChar(255)
-  summary         String?      @db.VarChar(255)
-  phoneNumber     String?
-  dateOfBirth     DateTime
-  currentLocation Location?
-  permission      Permission?
-  experience      Experience[]
-  education       Education[]
-  skills          Skill[]
-  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  Int            @id @default(autoincrement())
+  userId              Int            @unique
+  locationId          Int?
+  firstName           String         @db.VarChar(50)
+  middleName          String?        @db.VarChar(50)
+  lastName            String         @db.VarChar(50)
+  headline            String?        @db.VarChar(255)
+  summary             String?        @db.VarChar(255)
+  phoneNumber         String?
+  emailVerified       Boolean?       @default(false)
+  phoneNumberVerified Boolean?       @default(false)
+  dateOfBirth         DateTime
+  currentLocation     Location?
+  experience          Experience[]
+  education           Education[]
+  skills              UserSkill[]
+  languages           UserLanguage[]
+  sex                 Sex
+  user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Experience {
-  id            Int          @id @default(autoincrement())
-  userProfileId Int?         @unique
-  title         String       @db.VarChar(255)
-  company       String       @db.VarChar(255)
-  startDate     DateTime
-  endDate       DateTime?
-  description   String       @db.VarChar(255)
-  location      Location?
-  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  id             Int            @id @default(autoincrement())
+  userProfileId  Int?           @unique
+  title          String         @db.VarChar(255)
+  company        String         @db.VarChar(255)
+  startDate      DateTime
+  endDate        DateTime?
+  description    String         @db.VarChar(255)
+  location       Location?
+  employmentType EmploymentType
+  UserProfile    UserProfile?   @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 }
 
 model Education {
@@ -66,34 +70,61 @@ model Education {
 }
 
 model Skill {
-  id            Int          @id @default(autoincrement())
-  userProfileId Int?
-  name          String       @db.VarChar(255)
-  proficiency   Proficiency
-  UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  id    Int         @id @default(autoincrement())
+  name  String      @db.VarChar(255)
+  users UserSkill[]
+}
+
+model UserSkill {
+  id          Int         @id @default(autoincrement())
+  skillId     Int
+  userId      Int
+  user        UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill       Skill       @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  proficiency Proficiency
+
+  @@unique([skillId, userId])
 }
 
 model Location {
-  id               Int          @id @default(autoincrement())
-  userProfileId    Int?         @unique
-  userEducationId  Int?         @unique
-  userExperienceId Int?         @unique
-  country          String       @db.VarChar(50)
-  state            String?      @db.VarChar(50)
-  city             String       @db.VarChar(50)
-  coordinates      String?      @db.VarChar(100)
-  userProfile      UserProfile? @relation(fields: [userProfileId], references: [id])
-  userExperience   Experience?  @relation(fields: [userExperienceId], references: [id])
-  userEducation    Education?   @relation(fields: [userEducationId], references: [id])
+  id               Int           @id @default(autoincrement())
+  userProfileId    Int?          @unique
+  userEducationId  Int?          @unique
+  userExperienceId Int?          @unique
+  country          String        @db.VarChar(50)
+  state            String?       @db.VarChar(50)
+  city             String        @db.VarChar(50)
+  coordinates      String?       @db.VarChar(100)
+  locationType     LocationType?
+  userProfile      UserProfile?  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userExperience   Experience?   @relation(fields: [userExperienceId], references: [id], onDelete: Cascade)
+  userEducation    Education?    @relation(fields: [userEducationId], references: [id], onDelete: Cascade)
+}
+
+model Language {
+  id    Int            @id @default(autoincrement())
+  name  String         @db.VarChar(50)
+  users UserLanguage[]
+}
+
+model UserLanguage {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  languageId  Int
+  proficiency Proficiency
+  user        UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language    Language    @relation(fields: [languageId], references: [id],  onDelete: Cascade)
+
+  @@unique([userId, languageId])
 }
 
 model Permission {
-  id                   Int         @id @default(autoincrement())
-  userProfileId        Int         @unique
-  isEmailVisible       Boolean     @default(false)
-  isPhoneVisible       Boolean     @default(false)
-  isDateOfBirthVisible Boolean     @default(false)
-  userProfile          UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  id                   Int     @id @default(autoincrement())
+  userId               Int     @unique
+  isEmailVisible       Boolean @default(false)
+  isPhoneVisible       Boolean @default(false)
+  isDateOfBirthVisible Boolean @default(false)
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Proficiency {
@@ -101,4 +132,25 @@ enum Proficiency {
   INTERMEDIATE
   ADVANCED
   EXPERT
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  SELF_EMPLOYED
+  FREELANCE
+  INTERNSHIP
+  TRAINEE
+}
+
+enum LocationType {
+  ON_SITE
+  HYBRID
+  REMOTE
 }
