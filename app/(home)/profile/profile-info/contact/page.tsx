@@ -1,7 +1,7 @@
 "use client";
 import Input from "@app/components/Ui/Input";
 import { FieldType } from "@app/types/userInformationForm";
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 interface ContactInput {
   heading: string;
@@ -46,7 +46,7 @@ const ProfileInfo = () => {
           label: "Date Of Birth",
           name: "dateOfBirth",
           placeHolder: "DateOfBirth",
-          type: "Date",
+          type: "date",
         },
         {
           label: "Sex",
@@ -62,17 +62,6 @@ const ProfileInfo = () => {
         },
       ],
     },
-    {
-      heading: "Heading2",
-      inputs: [
-        {
-          label: "Failed",
-          name: "",
-          placeHolder: "",
-          type: "",
-        },
-      ],
-    },
   ];
   return (
     <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
@@ -83,15 +72,19 @@ const ProfileInfo = () => {
           </h1>
           {profile.inputs.map((input) => (
             <div className="col-span-1" key={input.name}>
-              <Input
-                type={input.type}
-                onChange={(e) => console.log(e.target.value)}
-                onBlur={(e) => console.log(e.target.value)}
-                name={input.name}
-                label={input.label}
-                value="Nothing"
-                placeholder={input.placeHolder}
-              />
+              {input.type === "text" && (
+                <Input
+                  type={input.type}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    console.log(e.target.value)
+                  }
+                  // onBlur={(e) => console.log(e.target.value)}
+                  name={input.name}
+                  label={input.label}
+                  value="Nothing"
+                  placeholder={input.placeHolder}
+                />
+              )}
             </div>
           ))}
         </React.Fragment>
