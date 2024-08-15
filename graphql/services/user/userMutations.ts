@@ -5,7 +5,8 @@ import {
   SignupInput,
   // UserProfileInput,
 } from "@app/graphql/graphql";
-import { CustomError, ErrorType } from "@app/graphql/error";
+import { CustomError } from "@app/graphql/error";
+import { ErrorType } from "@app/graphql/constants/errorEnum";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -121,7 +122,6 @@ export const userMutations = {
           profile: {
             include: {
               currentLocation: true,
-              permission: true,
               experience: {
                 include: {
                   location: true,
@@ -132,12 +132,21 @@ export const userMutations = {
                   location: true,
                 },
               },
-              skills: true,
+              skills: {
+                include: {
+                  skill: true,
+                },
+              },
+              languages: {
+                include: {
+                  language: true,
+                },
+              },
             },
           },
+          permission: true,
         },
       });
-      console.log(user, "user");
       if (!user) {
         return {
           error: {
@@ -214,7 +223,15 @@ export const userMutations = {
   //   } = args.input;
   //   const id = context.userId;
   //   if (!id) {
-
+  //     return {
+  //       error: {
+  //         __typename: "UserNotFoundError",
+  //         message: "Authentication failed or user does not exist.",
+  //         extensions: {
+  //           code: ErrorType.AUTHENTICATION_ERROR,
+  //         },
+  //       },
+  //     };
   //   }
   // },
 };

@@ -21,6 +21,10 @@ export const typeDefs = `#graphql
     deleteUser(id: ID!): User
     loginUser(input: LoginInput!): UserLoginResult
     updateUserProfile(input: UserProfileInput!): UserProfileResult
+    updateUserExperiences(input: UserExperienceInput!): UserExperienceResult
+    updateUserEducations(input: UserEducationInput!): UserEducationResult
+    updateUserSkills(input: UserSkillInput!): UserSkillResult
+    updateUserPermissions(input: UserPermissionInput!): UserPermissionResult
   }
 `;
 

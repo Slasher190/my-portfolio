@@ -24,11 +24,13 @@ const inputTypeDefs = `#graphql
     summary: String
     phoneNumber: String
     dateOfBirth: String
+    sex: Sex
     currentLocation: LocationInput
-    permission: PermissionInput
-    experience: [ExperienceInput!]
-    education: [EducationInput!]
-    skills: [SkillInput!]
+    permission: UserPermissionInput
+    experience: [UserExperienceInput!]
+    education: [UserEducationInput!]
+    skills: [UserSkillInput!]
+    languages: [UserLanguageInput!]
   }
 
   input LocationInput {
@@ -36,24 +38,26 @@ const inputTypeDefs = `#graphql
     state: String
     city: String
     coordinates: String
+    locationType: LocationType
   }
 
-  input PermissionInput {
+  input UserPermissionInput {
     isEmailVisible: Boolean
     isPhoneVisible: Boolean
     isDateOfBirthVisible: Boolean
   }
 
-  input ExperienceInput {
+  input UserExperienceInput {
     title: String
     company: String
     startDate: String
     endDate: String
     description: String
     location: LocationInput
+    employmentType: EmploymentType
   }
 
-  input EducationInput {
+  input UserEducationInput {
     institution: String
     degree: String
     fieldOfStudy: String
@@ -65,9 +69,21 @@ const inputTypeDefs = `#graphql
 
   input SkillInput {
     name: String
+  }
+
+  input UserSkillInput {
+    skillId: ID!
     proficiency: Proficiency
   }
 
+  input LanguageInput {
+    name: String
+  }
+
+  input UserLanguageInput {
+    languageId: ID!
+    proficiency: Proficiency
+  }
 `;
 
 export default inputTypeDefs;

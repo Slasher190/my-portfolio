@@ -1,5 +1,5 @@
 import { User } from "@app/graphql/graphql";
-import { ErrorType } from "@app/graphql/error";
+import { ErrorType } from "@app/graphql/constants/errorEnum";
 
 export const errorResolvers = {
   UserRegistrationResult: {
