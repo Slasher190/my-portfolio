@@ -31,6 +31,46 @@ const errorTypeDefs = `#graphql
   type UserNotFoundError {
     error: ErrorHandler!
   }
+
+  type ExperienceNotFoundError {
+    error: ErrorHandler!
+  }
+
+  type EducationNotFoundError {
+    error: ErrorHandler!
+  }
+
+  type SkillNotFoundError {
+    error: ErrorHandler!
+  }
+
+  type LanguageNotFoundError {
+    error: ErrorHandler!
+  }
+
+  type ExperienceInputError {
+    error: ErrorHandler!
+  }
+
+  type EducationInputError {
+    error: ErrorHandler!
+  }
+
+  type SkillInputError {
+    error: ErrorHandler!
+  }
+
+  type LanguageInputError {
+    error: ErrorHandler!
+  }
+
+  type PermissionInputError {
+    error: ErrorHandler!
+  }
+
+  type PermissionNotUpdatedError {
+    error: ErrorHandler!
+  }
 `;
 
 export default errorTypeDefs;

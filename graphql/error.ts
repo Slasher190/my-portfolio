@@ -1,14 +1,5 @@
 import { GraphQLError, Source, ASTNode } from "graphql";
-
-enum ErrorType {
-  USER_INPUT_ERROR = "USER_INPUT_ERROR",
-  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR",
-  USER_SUSPENDED = "USER_SUSPENDED",
-  USER_BLOCKED = "USER_BLOCKED",
-  USER_NOT_FOUND = "USER_NOT_FOUND",
-  USER_ALREADY_EXIST = "USER_ALREADY_EXIST",
-  INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR",
-}
+import { ErrorType } from "@app/graphql/constants/errorEnum";
 
 class CustomError extends GraphQLError {
   constructor(
@@ -39,4 +30,4 @@ class CustomError extends GraphQLError {
   }
 }
 
-export { CustomError, ErrorType };
+export { CustomError };
