@@ -63,6 +63,13 @@ async function main() {
           lastName: "User",
           dateOfBirth: new Date("1980-01-01"),
           sex: "FEMALE",
+          currentLocation: {
+            create: {
+              country: "USA",
+              state: "California",
+              city: "Los Angeles",
+            },
+          },
           experience: {
             create: [
               {
@@ -149,6 +156,13 @@ async function main() {
           lastName: "Doe",
           dateOfBirth: new Date("1990-05-15"),
           sex: "MALE",
+          currentLocation: {
+            create: {
+              country: "USA",
+              state: "California",
+              city: "Los Angeles",
+            },
+          },
           experience: {
             create: [
               {

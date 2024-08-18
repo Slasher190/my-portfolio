@@ -3,7 +3,8 @@ import { User } from "@prisma/client";
 import {
   LoginInput,
   SignupInput,
-  // UserProfileInput,
+  UserExperienceInput,
+  UserProfileInput,
 } from "@app/graphql/graphql";
 import { CustomError } from "@app/graphql/error";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
@@ -202,36 +203,170 @@ export const userMutations = {
       );
     }
   },
-  // updateUserProfile: async (
-  //   _parent: unknown,
-  //   args: { input: UserProfileInput },
-  //   context: Context
-  // ) => {
-  //   const {
-  //     firstName,
-  //     middleName,
-  //     lastName,
-  //     education,
-  //     experience,
-  //     permission,
-  //     summary,
-  //     headline,
-  //     phoneNumber,
-  //     skills,
-  //     dateOfBirth,
-  //     currentLocation,
-  //   } = args.input;
-  //   const id = context.userId;
-  //   if (!id) {
-  //     return {
-  //       error: {
-  //         __typename: "UserNotFoundError",
-  //         message: "Authentication failed or user does not exist.",
-  //         extensions: {
-  //           code: ErrorType.AUTHENTICATION_ERROR,
-  //         },
-  //       },
-  //     };
-  //   }
-  // },
+  updateUserProfile: async (
+    _parent: unknown,
+    args: { input: UserProfileInput },
+    context: Context
+  ) => {
+    const {
+      firstName,
+      middleName,
+      lastName,
+      education,
+      languages,
+      experience,
+      permission,
+      summary,
+      headline,
+      phoneNumber,
+      skills,
+      dateOfBirth,
+      currentLocation,
+      sex,
+    } = args.input;
+    try {
+      const id = context.userId;
+      if (!id) {
+        return {
+          error: {
+            __typename: "UserNotFoundError",
+            message: "Authentication failed or user does not exist.",
+            extensions: {
+              code: ErrorType.AUTHENTICATION_ERROR,
+            },
+          },
+        };
+      }
+      const userProfile = await context.prisma.userProfile.create({
+        data: {
+          userId: id,
+
+          firstName: firstName,
+          middleName: middleName,
+          lastName: lastName,
+          headline: headline,
+          summary: summary,
+          phoneNumber: phoneNumber,
+          dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
+          sex: sex,
+          currentLocation: currentLocation
+            ? {
+                create: {
+                  country: currentLocation.country,
+                  state: currentLocation.state,
+                  city: currentLocation.city,
+                  coordinates: currentLocation.coordinates,
+                  locationType: currentLocation.locationType,
+                },
+              }
+            : undefined,
+
+          // Education
+          education: education
+            ? {
+                create: education.map((edu) => ({
+                  institution: edu.institution,
+                  degree: edu.degree,
+                  fieldOfStudy: edu.fieldOfStudy,
+                  startDate: new Date(String(edu.startDate)),
+                  endDate: edu.endDate ? new Date(edu.endDate) : undefined,
+                  description: edu.description,
+                  location: edu.location
+                    ? {
+                        create: {
+                          country: edu.location.country,
+                          state: edu.location.state,
+                          city: edu.location.city,
+                          coordinates: edu.location.coordinates,
+                          locationType: edu.location.locationType,
+                        },
+                      }
+                    : undefined,
+                })),
+              }
+            : undefined,
+
+          // Experience
+          experience: experience
+            ? {
+                create: experience.map((exp) => ({
+                  title: exp.title,
+                  company: exp.company,
+                  startDate: new Date(String(exp.startDate)),
+                  endDate: exp.endDate ? new Date(exp.endDate) : undefined,
+                  description: exp.description,
+                  location: exp.location
+                    ? {
+                        create: {
+                          country: exp.location.country,
+                          state: exp.location.state,
+                          city: exp.location.city,
+                          coordinates: exp.location.coordinates,
+                          locationType: exp.location.locationType,
+                        },
+                      }
+                    : undefined,
+                  employmentType: exp.employmentType,
+                })),
+              }
+            : undefined,
+
+          // Skills
+          skills: skills
+            ? {
+                create: skills.map((skill) => ({
+                  skill: {
+                    connectOrCreate: {
+                      where: { id: skill.skillId },
+                      create: { id: skill.skillId },
+                    },
+                  },
+                  proficiency: skill.proficiency,
+                })),
+              }
+            : undefined,
+
+          // Languages
+          languages: languages
+            ? {
+                create: languages.map((lang) => ({
+                  language: {
+                    connectOrCreate: {
+                      where: { id: lang.languageId },
+                      create: { id: lang.languageId },
+                    },
+                  },
+                  proficiency: lang.proficiency,
+                })),
+              }
+            : undefined,
+
+          // Permissions
+          permission: permission
+            ? {
+                create: {
+                  isEmailVisible: permission.isEmailVisible,
+                  isPhoneVisible: permission.isPhoneVisible,
+                  isDateOfBirthVisible: permission.isDateOfBirthVisible,
+                },
+              }
+            : undefined,
+        },
+      });
+      return {
+        userProfile,
+        __typeName: "UserProfileResponse",
+      };
+    } catch (error) {
+      throw new CustomError(
+        "Internal server error",
+        ErrorType.INTERNAL_SERVER_ERROR
+      );
+    }
+  },
+  updateUserExperiences: async (
+    _parent: unknown,
+    args: { input: UserExperienceInput },
+    context: Context
+  ) => {},
 };
