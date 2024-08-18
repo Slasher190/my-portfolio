@@ -85,7 +85,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                   alt="profile"
                   width={screenSize === "desktop" ? 164 : 101}
                   height={screenSize === "desktop" ? 164 : 101}
-                  className="rounded-full"
+                  className="rounded-full min-w-full"
                 />
               </div>
             </div>
@@ -123,7 +123,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
         {!!path?.match("/profile/profile-info") && (
           <div className="p-10 row-auto mb-5 text-black bg-light-background dark:bg-dark-surface rounded-lg shadow-flat">
             {/* <LinearProgressBar totalProgress={20} /> */}
-            <div className="flex gap-2 justify-around flex-wrap">
+            <div className="flex gap-2 justify- flex-wrap">
               {userFormTabs.map((tab) => (
                 <ProgressTab
                   key={tab.link}

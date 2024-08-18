@@ -6,32 +6,42 @@ import {
 } from "@app/types/inputFormatProps";
 import { Input, Textarea, Select, MultiSelect } from "@app/components/Ui";
 
-type InputType = InputProps | TextareaProps | SelectProps | MultiSelectProps;
+interface CommonProps {
+  type: string;
+  label: string;
+  name: string;
+  [key: string]: string | number | boolean | undefined | string[] | number[]; // Adjust types as needed
+}
 
-const FormField = ({ type, label, name, options, ...rest }: InputType) => {
+type FormFieldProps =
+  | (InputProps & CommonProps)
+  | (TextareaProps & CommonProps)
+  | (SelectProps & CommonProps)
+  | (MultiSelectProps & CommonProps);
+
+const FormField: React.FC<FormFieldProps> = ({
+  type,
+  label,
+  name,
+  options,
+  ...rest
+}) => {
   switch (type) {
     case "text":
     case "email":
     case "password":
+    case "date": // Allow "date" type
       return <Input type={type} label={label} name={name} {...rest} />;
     case "textarea":
       return <Textarea type={type} label={label} name={name} {...rest} />;
     case "select":
-      return (
-        <Select
-          type={type}
-          label={label}
-          name={name}
-          options={options}
-          {...rest}
-        />
-      );
+      return <Select label={label} name={name} options={options} {...rest} />;
     case "multiselect":
       return (
         <MultiSelect
-          type={type}
           label={label}
           name={name}
+          type={type}
           options={options}
           {...rest}
         />
