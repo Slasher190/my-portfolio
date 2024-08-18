@@ -53,11 +53,6 @@ export type EducationNotFoundError = {
   error: ErrorHandler;
 };
 
-export type EducationResponse = {
-  __typename?: "EducationResponse";
-  education?: Maybe<Array<Education>>;
-};
-
 export enum EmploymentType {
   Freelance = "FREELANCE",
   FullTime = "FULL_TIME",
@@ -104,9 +99,14 @@ export type ExperienceNotFoundError = {
   error: ErrorHandler;
 };
 
-export type ExperienceResponse = {
-  __typename?: "ExperienceResponse";
-  experience?: Maybe<Array<Experience>>;
+export type Failure = Operation & {
+  __typename?: "Failure";
+  message: Scalars["String"]["output"];
+  success: Scalars["Boolean"]["output"];
+};
+
+export type Ids = {
+  ids?: InputMaybe<Array<Scalars["ID"]["input"]>>;
 };
 
 export type Language = {
@@ -133,6 +133,11 @@ export type LanguageResponse = {
   __typename?: "LanguageResponse";
   languages?: Maybe<Array<Language>>;
 };
+
+export type LanguageResult =
+  | LanguageInputError
+  | LanguageNotFoundError
+  | LanguageResponse;
 
 export type Location = {
   __typename?: "Location";
@@ -166,8 +171,16 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  addUserEducation?: Maybe<UserEducationResult>;
+  addUserExperience?: Maybe<UserExperienceResult>;
+  addUserLanguages?: Maybe<UserLanguageResult>;
+  addUserSkills?: Maybe<UserSkillResult>;
   createUser?: Maybe<UserRegistrationResult>;
   deleteUser?: Maybe<User>;
+  deleteUserEducation?: Maybe<OperationStatus>;
+  deleteUserExperience?: Maybe<OperationStatus>;
+  deleteUserLanguage?: Maybe<OperationStatus>;
+  deleteUserSkill?: Maybe<OperationStatus>;
   loginUser?: Maybe<UserLoginResult>;
   updateUserEducations?: Maybe<UserEducationResult>;
   updateUserExperiences?: Maybe<UserExperienceResult>;
@@ -176,12 +189,44 @@ export type Mutation = {
   updateUserSkills?: Maybe<UserSkillResult>;
 };
 
+export type MutationAddUserEducationArgs = {
+  input?: InputMaybe<Array<UserEducationInput>>;
+};
+
+export type MutationAddUserExperienceArgs = {
+  input?: InputMaybe<Array<UserExperienceInput>>;
+};
+
+export type MutationAddUserLanguagesArgs = {
+  input?: InputMaybe<Array<UserLanguageInput>>;
+};
+
+export type MutationAddUserSkillsArgs = {
+  input?: InputMaybe<Array<UserSkillInput>>;
+};
+
 export type MutationCreateUserArgs = {
   input: SignupInput;
 };
 
 export type MutationDeleteUserArgs = {
   id: Scalars["ID"]["input"];
+};
+
+export type MutationDeleteUserEducationArgs = {
+  input?: InputMaybe<Ids>;
+};
+
+export type MutationDeleteUserExperienceArgs = {
+  input?: InputMaybe<Ids>;
+};
+
+export type MutationDeleteUserLanguageArgs = {
+  input?: InputMaybe<Ids>;
+};
+
+export type MutationDeleteUserSkillArgs = {
+  input?: InputMaybe<Ids>;
 };
 
 export type MutationLoginUserArgs = {
@@ -208,6 +253,19 @@ export type MutationUpdateUserSkillsArgs = {
   input: UserSkillInput;
 };
 
+export type NotFound = Operation & {
+  __typename?: "NotFound";
+  message: Scalars["String"]["output"];
+  success: Scalars["Boolean"]["output"];
+};
+
+export type Operation = {
+  message: Scalars["String"]["output"];
+  success: Scalars["Boolean"]["output"];
+};
+
+export type OperationStatus = Failure | NotFound | Successful;
+
 export type Permission = {
   __typename?: "Permission";
   id: Scalars["ID"]["output"];
@@ -224,11 +282,6 @@ export type PermissionInputError = {
 export type PermissionNotUpdatedError = {
   __typename?: "PermissionNotUpdatedError";
   error: ErrorHandler;
-};
-
-export type PermissionResponse = {
-  __typename?: "PermissionResponse";
-  permission: Permission;
 };
 
 export enum Proficiency {
@@ -288,6 +341,14 @@ export type SkillResponse = {
   skills?: Maybe<Array<Skill>>;
 };
 
+export type SkillsResult = SkillInputError | SkillNotFoundError | SkillResponse;
+
+export type Successful = Operation & {
+  __typename?: "Successful";
+  message: Scalars["String"]["output"];
+  success: Scalars["Boolean"]["output"];
+};
+
 export type User = {
   __typename?: "User";
   createdAt: Scalars["String"]["output"];
@@ -319,10 +380,15 @@ export type UserEducationInput = {
   startDate?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type UserEducationResponse = {
+  __typename?: "UserEducationResponse";
+  education?: Maybe<Array<Education>>;
+};
+
 export type UserEducationResult =
   | EducationInputError
   | EducationNotFoundError
-  | EducationResponse;
+  | UserEducationResponse;
 
 export type UserExperienceInput = {
   company?: InputMaybe<Scalars["String"]["input"]>;
@@ -334,10 +400,15 @@ export type UserExperienceInput = {
   title?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type UserExperienceResponse = {
+  __typename?: "UserExperienceResponse";
+  experience?: Maybe<Array<Experience>>;
+};
+
 export type UserExperienceResult =
   | ExperienceInputError
   | ExperienceNotFoundError
-  | ExperienceResponse;
+  | UserExperienceResponse;
 
 export type UserInput = {
   id: Scalars["ID"]["input"];
@@ -360,10 +431,15 @@ export type UserLanguageInput = {
   proficiency?: InputMaybe<Proficiency>;
 };
 
+export type UserLanguageResponse = {
+  __typename?: "UserLanguageResponse";
+  languages?: Maybe<Array<UserLanguage>>;
+};
+
 export type UserLanguageResult =
   | LanguageInputError
   | LanguageNotFoundError
-  | LanguageResponse;
+  | UserLanguageResponse;
 
 export type UserLoginResult =
   | UserBlockedError
@@ -388,10 +464,15 @@ export type UserPermissionInput = {
   isPhoneVisible?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
+export type UserPermissionResponse = {
+  __typename?: "UserPermissionResponse";
+  permission: Permission;
+};
+
 export type UserPermissionResult =
   | PermissionInputError
   | PermissionNotUpdatedError
-  | PermissionResponse;
+  | UserPermissionResponse;
 
 export type UserProfile = {
   __typename?: "UserProfile";
@@ -475,10 +556,15 @@ export type UserSkillInput = {
   skillId: Scalars["ID"]["input"];
 };
 
+export type UserSkillResponse = {
+  __typename?: "UserSkillResponse";
+  skills?: Maybe<Array<UserSkill>>;
+};
+
 export type UserSkillResult =
   | SkillInputError
   | SkillNotFoundError
-  | SkillResponse;
+  | UserSkillResponse;
 
 export type UserSuspendedError = {
   __typename?: "UserSuspendedError";
@@ -592,18 +678,21 @@ export type DirectiveResolverFn<
 
 /** Mapping of union types */
 export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
+  LanguageResult: LanguageInputError | LanguageNotFoundError | LanguageResponse;
+  OperationStatus: Failure | NotFound | Successful;
+  SkillsResult: SkillInputError | SkillNotFoundError | SkillResponse;
   UserEducationResult:
     | EducationInputError
     | EducationNotFoundError
-    | EducationResponse;
+    | UserEducationResponse;
   UserExperienceResult:
     | ExperienceInputError
     | ExperienceNotFoundError
-    | ExperienceResponse;
+    | UserExperienceResponse;
   UserLanguageResult:
     | LanguageInputError
     | LanguageNotFoundError
-    | LanguageResponse;
+    | UserLanguageResponse;
   UserLoginResult:
     | UserBlockedError
     | UserInputError
@@ -613,7 +702,7 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
   UserPermissionResult:
     | PermissionInputError
     | PermissionNotUpdatedError
-    | PermissionResponse;
+    | UserPermissionResponse;
   UserProfileResult:
     | UserBlockedError
     | UserInputError
@@ -629,13 +718,14 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
     | UserNotFoundError
     | UserResponse
     | UserSuspendedError;
-  UserSkillResult: SkillInputError | SkillNotFoundError | SkillResponse;
+  UserSkillResult: SkillInputError | SkillNotFoundError | UserSkillResponse;
 };
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> =
   {
     Error: ErrorHandler;
+    Operation: Failure | NotFound | Successful;
   };
 
 /** Mapping between all available schema types and the resolvers types */
@@ -644,7 +734,6 @@ export type ResolversTypes = {
   Education: ResolverTypeWrapper<Education>;
   EducationInputError: ResolverTypeWrapper<EducationInputError>;
   EducationNotFoundError: ResolverTypeWrapper<EducationNotFoundError>;
-  EducationResponse: ResolverTypeWrapper<EducationResponse>;
   EmploymentType: EmploymentType;
   Error: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>["Error"]>;
   ErrorExtensions: ResolverTypeWrapper<ErrorExtensions>;
@@ -652,22 +741,32 @@ export type ResolversTypes = {
   Experience: ResolverTypeWrapper<Experience>;
   ExperienceInputError: ResolverTypeWrapper<ExperienceInputError>;
   ExperienceNotFoundError: ResolverTypeWrapper<ExperienceNotFoundError>;
-  ExperienceResponse: ResolverTypeWrapper<ExperienceResponse>;
+  Failure: ResolverTypeWrapper<Failure>;
   ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
+  Ids: Ids;
   Language: ResolverTypeWrapper<Language>;
   LanguageInput: LanguageInput;
   LanguageInputError: ResolverTypeWrapper<LanguageInputError>;
   LanguageNotFoundError: ResolverTypeWrapper<LanguageNotFoundError>;
   LanguageResponse: ResolverTypeWrapper<LanguageResponse>;
+  LanguageResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["LanguageResult"]
+  >;
   Location: ResolverTypeWrapper<Location>;
   LocationInput: LocationInput;
   LocationType: LocationType;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
+  NotFound: ResolverTypeWrapper<NotFound>;
+  Operation: ResolverTypeWrapper<
+    ResolversInterfaceTypes<ResolversTypes>["Operation"]
+  >;
+  OperationStatus: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["OperationStatus"]
+  >;
   Permission: ResolverTypeWrapper<Permission>;
   PermissionInputError: ResolverTypeWrapper<PermissionInputError>;
   PermissionNotUpdatedError: ResolverTypeWrapper<PermissionNotUpdatedError>;
-  PermissionResponse: ResolverTypeWrapper<PermissionResponse>;
   Proficiency: Proficiency;
   Query: ResolverTypeWrapper<{}>;
   Sex: Sex;
@@ -677,15 +776,21 @@ export type ResolversTypes = {
   SkillInputError: ResolverTypeWrapper<SkillInputError>;
   SkillNotFoundError: ResolverTypeWrapper<SkillNotFoundError>;
   SkillResponse: ResolverTypeWrapper<SkillResponse>;
+  SkillsResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["SkillsResult"]
+  >;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
+  Successful: ResolverTypeWrapper<Successful>;
   User: ResolverTypeWrapper<User>;
   UserAlreadyExistError: ResolverTypeWrapper<UserAlreadyExistError>;
   UserBlockedError: ResolverTypeWrapper<UserBlockedError>;
   UserEducationInput: UserEducationInput;
+  UserEducationResponse: ResolverTypeWrapper<UserEducationResponse>;
   UserEducationResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["UserEducationResult"]
   >;
   UserExperienceInput: UserExperienceInput;
+  UserExperienceResponse: ResolverTypeWrapper<UserExperienceResponse>;
   UserExperienceResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["UserExperienceResult"]
   >;
@@ -693,6 +798,7 @@ export type ResolversTypes = {
   UserInputError: ResolverTypeWrapper<UserInputError>;
   UserLanguage: ResolverTypeWrapper<UserLanguage>;
   UserLanguageInput: UserLanguageInput;
+  UserLanguageResponse: ResolverTypeWrapper<UserLanguageResponse>;
   UserLanguageResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["UserLanguageResult"]
   >;
@@ -702,6 +808,7 @@ export type ResolversTypes = {
   UserLoginSuccess: ResolverTypeWrapper<UserLoginSuccess>;
   UserNotFoundError: ResolverTypeWrapper<UserNotFoundError>;
   UserPermissionInput: UserPermissionInput;
+  UserPermissionResponse: ResolverTypeWrapper<UserPermissionResponse>;
   UserPermissionResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["UserPermissionResult"]
   >;
@@ -721,6 +828,7 @@ export type ResolversTypes = {
   >;
   UserSkill: ResolverTypeWrapper<UserSkill>;
   UserSkillInput: UserSkillInput;
+  UserSkillResponse: ResolverTypeWrapper<UserSkillResponse>;
   UserSkillResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["UserSkillResult"]
   >;
@@ -733,28 +841,31 @@ export type ResolversParentTypes = {
   Education: Education;
   EducationInputError: EducationInputError;
   EducationNotFoundError: EducationNotFoundError;
-  EducationResponse: EducationResponse;
   Error: ResolversInterfaceTypes<ResolversParentTypes>["Error"];
   ErrorExtensions: ErrorExtensions;
   ErrorHandler: ErrorHandler;
   Experience: Experience;
   ExperienceInputError: ExperienceInputError;
   ExperienceNotFoundError: ExperienceNotFoundError;
-  ExperienceResponse: ExperienceResponse;
+  Failure: Failure;
   ID: Scalars["ID"]["output"];
+  Ids: Ids;
   Language: Language;
   LanguageInput: LanguageInput;
   LanguageInputError: LanguageInputError;
   LanguageNotFoundError: LanguageNotFoundError;
   LanguageResponse: LanguageResponse;
+  LanguageResult: ResolversUnionTypes<ResolversParentTypes>["LanguageResult"];
   Location: Location;
   LocationInput: LocationInput;
   LoginInput: LoginInput;
   Mutation: {};
+  NotFound: NotFound;
+  Operation: ResolversInterfaceTypes<ResolversParentTypes>["Operation"];
+  OperationStatus: ResolversUnionTypes<ResolversParentTypes>["OperationStatus"];
   Permission: Permission;
   PermissionInputError: PermissionInputError;
   PermissionNotUpdatedError: PermissionNotUpdatedError;
-  PermissionResponse: PermissionResponse;
   Query: {};
   SignupInput: SignupInput;
   Skill: Skill;
@@ -762,23 +873,29 @@ export type ResolversParentTypes = {
   SkillInputError: SkillInputError;
   SkillNotFoundError: SkillNotFoundError;
   SkillResponse: SkillResponse;
+  SkillsResult: ResolversUnionTypes<ResolversParentTypes>["SkillsResult"];
   String: Scalars["String"]["output"];
+  Successful: Successful;
   User: User;
   UserAlreadyExistError: UserAlreadyExistError;
   UserBlockedError: UserBlockedError;
   UserEducationInput: UserEducationInput;
+  UserEducationResponse: UserEducationResponse;
   UserEducationResult: ResolversUnionTypes<ResolversParentTypes>["UserEducationResult"];
   UserExperienceInput: UserExperienceInput;
+  UserExperienceResponse: UserExperienceResponse;
   UserExperienceResult: ResolversUnionTypes<ResolversParentTypes>["UserExperienceResult"];
   UserInput: UserInput;
   UserInputError: UserInputError;
   UserLanguage: UserLanguage;
   UserLanguageInput: UserLanguageInput;
+  UserLanguageResponse: UserLanguageResponse;
   UserLanguageResult: ResolversUnionTypes<ResolversParentTypes>["UserLanguageResult"];
   UserLoginResult: ResolversUnionTypes<ResolversParentTypes>["UserLoginResult"];
   UserLoginSuccess: UserLoginSuccess;
   UserNotFoundError: UserNotFoundError;
   UserPermissionInput: UserPermissionInput;
+  UserPermissionResponse: UserPermissionResponse;
   UserPermissionResult: ResolversUnionTypes<ResolversParentTypes>["UserPermissionResult"];
   UserProfile: UserProfile;
   UserProfileInput: UserProfileInput;
@@ -790,6 +907,7 @@ export type ResolversParentTypes = {
   UserResult: ResolversUnionTypes<ResolversParentTypes>["UserResult"];
   UserSkill: UserSkill;
   UserSkillInput: UserSkillInput;
+  UserSkillResponse: UserSkillResponse;
   UserSkillResult: ResolversUnionTypes<ResolversParentTypes>["UserSkillResult"];
   UserSuspendedError: UserSuspendedError;
 };
@@ -833,19 +951,6 @@ export type EducationNotFoundErrorResolvers<
     ResolversParentTypes["EducationNotFoundError"] = ResolversParentTypes["EducationNotFoundError"],
 > = {
   error?: Resolver<ResolversTypes["ErrorHandler"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type EducationResponseResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["EducationResponse"] = ResolversParentTypes["EducationResponse"],
-> = {
-  education?: Resolver<
-    Maybe<Array<ResolversTypes["Education"]>>,
-    ParentType,
-    ContextType
-  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -923,16 +1028,13 @@ export type ExperienceNotFoundErrorResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ExperienceResponseResolvers<
+export type FailureResolvers<
   ContextType = any,
   ParentType extends
-    ResolversParentTypes["ExperienceResponse"] = ResolversParentTypes["ExperienceResponse"],
+    ResolversParentTypes["Failure"] = ResolversParentTypes["Failure"],
 > = {
-  experience?: Resolver<
-    Maybe<Array<ResolversTypes["Experience"]>>,
-    ParentType,
-    ContextType
-  >;
+  message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -977,6 +1079,18 @@ export type LanguageResponseResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LanguageResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["LanguageResult"] = ResolversParentTypes["LanguageResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    "LanguageInputError" | "LanguageNotFoundError" | "LanguageResponse",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type LocationResolvers<
   ContextType = any,
   ParentType extends
@@ -1004,6 +1118,30 @@ export type MutationResolvers<
   ParentType extends
     ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
+  addUserEducation?: Resolver<
+    Maybe<ResolversTypes["UserEducationResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationAddUserEducationArgs>
+  >;
+  addUserExperience?: Resolver<
+    Maybe<ResolversTypes["UserExperienceResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationAddUserExperienceArgs>
+  >;
+  addUserLanguages?: Resolver<
+    Maybe<ResolversTypes["UserLanguageResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationAddUserLanguagesArgs>
+  >;
+  addUserSkills?: Resolver<
+    Maybe<ResolversTypes["UserSkillResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationAddUserSkillsArgs>
+  >;
   createUser?: Resolver<
     Maybe<ResolversTypes["UserRegistrationResult"]>,
     ParentType,
@@ -1015,6 +1153,30 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationDeleteUserArgs, "id">
+  >;
+  deleteUserEducation?: Resolver<
+    Maybe<ResolversTypes["OperationStatus"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationDeleteUserEducationArgs>
+  >;
+  deleteUserExperience?: Resolver<
+    Maybe<ResolversTypes["OperationStatus"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationDeleteUserExperienceArgs>
+  >;
+  deleteUserLanguage?: Resolver<
+    Maybe<ResolversTypes["OperationStatus"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationDeleteUserLanguageArgs>
+  >;
+  deleteUserSkill?: Resolver<
+    Maybe<ResolversTypes["OperationStatus"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationDeleteUserSkillArgs>
   >;
   loginUser?: Resolver<
     Maybe<ResolversTypes["UserLoginResult"]>,
@@ -1054,6 +1216,42 @@ export type MutationResolvers<
   >;
 };
 
+export type NotFoundResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["NotFound"] = ResolversParentTypes["NotFound"],
+> = {
+  message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OperationResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["Operation"] = ResolversParentTypes["Operation"],
+> = {
+  __resolveType: TypeResolveFn<
+    "Failure" | "NotFound" | "Successful",
+    ParentType,
+    ContextType
+  >;
+  message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+};
+
+export type OperationStatusResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["OperationStatus"] = ResolversParentTypes["OperationStatus"],
+> = {
+  __resolveType: TypeResolveFn<
+    "Failure" | "NotFound" | "Successful",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type PermissionResolvers<
   ContextType = any,
   ParentType extends
@@ -1085,15 +1283,6 @@ export type PermissionNotUpdatedErrorResolvers<
     ResolversParentTypes["PermissionNotUpdatedError"] = ResolversParentTypes["PermissionNotUpdatedError"],
 > = {
   error?: Resolver<ResolversTypes["ErrorHandler"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type PermissionResponseResolvers<
-  ContextType = any,
-  ParentType extends
-    ResolversParentTypes["PermissionResponse"] = ResolversParentTypes["PermissionResponse"],
-> = {
-  permission?: Resolver<ResolversTypes["Permission"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1162,6 +1351,28 @@ export type SkillResponseResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SkillsResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["SkillsResult"] = ResolversParentTypes["SkillsResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    "SkillInputError" | "SkillNotFoundError" | "SkillResponse",
+    ParentType,
+    ContextType
+  >;
+};
+
+export type SuccessfulResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["Successful"] = ResolversParentTypes["Successful"],
+> = {
+  message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<
   ContextType = any,
   ParentType extends
@@ -1203,16 +1414,42 @@ export type UserBlockedErrorResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserEducationResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserEducationResponse"] = ResolversParentTypes["UserEducationResponse"],
+> = {
+  education?: Resolver<
+    Maybe<Array<ResolversTypes["Education"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserEducationResultResolvers<
   ContextType = any,
   ParentType extends
     ResolversParentTypes["UserEducationResult"] = ResolversParentTypes["UserEducationResult"],
 > = {
   __resolveType: TypeResolveFn<
-    "EducationInputError" | "EducationNotFoundError" | "EducationResponse",
+    "EducationInputError" | "EducationNotFoundError" | "UserEducationResponse",
     ParentType,
     ContextType
   >;
+};
+
+export type UserExperienceResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserExperienceResponse"] = ResolversParentTypes["UserExperienceResponse"],
+> = {
+  experience?: Resolver<
+    Maybe<Array<ResolversTypes["Experience"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserExperienceResultResolvers<
@@ -1221,7 +1458,9 @@ export type UserExperienceResultResolvers<
     ResolversParentTypes["UserExperienceResult"] = ResolversParentTypes["UserExperienceResult"],
 > = {
   __resolveType: TypeResolveFn<
-    "ExperienceInputError" | "ExperienceNotFoundError" | "ExperienceResponse",
+    | "ExperienceInputError"
+    | "ExperienceNotFoundError"
+    | "UserExperienceResponse",
     ParentType,
     ContextType
   >;
@@ -1251,13 +1490,26 @@ export type UserLanguageResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserLanguageResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserLanguageResponse"] = ResolversParentTypes["UserLanguageResponse"],
+> = {
+  languages?: Resolver<
+    Maybe<Array<ResolversTypes["UserLanguage"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserLanguageResultResolvers<
   ContextType = any,
   ParentType extends
     ResolversParentTypes["UserLanguageResult"] = ResolversParentTypes["UserLanguageResult"],
 > = {
   __resolveType: TypeResolveFn<
-    "LanguageInputError" | "LanguageNotFoundError" | "LanguageResponse",
+    "LanguageInputError" | "LanguageNotFoundError" | "UserLanguageResponse",
     ParentType,
     ContextType
   >;
@@ -1297,13 +1549,24 @@ export type UserNotFoundErrorResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserPermissionResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserPermissionResponse"] = ResolversParentTypes["UserPermissionResponse"],
+> = {
+  permission?: Resolver<ResolversTypes["Permission"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserPermissionResultResolvers<
   ContextType = any,
   ParentType extends
     ResolversParentTypes["UserPermissionResult"] = ResolversParentTypes["UserPermissionResult"],
 > = {
   __resolveType: TypeResolveFn<
-    "PermissionInputError" | "PermissionNotUpdatedError" | "PermissionResponse",
+    | "PermissionInputError"
+    | "PermissionNotUpdatedError"
+    | "UserPermissionResponse",
     ParentType,
     ContextType
   >;
@@ -1462,13 +1725,26 @@ export type UserSkillResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserSkillResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserSkillResponse"] = ResolversParentTypes["UserSkillResponse"],
+> = {
+  skills?: Resolver<
+    Maybe<Array<ResolversTypes["UserSkill"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserSkillResultResolvers<
   ContextType = any,
   ParentType extends
     ResolversParentTypes["UserSkillResult"] = ResolversParentTypes["UserSkillResult"],
 > = {
   __resolveType: TypeResolveFn<
-    "SkillInputError" | "SkillNotFoundError" | "SkillResponse",
+    "SkillInputError" | "SkillNotFoundError" | "UserSkillResponse",
     ParentType,
     ContextType
   >;
@@ -1487,40 +1763,48 @@ export type Resolvers<ContextType = any> = {
   Education?: EducationResolvers<ContextType>;
   EducationInputError?: EducationInputErrorResolvers<ContextType>;
   EducationNotFoundError?: EducationNotFoundErrorResolvers<ContextType>;
-  EducationResponse?: EducationResponseResolvers<ContextType>;
   Error?: ErrorResolvers<ContextType>;
   ErrorExtensions?: ErrorExtensionsResolvers<ContextType>;
   ErrorHandler?: ErrorHandlerResolvers<ContextType>;
   Experience?: ExperienceResolvers<ContextType>;
   ExperienceInputError?: ExperienceInputErrorResolvers<ContextType>;
   ExperienceNotFoundError?: ExperienceNotFoundErrorResolvers<ContextType>;
-  ExperienceResponse?: ExperienceResponseResolvers<ContextType>;
+  Failure?: FailureResolvers<ContextType>;
   Language?: LanguageResolvers<ContextType>;
   LanguageInputError?: LanguageInputErrorResolvers<ContextType>;
   LanguageNotFoundError?: LanguageNotFoundErrorResolvers<ContextType>;
   LanguageResponse?: LanguageResponseResolvers<ContextType>;
+  LanguageResult?: LanguageResultResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NotFound?: NotFoundResolvers<ContextType>;
+  Operation?: OperationResolvers<ContextType>;
+  OperationStatus?: OperationStatusResolvers<ContextType>;
   Permission?: PermissionResolvers<ContextType>;
   PermissionInputError?: PermissionInputErrorResolvers<ContextType>;
   PermissionNotUpdatedError?: PermissionNotUpdatedErrorResolvers<ContextType>;
-  PermissionResponse?: PermissionResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Skill?: SkillResolvers<ContextType>;
   SkillInputError?: SkillInputErrorResolvers<ContextType>;
   SkillNotFoundError?: SkillNotFoundErrorResolvers<ContextType>;
   SkillResponse?: SkillResponseResolvers<ContextType>;
+  SkillsResult?: SkillsResultResolvers<ContextType>;
+  Successful?: SuccessfulResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserAlreadyExistError?: UserAlreadyExistErrorResolvers<ContextType>;
   UserBlockedError?: UserBlockedErrorResolvers<ContextType>;
+  UserEducationResponse?: UserEducationResponseResolvers<ContextType>;
   UserEducationResult?: UserEducationResultResolvers<ContextType>;
+  UserExperienceResponse?: UserExperienceResponseResolvers<ContextType>;
   UserExperienceResult?: UserExperienceResultResolvers<ContextType>;
   UserInputError?: UserInputErrorResolvers<ContextType>;
   UserLanguage?: UserLanguageResolvers<ContextType>;
+  UserLanguageResponse?: UserLanguageResponseResolvers<ContextType>;
   UserLanguageResult?: UserLanguageResultResolvers<ContextType>;
   UserLoginResult?: UserLoginResultResolvers<ContextType>;
   UserLoginSuccess?: UserLoginSuccessResolvers<ContextType>;
   UserNotFoundError?: UserNotFoundErrorResolvers<ContextType>;
+  UserPermissionResponse?: UserPermissionResponseResolvers<ContextType>;
   UserPermissionResult?: UserPermissionResultResolvers<ContextType>;
   UserProfile?: UserProfileResolvers<ContextType>;
   UserProfileResponse?: UserProfileResponseResolvers<ContextType>;
@@ -1530,6 +1814,7 @@ export type Resolvers<ContextType = any> = {
   UserResponse?: UserResponseResolvers<ContextType>;
   UserResult?: UserResultResolvers<ContextType>;
   UserSkill?: UserSkillResolvers<ContextType>;
+  UserSkillResponse?: UserSkillResponseResolvers<ContextType>;
   UserSkillResult?: UserSkillResultResolvers<ContextType>;
   UserSuspendedError?: UserSuspendedErrorResolvers<ContextType>;
 };
