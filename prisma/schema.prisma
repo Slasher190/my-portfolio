@@ -24,7 +24,6 @@ model User {
 model UserProfile {
   id                  Int            @id @default(autoincrement())
   userId              Int            @unique
-  locationId          Int?
   firstName           String         @db.VarChar(50)
   middleName          String?        @db.VarChar(50)
   lastName            String         @db.VarChar(50)

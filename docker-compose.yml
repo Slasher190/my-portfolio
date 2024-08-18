@@ -11,8 +11,8 @@ services:
       POSTGRES_PASSWORD: root
     ports:
       - "5432:5432"
-    volumes:
-      - ./docker-volumes/postgres:/var/lib/postgresql/data
+    # volumes:
+    #   - ./docker-volumes/postgres:/var/lib/postgresql/data
 networks:
   postgres:
     name: postgres_network
