@@ -8,7 +8,8 @@ export interface BaseInput<T extends FieldType> {
   [key: string]: any;
 }
 
-export interface InputProps extends BaseInput<"email" | "text" | "password"> {}
+export interface InputProps
+  extends BaseInput<"email" | "text" | "password" | "date"> {}
 
 export interface MultiSelectProps extends BaseInput<"multiselect"> {
   options: Option[];

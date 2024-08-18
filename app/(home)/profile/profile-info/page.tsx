@@ -7,47 +7,62 @@ const ProfileInfo = () => {
   const { heading, fields } = personalInformationSection;
 
   return (
-    <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
-      <h1 className="text-2xl text-black dark:text-white col-span-1 md:col-span-2">
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
         {heading}
       </h1>
-      {fields.map((field) => (
-        <div className="col-span-1" key={field.label}>
-          {field.type === "text" && (
-            <ProfileInputs
-              label={field.label}
-              type={field.type}
-              name={field.name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                console.log(e.target.value)
-              }
-            />
-          )}
-          {field.type === "select" && (
-            <ProfileInputs
-              label={field.label}
-              type={field.type}
-              name={field.name}
-              options={field.options}
-            />
-          )}
-          {field.type === "multiselect" && (
-            <ProfileInputs
-              label={field.label}
-              type={field.type}
-              name={field.name}
-              options={field.options}
-            />
-          )}
-          {field.type === "textarea" && (
-            <ProfileInputs
-              label={field.label}
-              type={field.type}
-              name={field.name}
-            />
-          )}
-        </div>
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {fields.map((field) => (
+          <div className="w-full" key={field.label}>
+            {field.type === "text" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  console.log(e.target.value)
+                }
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+            {field.type === "select" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                options={field.options}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+            {field.type === "multiselect" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                options={field.options}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+            {field.type === "textarea" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+
+            {field.type === "date" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

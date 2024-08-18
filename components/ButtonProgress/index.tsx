@@ -13,7 +13,7 @@ const CircularProgressBarButton: React.FC = () => {
     <div className="space-y-4">
       <button
         onClick={increaseProgress}
-        className={`relative flex items-center justify-center px-3 py-3 text-black dark:text-white rounded-full transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`relative mt-4 flex items-center justify-center px-3 py-3 text-black dark:text-white rounded-full transition-all duration-300 ease-in-out overflow-hidden ${
           progress === 100
             ? "border-green-500 border-2"
             : "border-blue-500 border-2"
