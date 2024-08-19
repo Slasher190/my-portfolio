@@ -1,14 +1,14 @@
 "use client";
 import React, { ChangeEvent } from "react";
-import { personalInformationSection } from "@app/utils/userInformationFormHelper";
+import { educationSection } from "@app/utils/userInformationFormHelper";
 import ProfileInputs from "@app/components/ConditionalInputs";
 
 const ProfileInfo = () => {
-  const { heading, fields } = personalInformationSection;
+  const { heading, fields } = educationSection;
 
   return (
     <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
+      <h1 className="text-2xl font-bold text-black dark:text-white mb-6 text-left">
         {heading}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -44,6 +44,15 @@ const ProfileInfo = () => {
               />
             )}
             {field.type === "textarea" && (
+              <ProfileInputs
+                label={field.label}
+                type={field.type}
+                name={field.name}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
+            )}
+
+            {field.type === "date" && (
               <ProfileInputs
                 label={field.label}
                 type={field.type}
