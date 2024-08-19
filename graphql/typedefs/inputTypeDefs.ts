@@ -84,6 +84,10 @@ const inputTypeDefs = `#graphql
     languageId: ID!
     proficiency: Proficiency
   }
+
+  input Ids {
+    ids: [ID!]
+  }
 `;
 
 export default inputTypeDefs;

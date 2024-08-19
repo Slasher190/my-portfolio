@@ -108,19 +108,27 @@ const userTypeDefs = `#graphql
     skills: [Skill!]
   }
 
+  type UserSkillResponse {
+    skills: [UserSkill!]
+  }
+
+  type UserLanguageResponse {
+    languages: [UserLanguage!]
+  }
+
   type UserProfileResponse {
     userProfile: UserProfile!
   }
 
-  type ExperienceResponse {
+  type UserExperienceResponse {
     experience: [Experience!]
   }
 
-  type EducationResponse {
+  type UserEducationResponse {
     education: [Education!]
   }
 
-  type PermissionResponse {
+  type UserPermissionResponse {
     permission: Permission!
   }
 
@@ -156,11 +164,14 @@ const userTypeDefs = `#graphql
   union UserLoginResult = UserLoginSuccess | UserInputError | UserSuspendedError | UserBlockedError | UserNotFoundError
   union UserResult = UserResponse | UserNotFoundError | UserSuspendedError | UserBlockedError
   union UserProfileResult = UserProfileResponse | UserInputError | UserSuspendedError | UserBlockedError | UserNotFoundError
-  union UserExperienceResult = ExperienceResponse | ExperienceNotFoundError | ExperienceInputError
-  union UserEducationResult = EducationResponse | EducationNotFoundError | EducationInputError
-  union UserSkillResult = SkillResponse | SkillNotFoundError | SkillInputError
-  union UserLanguageResult = LanguageResponse | LanguageNotFoundError | LanguageInputError
-  union UserPermissionResult = PermissionResponse | PermissionNotUpdatedError | PermissionInputError
+  union UserExperienceResult = UserExperienceResponse | ExperienceNotFoundError | ExperienceInputError
+  union UserEducationResult = UserEducationResponse | EducationNotFoundError | EducationInputError
+  union UserSkillResult = UserSkillResponse | SkillNotFoundError | SkillInputError
+  union UserLanguageResult = UserLanguageResponse | LanguageNotFoundError | LanguageInputError
+  union UserPermissionResult = UserPermissionResponse | PermissionNotUpdatedError | PermissionInputError
+  union SkillsResult = SkillResponse | SkillNotFoundError | SkillInputError
+  union LanguageResult = LanguageResponse | LanguageNotFoundError | LanguageInputError
+  union OperationStatus = Successful | Failure | NotFound
   
   # union UserExperienceResult = 
 `;
