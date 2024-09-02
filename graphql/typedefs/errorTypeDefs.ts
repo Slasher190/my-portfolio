@@ -28,10 +28,6 @@ const errorTypeDefs = `#graphql
     error: ErrorHandler!
   }
 
-  type UserNotFoundError {
-    error: ErrorHandler!
-  }
-
   type ExperienceNotFoundError {
     error: ErrorHandler!
   }
@@ -69,6 +65,10 @@ const errorTypeDefs = `#graphql
   }
 
   type PermissionNotUpdatedError {
+    error: ErrorHandler!
+  }
+
+  type NotFoundError {
     error: ErrorHandler!
   }
 `;

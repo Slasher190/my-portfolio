@@ -81,9 +81,12 @@ const userTypeDefs = `#graphql
 
   type Location {
     id: ID!
-    country: String!
-    state: String
-    city: String!
+    countryId: Int!
+    stateId: Int
+    cityId: Int!
+    country: Country
+    state: State
+    city: City
     coordinates: String
     locationType: LocationType
   }
@@ -172,8 +175,6 @@ const userTypeDefs = `#graphql
   union SkillsResult = SkillResponse | SkillNotFoundError | SkillInputError
   union LanguageResult = LanguageResponse | LanguageNotFoundError | LanguageInputError
   union OperationStatus = Successful | Failure | NotFound
-  
-  # union UserExperienceResult = 
 `;
 
 export default userTypeDefs;

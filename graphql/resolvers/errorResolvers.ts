@@ -1,4 +1,4 @@
-import { User } from "@app/graphql/graphql";
+import { Country, User } from "@app/graphql/graphql";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 
 export const errorResolvers = {
@@ -52,6 +52,22 @@ export const errorResolvers = {
         }
       }
       return null;
+    },
+  },
+  CountryResult: {
+    __resolveType(obj: {
+      countries?: Country[];
+      error: {
+        message?: string;
+        extensions?: { code: ErrorType };
+      };
+    }) {
+      if (obj.countries) {
+        return "CountryResponse";
+      }
+      if (obj.error.message) {
+        return "";
+      }
     },
   },
 };

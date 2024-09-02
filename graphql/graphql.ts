@@ -31,6 +31,60 @@ export type Scalars = {
   Float: { input: number; output: number };
 };
 
+export type City = {
+  __typename?: "City";
+  country_code?: Maybe<Scalars["String"]["output"]>;
+  country_id?: Maybe<Scalars["Int"]["output"]>;
+  country_name?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ID"]["output"];
+  latitude?: Maybe<Scalars["Float"]["output"]>;
+  longitude?: Maybe<Scalars["Float"]["output"]>;
+  name?: Maybe<Scalars["String"]["output"]>;
+  state_code?: Maybe<Scalars["String"]["output"]>;
+  state_id?: Maybe<Scalars["Int"]["output"]>;
+  state_name?: Maybe<Scalars["String"]["output"]>;
+  wikiDataId?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type CityResponse = {
+  __typename?: "CityResponse";
+  cities?: Maybe<Array<City>>;
+};
+
+export type CityResult = CityResponse | NotFoundError;
+
+export type Country = {
+  __typename?: "Country";
+  capital?: Maybe<Scalars["String"]["output"]>;
+  currency?: Maybe<Scalars["String"]["output"]>;
+  currency_name?: Maybe<Scalars["String"]["output"]>;
+  currency_symbol?: Maybe<Scalars["String"]["output"]>;
+  emoji?: Maybe<Scalars["String"]["output"]>;
+  emojiU?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ID"]["output"];
+  iso2?: Maybe<Scalars["String"]["output"]>;
+  iso3?: Maybe<Scalars["String"]["output"]>;
+  latitude?: Maybe<Scalars["Float"]["output"]>;
+  longitude?: Maybe<Scalars["Float"]["output"]>;
+  name?: Maybe<Scalars["String"]["output"]>;
+  nationality?: Maybe<Scalars["String"]["output"]>;
+  native?: Maybe<Scalars["String"]["output"]>;
+  numeric_code?: Maybe<Scalars["Int"]["output"]>;
+  phone_code?: Maybe<Scalars["String"]["output"]>;
+  region?: Maybe<Scalars["String"]["output"]>;
+  region_id?: Maybe<Scalars["Int"]["output"]>;
+  subregion?: Maybe<Scalars["String"]["output"]>;
+  subregion_id?: Maybe<Scalars["Int"]["output"]>;
+  tld?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type CountryResponse = {
+  __typename?: "CountryResponse";
+  countries?: Maybe<Array<Country>>;
+};
+
+export type CountryResult = CountryResponse | NotFoundError;
+
 export type Education = {
   __typename?: "Education";
   degree: Scalars["String"]["output"];
@@ -141,12 +195,15 @@ export type LanguageResult =
 
 export type Location = {
   __typename?: "Location";
-  city: Scalars["String"]["output"];
+  city?: Maybe<City>;
+  cityId: Scalars["Int"]["output"];
   coordinates?: Maybe<Scalars["String"]["output"]>;
-  country: Scalars["String"]["output"];
+  country?: Maybe<Country>;
+  countryId: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
   locationType?: Maybe<LocationType>;
-  state?: Maybe<Scalars["String"]["output"]>;
+  state?: Maybe<State>;
+  stateId?: Maybe<Scalars["Int"]["output"]>;
 };
 
 export type LocationInput = {
@@ -181,6 +238,9 @@ export type Mutation = {
   deleteUserExperience?: Maybe<OperationStatus>;
   deleteUserLanguage?: Maybe<OperationStatus>;
   deleteUserSkill?: Maybe<OperationStatus>;
+  getCitiesByIds?: Maybe<CityResult>;
+  getCountriesByIds?: Maybe<CountryResult>;
+  getStatesByIds?: Maybe<StateResult>;
   loginUser?: Maybe<UserLoginResult>;
   updateUserEducations?: Maybe<UserEducationResult>;
   updateUserExperiences?: Maybe<UserExperienceResult>;
@@ -229,6 +289,18 @@ export type MutationDeleteUserSkillArgs = {
   input?: InputMaybe<Ids>;
 };
 
+export type MutationGetCitiesByIdsArgs = {
+  inout?: InputMaybe<Ids>;
+};
+
+export type MutationGetCountriesByIdsArgs = {
+  input?: InputMaybe<Ids>;
+};
+
+export type MutationGetStatesByIdsArgs = {
+  input?: InputMaybe<Ids>;
+};
+
 export type MutationLoginUserArgs = {
   input: LoginInput;
 };
@@ -257,6 +329,11 @@ export type NotFound = Operation & {
   __typename?: "NotFound";
   message: Scalars["String"]["output"];
   success: Scalars["Boolean"]["output"];
+};
+
+export type NotFoundError = {
+  __typename?: "NotFoundError";
+  error: ErrorHandler;
 };
 
 export type Operation = {
@@ -294,9 +371,20 @@ export enum Proficiency {
 export type Query = {
   __typename?: "Query";
   getAllSkillSet?: Maybe<SkillResponse>;
+  getCitiesByState?: Maybe<CityResult>;
+  getCountries?: Maybe<CountryResult>;
+  getStatesByCountry?: Maybe<StateResult>;
   getUserById?: Maybe<UserResult>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+export type QueryGetCitiesByStateArgs = {
+  input?: InputMaybe<Ids>;
+};
+
+export type QueryGetStatesByCountryArgs = {
+  input?: InputMaybe<Ids>;
 };
 
 export type QueryGetUserByIdArgs = {
@@ -342,6 +430,26 @@ export type SkillResponse = {
 };
 
 export type SkillsResult = SkillInputError | SkillNotFoundError | SkillResponse;
+
+export type State = {
+  __typename?: "State";
+  country_code?: Maybe<Scalars["String"]["output"]>;
+  country_id?: Maybe<Scalars["Int"]["output"]>;
+  country_name?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ID"]["output"];
+  latitude?: Maybe<Scalars["Float"]["output"]>;
+  longitude?: Maybe<Scalars["Float"]["output"]>;
+  name?: Maybe<Scalars["String"]["output"]>;
+  state_code?: Maybe<Scalars["String"]["output"]>;
+  type?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type StateResponse = {
+  __typename?: "StateResponse";
+  states?: Maybe<Array<State>>;
+};
+
+export type StateResult = NotFoundError | StateResponse;
 
 export type Successful = Operation & {
   __typename?: "Successful";
@@ -678,9 +786,12 @@ export type DirectiveResolverFn<
 
 /** Mapping of union types */
 export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
+  CityResult: CityResponse | NotFoundError;
+  CountryResult: CountryResponse | NotFoundError;
   LanguageResult: LanguageInputError | LanguageNotFoundError | LanguageResponse;
   OperationStatus: Failure | NotFound | Successful;
   SkillsResult: SkillInputError | SkillNotFoundError | SkillResponse;
+  StateResult: NotFoundError | StateResponse;
   UserEducationResult:
     | EducationInputError
     | EducationNotFoundError
@@ -731,6 +842,16 @@ export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> =
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
+  City: ResolverTypeWrapper<City>;
+  CityResponse: ResolverTypeWrapper<CityResponse>;
+  CityResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["CityResult"]
+  >;
+  Country: ResolverTypeWrapper<Country>;
+  CountryResponse: ResolverTypeWrapper<CountryResponse>;
+  CountryResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["CountryResult"]
+  >;
   Education: ResolverTypeWrapper<Education>;
   EducationInputError: ResolverTypeWrapper<EducationInputError>;
   EducationNotFoundError: ResolverTypeWrapper<EducationNotFoundError>;
@@ -742,8 +863,10 @@ export type ResolversTypes = {
   ExperienceInputError: ResolverTypeWrapper<ExperienceInputError>;
   ExperienceNotFoundError: ResolverTypeWrapper<ExperienceNotFoundError>;
   Failure: ResolverTypeWrapper<Failure>;
+  Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
   Ids: Ids;
+  Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
   Language: ResolverTypeWrapper<Language>;
   LanguageInput: LanguageInput;
   LanguageInputError: ResolverTypeWrapper<LanguageInputError>;
@@ -758,6 +881,7 @@ export type ResolversTypes = {
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   NotFound: ResolverTypeWrapper<NotFound>;
+  NotFoundError: ResolverTypeWrapper<NotFoundError>;
   Operation: ResolverTypeWrapper<
     ResolversInterfaceTypes<ResolversTypes>["Operation"]
   >;
@@ -778,6 +902,11 @@ export type ResolversTypes = {
   SkillResponse: ResolverTypeWrapper<SkillResponse>;
   SkillsResult: ResolverTypeWrapper<
     ResolversUnionTypes<ResolversTypes>["SkillsResult"]
+  >;
+  State: ResolverTypeWrapper<State>;
+  StateResponse: ResolverTypeWrapper<StateResponse>;
+  StateResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["StateResult"]
   >;
   String: ResolverTypeWrapper<Scalars["String"]["output"]>;
   Successful: ResolverTypeWrapper<Successful>;
@@ -838,6 +967,12 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars["Boolean"]["output"];
+  City: City;
+  CityResponse: CityResponse;
+  CityResult: ResolversUnionTypes<ResolversParentTypes>["CityResult"];
+  Country: Country;
+  CountryResponse: CountryResponse;
+  CountryResult: ResolversUnionTypes<ResolversParentTypes>["CountryResult"];
   Education: Education;
   EducationInputError: EducationInputError;
   EducationNotFoundError: EducationNotFoundError;
@@ -848,8 +983,10 @@ export type ResolversParentTypes = {
   ExperienceInputError: ExperienceInputError;
   ExperienceNotFoundError: ExperienceNotFoundError;
   Failure: Failure;
+  Float: Scalars["Float"]["output"];
   ID: Scalars["ID"]["output"];
   Ids: Ids;
+  Int: Scalars["Int"]["output"];
   Language: Language;
   LanguageInput: LanguageInput;
   LanguageInputError: LanguageInputError;
@@ -861,6 +998,7 @@ export type ResolversParentTypes = {
   LoginInput: LoginInput;
   Mutation: {};
   NotFound: NotFound;
+  NotFoundError: NotFoundError;
   Operation: ResolversInterfaceTypes<ResolversParentTypes>["Operation"];
   OperationStatus: ResolversUnionTypes<ResolversParentTypes>["OperationStatus"];
   Permission: Permission;
@@ -874,6 +1012,9 @@ export type ResolversParentTypes = {
   SkillNotFoundError: SkillNotFoundError;
   SkillResponse: SkillResponse;
   SkillsResult: ResolversUnionTypes<ResolversParentTypes>["SkillsResult"];
+  State: State;
+  StateResponse: StateResponse;
+  StateResult: ResolversUnionTypes<ResolversParentTypes>["StateResult"];
   String: Scalars["String"]["output"];
   Successful: Successful;
   User: User;
@@ -910,6 +1051,152 @@ export type ResolversParentTypes = {
   UserSkillResponse: UserSkillResponse;
   UserSkillResult: ResolversUnionTypes<ResolversParentTypes>["UserSkillResult"];
   UserSuspendedError: UserSuspendedError;
+};
+
+export type CityResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["City"] = ResolversParentTypes["City"],
+> = {
+  country_code?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  country_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  country_name?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  latitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  longitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  state_code?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  state_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  state_name?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  wikiDataId?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CityResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["CityResponse"] = ResolversParentTypes["CityResponse"],
+> = {
+  cities?: Resolver<
+    Maybe<Array<ResolversTypes["City"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CityResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["CityResult"] = ResolversParentTypes["CityResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    "CityResponse" | "NotFoundError",
+    ParentType,
+    ContextType
+  >;
+};
+
+export type CountryResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["Country"] = ResolversParentTypes["Country"],
+> = {
+  capital?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  currency?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  currency_name?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  currency_symbol?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  emoji?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  emojiU?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  iso2?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  iso3?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  latitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  longitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  nationality?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  native?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  numeric_code?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  phone_code?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  region?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  region_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  subregion?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  subregion_id?: Resolver<
+    Maybe<ResolversTypes["Int"]>,
+    ParentType,
+    ContextType
+  >;
+  tld?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CountryResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["CountryResponse"] = ResolversParentTypes["CountryResponse"],
+> = {
+  countries?: Resolver<
+    Maybe<Array<ResolversTypes["Country"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CountryResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["CountryResult"] = ResolversParentTypes["CountryResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    "CountryResponse" | "NotFoundError",
+    ParentType,
+    ContextType
+  >;
 };
 
 export type EducationResolvers<
@@ -1096,20 +1383,23 @@ export type LocationResolvers<
   ParentType extends
     ResolversParentTypes["Location"] = ResolversParentTypes["Location"],
 > = {
-  city?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  city?: Resolver<Maybe<ResolversTypes["City"]>, ParentType, ContextType>;
+  cityId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   coordinates?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
   >;
-  country?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  country?: Resolver<Maybe<ResolversTypes["Country"]>, ParentType, ContextType>;
+  countryId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   locationType?: Resolver<
     Maybe<ResolversTypes["LocationType"]>,
     ParentType,
     ContextType
   >;
-  state?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  state?: Resolver<Maybe<ResolversTypes["State"]>, ParentType, ContextType>;
+  stateId?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1178,6 +1468,24 @@ export type MutationResolvers<
     ContextType,
     Partial<MutationDeleteUserSkillArgs>
   >;
+  getCitiesByIds?: Resolver<
+    Maybe<ResolversTypes["CityResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationGetCitiesByIdsArgs>
+  >;
+  getCountriesByIds?: Resolver<
+    Maybe<ResolversTypes["CountryResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationGetCountriesByIdsArgs>
+  >;
+  getStatesByIds?: Resolver<
+    Maybe<ResolversTypes["StateResult"]>,
+    ParentType,
+    ContextType,
+    Partial<MutationGetStatesByIdsArgs>
+  >;
   loginUser?: Resolver<
     Maybe<ResolversTypes["UserLoginResult"]>,
     ParentType,
@@ -1223,6 +1531,15 @@ export type NotFoundResolvers<
 > = {
   message?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   success?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type NotFoundErrorResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["NotFoundError"] = ResolversParentTypes["NotFoundError"],
+> = {
+  error?: Resolver<ResolversTypes["ErrorHandler"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1296,6 +1613,23 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  getCitiesByState?: Resolver<
+    Maybe<ResolversTypes["CityResult"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryGetCitiesByStateArgs>
+  >;
+  getCountries?: Resolver<
+    Maybe<ResolversTypes["CountryResult"]>,
+    ParentType,
+    ContextType
+  >;
+  getStatesByCountry?: Resolver<
+    Maybe<ResolversTypes["StateResult"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryGetStatesByCountryArgs>
+  >;
   getUserById?: Resolver<
     Maybe<ResolversTypes["UserResult"]>,
     ParentType,
@@ -1358,6 +1692,60 @@ export type SkillsResultResolvers<
 > = {
   __resolveType: TypeResolveFn<
     "SkillInputError" | "SkillNotFoundError" | "SkillResponse",
+    ParentType,
+    ContextType
+  >;
+};
+
+export type StateResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["State"] = ResolversParentTypes["State"],
+> = {
+  country_code?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  country_id?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  country_name?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  latitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  longitude?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  state_code?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StateResponseResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["StateResponse"] = ResolversParentTypes["StateResponse"],
+> = {
+  states?: Resolver<
+    Maybe<Array<ResolversTypes["State"]>>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StateResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["StateResult"] = ResolversParentTypes["StateResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    "NotFoundError" | "StateResponse",
     ParentType,
     ContextType
   >;
@@ -1760,6 +2148,12 @@ export type UserSuspendedErrorResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
+  City?: CityResolvers<ContextType>;
+  CityResponse?: CityResponseResolvers<ContextType>;
+  CityResult?: CityResultResolvers<ContextType>;
+  Country?: CountryResolvers<ContextType>;
+  CountryResponse?: CountryResponseResolvers<ContextType>;
+  CountryResult?: CountryResultResolvers<ContextType>;
   Education?: EducationResolvers<ContextType>;
   EducationInputError?: EducationInputErrorResolvers<ContextType>;
   EducationNotFoundError?: EducationNotFoundErrorResolvers<ContextType>;
@@ -1778,6 +2172,7 @@ export type Resolvers<ContextType = any> = {
   Location?: LocationResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   NotFound?: NotFoundResolvers<ContextType>;
+  NotFoundError?: NotFoundErrorResolvers<ContextType>;
   Operation?: OperationResolvers<ContextType>;
   OperationStatus?: OperationStatusResolvers<ContextType>;
   Permission?: PermissionResolvers<ContextType>;
@@ -1789,6 +2184,9 @@ export type Resolvers<ContextType = any> = {
   SkillNotFoundError?: SkillNotFoundErrorResolvers<ContextType>;
   SkillResponse?: SkillResponseResolvers<ContextType>;
   SkillsResult?: SkillsResultResolvers<ContextType>;
+  State?: StateResolvers<ContextType>;
+  StateResponse?: StateResponseResolvers<ContextType>;
+  StateResult?: StateResultResolvers<ContextType>;
   Successful?: SuccessfulResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserAlreadyExistError?: UserAlreadyExistErrorResolvers<ContextType>;

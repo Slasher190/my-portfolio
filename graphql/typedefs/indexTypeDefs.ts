@@ -3,6 +3,7 @@ import inputTypeDefs from "./inputTypeDefs";
 import interfaceTypeDefs from "./interfaceTypeDefs";
 import userTypeDefs from "./userTypeDefs";
 import statusTypeDefs from "./statusType";
+import locationTypeDefs from "./locationTypeDefs";
 
 export {
   errorTypeDefs,
@@ -10,12 +11,5 @@ export {
   interfaceTypeDefs,
   userTypeDefs,
   statusTypeDefs,
+  locationTypeDefs,
 };
-
-export default [
-  errorTypeDefs,
-  inputTypeDefs,
-  interfaceTypeDefs,
-  userTypeDefs,
-  statusTypeDefs,
-].join("\n");

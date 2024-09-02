@@ -4,19 +4,24 @@ import {
   interfaceTypeDefs,
   userTypeDefs,
   statusTypeDefs,
+  locationTypeDefs,
 } from "@app/graphql/typedefs/indexTypeDefs";
 
 export const typeDefs = `#graphql
   ${interfaceTypeDefs}
   ${inputTypeDefs}
+  ${locationTypeDefs}
+  ${statusTypeDefs}
   ${errorTypeDefs}
   ${userTypeDefs}
-  ${statusTypeDefs}
   type Query {
     users: [User]
     user: User
     getUserById(input: UserInput!): UserResult
     getAllSkillSet: SkillResponse
+    getCountries: CountryResult
+    getStatesByCountry(input: Ids): StateResult
+    getCitiesByState(input: Ids): CityResult
   }
   type Mutation {
     createUser(input: SignupInput!): UserRegistrationResult
@@ -38,6 +43,10 @@ export const typeDefs = `#graphql
     deleteUserEducation(input: Ids): OperationStatus
     deleteUserSkill(input: Ids): OperationStatus
     deleteUserLanguage(input: Ids): OperationStatus
+
+    getCountriesByIds(input: Ids): CountryResult
+    getStatesByIds(input: Ids): StateResult
+    getCitiesByIds(inout: Ids): CityResult
   }
 `;
 
