@@ -65,9 +65,9 @@ async function main() {
           sex: "FEMALE",
           currentLocation: {
             create: {
-              country: "USA",
-              state: "California",
-              city: "Los Angeles",
+              country: 1,
+              state: 1,
+              city: 1,
             },
           },
           experience: {
@@ -82,9 +82,9 @@ async function main() {
                 employmentType: "FREELANCE",
                 location: {
                   create: {
-                    country: "USA",
-                    state: "California",
-                    city: "San Francisco",
+                    country: 1,
+                    state: 1,
+                    city: 1,
                   },
                 },
               },
@@ -101,9 +101,9 @@ async function main() {
                 description: "Studied computer science and engineering.",
                 location: {
                   create: {
-                    country: "USA",
-                    state: "Massachusetts",
-                    city: "Cambridge",
+                    country: 1,
+                    state: 1,
+                    city: 1,
                   },
                 },
               },
@@ -158,9 +158,9 @@ async function main() {
           sex: "MALE",
           currentLocation: {
             create: {
-              country: "USA",
-              state: "California",
-              city: "Los Angeles",
+              country: 1,
+              state: 1,
+              city: 1,
             },
           },
           experience: {
@@ -173,9 +173,9 @@ async function main() {
                 employmentType: "FULL_TIME",
                 location: {
                   create: {
-                    country: "USA",
-                    state: "New York",
-                    city: "New York City",
+                    country: 1,
+                    state: 1,
+                    city: 1,
                   },
                 },
               },
@@ -192,9 +192,9 @@ async function main() {
                 description: "Focused on AI and machine learning.",
                 location: {
                   create: {
-                    country: "USA",
-                    state: "California",
-                    city: "Stanford",
+                    country: 1,
+                    state: 1,
+                    city: 1,
                   },
                 },
               },

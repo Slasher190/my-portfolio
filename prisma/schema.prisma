@@ -90,9 +90,9 @@ model Location {
   userProfileId    Int?          @unique
   userEducationId  Int?          @unique
   userExperienceId Int?          @unique
-  country          String        @db.VarChar(50)
-  state            String?       @db.VarChar(50)
-  city             String        @db.VarChar(50)
+  countryId        Int
+  stateId          Int?
+  cityId           Int
   coordinates      String?       @db.VarChar(100)
   locationType     LocationType?
   userProfile      UserProfile?  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
@@ -112,7 +112,7 @@ model UserLanguage {
   languageId  Int
   proficiency Proficiency
   user        UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
-  language    Language    @relation(fields: [languageId], references: [id],  onDelete: Cascade)
+  language    Language    @relation(fields: [languageId], references: [id], onDelete: Cascade)
 
   @@unique([userId, languageId])
 }
