@@ -1145,6 +1145,30 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "Id",
+        "description": null,
+        "isOneOf": false,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "Ids",
         "description": null,
         "isOneOf": false,
@@ -1956,7 +1980,7 @@
             "description": null,
             "args": [
               {
-                "name": "inout",
+                "name": "input",
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
@@ -2566,7 +2590,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "Ids",
+                  "name": "Id",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2603,7 +2627,7 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "Ids",
+                  "name": "Id",
                   "ofType": null
                 },
                 "defaultValue": null,

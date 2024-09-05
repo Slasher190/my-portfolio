@@ -1,7 +1,7 @@
-import { Country, User } from "@app/graphql/graphql";
+import { User } from "@app/graphql/graphql";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 
-export const errorResolvers = {
+export const userResolvers = {
   UserRegistrationResult: {
     __resolveType(obj: {
       user?: User;
@@ -45,29 +45,14 @@ export const errorResolvers = {
             return "UserSuspendedError";
           case ErrorType.USER_BLOCKED:
             return "UserBlockedError";
-          case ErrorType.USER_NOT_FOUND || ErrorType.AUTHENTICATION_ERROR:
+          case ErrorType.USER_NOT_FOUND:
+          case ErrorType.AUTHENTICATION_ERROR:
             return "UserNotFoundError";
           default:
             return "UserInputError";
         }
       }
       return null;
-    },
-  },
-  CountryResult: {
-    __resolveType(obj: {
-      countries?: Country[];
-      error: {
-        message?: string;
-        extensions?: { code: ErrorType };
-      };
-    }) {
-      if (obj.countries) {
-        return "CountryResponse";
-      }
-      if (obj.error.message) {
-        return "";
-      }
     },
   },
 };

@@ -159,6 +159,10 @@ export type Failure = Operation & {
   success: Scalars["Boolean"]["output"];
 };
 
+export type Id = {
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
 export type Ids = {
   ids?: InputMaybe<Array<Scalars["ID"]["input"]>>;
 };
@@ -290,7 +294,7 @@ export type MutationDeleteUserSkillArgs = {
 };
 
 export type MutationGetCitiesByIdsArgs = {
-  inout?: InputMaybe<Ids>;
+  input?: InputMaybe<Ids>;
 };
 
 export type MutationGetCountriesByIdsArgs = {
@@ -380,11 +384,11 @@ export type Query = {
 };
 
 export type QueryGetCitiesByStateArgs = {
-  input?: InputMaybe<Ids>;
+  input?: InputMaybe<Id>;
 };
 
 export type QueryGetStatesByCountryArgs = {
-  input?: InputMaybe<Ids>;
+  input?: InputMaybe<Id>;
 };
 
 export type QueryGetUserByIdArgs = {
@@ -865,6 +869,7 @@ export type ResolversTypes = {
   Failure: ResolverTypeWrapper<Failure>;
   Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
   ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
+  Id: Id;
   Ids: Ids;
   Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
   Language: ResolverTypeWrapper<Language>;
@@ -985,6 +990,7 @@ export type ResolversParentTypes = {
   Failure: Failure;
   Float: Scalars["Float"]["output"];
   ID: Scalars["ID"]["output"];
+  Id: Id;
   Ids: Ids;
   Int: Scalars["Int"]["output"];
   Language: Language;

@@ -20,8 +20,8 @@ export const typeDefs = `#graphql
     getUserById(input: UserInput!): UserResult
     getAllSkillSet: SkillResponse
     getCountries: CountryResult
-    getStatesByCountry(input: Ids): StateResult
-    getCitiesByState(input: Ids): CityResult
+    getStatesByCountry(input: Id): StateResult
+    getCitiesByState(input: Id): CityResult
   }
   type Mutation {
     createUser(input: SignupInput!): UserRegistrationResult
@@ -46,7 +46,7 @@ export const typeDefs = `#graphql
 
     getCountriesByIds(input: Ids): CountryResult
     getStatesByIds(input: Ids): StateResult
-    getCitiesByIds(inout: Ids): CityResult
+    getCitiesByIds(input: Ids): CityResult
   }
 `;
 

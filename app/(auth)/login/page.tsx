@@ -8,7 +8,7 @@ import { FaFacebook } from "react-icons/fa";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import { LoginInput } from "@app/graphql/graphql";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "@app/graphql/operations/mutations/loginUser";
+import { LOGIN_USER } from "@app/graphql/operations/userOperation/mutations/loginUser";
 import {
   userMutationStart,
   userMutationSuccess,
