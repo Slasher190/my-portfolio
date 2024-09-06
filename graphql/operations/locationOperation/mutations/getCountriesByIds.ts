@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_STATES_BY_COUNTRY = gql`
+export const GET_COUNTRIES_BY_IDS = gql`
   mutation GetCountriesByIds($input: Ids) {
     getCountriesByIds(input: $input) {
       ... on CountryResponse {
@@ -26,15 +26,9 @@ export const GET_STATES_BY_COUNTRY = gql`
           longitude
           emoji
           emojiU
+          __typeName
         }
-      }
-      ... on NotFoundError {
-        error {
-          message
-          extensions {
-            code
-          }
-        }
+        __typeName
       }
     }
   }
