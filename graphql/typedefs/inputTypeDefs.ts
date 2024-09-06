@@ -88,6 +88,9 @@ const inputTypeDefs = `#graphql
   input Ids {
     ids: [ID!]
   }
+  input Id {
+    id: ID
+  }
 `;
 
 export default inputTypeDefs;

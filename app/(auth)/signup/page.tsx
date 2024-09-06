@@ -7,7 +7,7 @@ import { FaFacebook } from "react-icons/fa";
 import { userSignupSchema } from "@app/Validation/userSchema";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "@app/graphql/operations/mutations/createUser";
+import { CREATE_USER } from "@app/graphql/operations/userOperation/mutations/createUser";
 import { SignupInput } from "@app/graphql/graphql";
 import {
   userMutationStart,
