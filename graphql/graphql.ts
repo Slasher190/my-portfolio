@@ -211,11 +211,11 @@ export type Location = {
 };
 
 export type LocationInput = {
-  city?: InputMaybe<Scalars["String"]["input"]>;
+  cityId?: InputMaybe<Scalars["String"]["input"]>;
   coordinates?: InputMaybe<Scalars["String"]["input"]>;
-  country?: InputMaybe<Scalars["String"]["input"]>;
+  countryId?: InputMaybe<Scalars["String"]["input"]>;
   locationType?: InputMaybe<LocationType>;
-  state?: InputMaybe<Scalars["String"]["input"]>;
+  stateId?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export enum LocationType {

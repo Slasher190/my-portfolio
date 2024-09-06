@@ -34,9 +34,9 @@ const inputTypeDefs = `#graphql
   }
 
   input LocationInput {
-    country: String
-    state: String
-    city: String
+    countryId: String
+    stateId: String
+    cityId: String
     coordinates: String
     locationType: LocationType
   }

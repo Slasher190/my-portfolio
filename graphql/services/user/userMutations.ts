@@ -252,9 +252,9 @@ export const userMutations = {
           currentLocation: currentLocation
             ? {
                 create: {
-                  country: currentLocation.country,
-                  state: currentLocation.state,
-                  city: currentLocation.city,
+                  country: currentLocation.countryId,
+                  state: currentLocation.stateId,
+                  city: currentLocation.cityId,
                   coordinates: currentLocation.coordinates,
                   locationType: currentLocation.locationType,
                 },
@@ -274,9 +274,9 @@ export const userMutations = {
                   location: edu.location
                     ? {
                         create: {
-                          country: edu.location.country,
-                          state: edu.location.state,
-                          city: edu.location.city,
+                          country: edu.location.countryId,
+                          state: edu.location.stateId,
+                          city: edu.location.cityId,
                           coordinates: edu.location.coordinates,
                           locationType: edu.location.locationType,
                         },
@@ -298,9 +298,9 @@ export const userMutations = {
                   location: exp.location
                     ? {
                         create: {
-                          country: exp.location.country,
-                          state: exp.location.state,
-                          city: exp.location.city,
+                          country: exp.location.countryId,
+                          state: exp.location.stateId,
+                          city: exp.location.cityId,
                           coordinates: exp.location.coordinates,
                           locationType: exp.location.locationType,
                         },

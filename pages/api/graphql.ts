@@ -25,7 +25,7 @@ const formatError = (
     error instanceof GraphQLError &&
     error.originalError instanceof CustomError
   ) {
-    const customError = error.originalError as CustomError;
+    const customError = error.originalError;
     return {
       ...formattedError,
       message: customError.message,
