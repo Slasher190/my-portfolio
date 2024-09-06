@@ -1,4 +1,4 @@
-import { Country, State } from "@app/graphql/graphql";
+import { City, Country, State } from "@app/graphql/graphql";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 
 export const locationResolvers = {
@@ -28,6 +28,22 @@ export const locationResolvers = {
     }) {
       if (obj.states) {
         return "StateResponse";
+      }
+      if (obj.error.message) {
+        return "";
+      }
+    },
+  },
+  CityResult: {
+    __resolveType(obj: {
+      cities?: City[];
+      error: {
+        message?: string;
+        extensions?: { code: ErrorType };
+      };
+    }) {
+      if (obj.cities) {
+        return "CityResponse";
       }
       if (obj.error.message) {
         return "";

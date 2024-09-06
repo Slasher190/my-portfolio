@@ -1,8 +1,14 @@
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 import { CustomError } from "@app/graphql/error";
-import { CountryResponse, Id, StateResponse } from "@app/graphql/graphql";
+import {
+  CityResponse,
+  CountryResponse,
+  Id,
+  StateResponse,
+} from "@app/graphql/graphql";
 import { _ } from "@app/graphql/middileware/axios";
 import { Context } from "@app/pages/api/graphql";
+import { AxiosError } from "axios";
 import { GraphQLError } from "graphql";
 
 export const locationQuery = {
@@ -24,6 +30,14 @@ export const locationQuery = {
         __typeName: "CountryResponse",
       };
     } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        throw new GraphQLError("No states found", {
+          extensions: {
+            code: ErrorType.NOT_FOUND_ERROR,
+            __typeName: "NotFoundError",
+          },
+        });
+      }
       throw new CustomError(
         "Internal server error",
         ErrorType.INTERNAL_SERVER_ERROR
@@ -52,6 +66,51 @@ export const locationQuery = {
         __typeName: "StateResponse",
       };
     } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        throw new GraphQLError("No states found", {
+          extensions: {
+            code: ErrorType.NOT_FOUND_ERROR,
+            __typeName: "NotFoundError",
+          },
+        });
+      }
+      throw new CustomError(
+        "Internal server error",
+        ErrorType.INTERNAL_SERVER_ERROR
+      );
+    }
+  },
+  getCitiesByState: async (
+    _parent: unknown,
+    args: { input: Id },
+    _context: Context
+  ) => {
+    try {
+      const cities = await _.get<CityResponse>(`/cities/${args.input.id}`).then(
+        (res) => res.data.cities
+      );
+      if (!cities) {
+        throw new GraphQLError("No states found", {
+          extensions: {
+            code: "NOT_FOUND",
+            __typeName: "NotFoundError",
+          },
+        });
+      }
+      return {
+        cities,
+        __typeName: "CityResponse",
+      };
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        throw new GraphQLError("No states found", {
+          extensions: {
+            code: ErrorType.NOT_FOUND_ERROR,
+            __typeName: "NotFoundError",
+          },
+        });
+      }
+
       throw new CustomError(
         "Internal server error",
         ErrorType.INTERNAL_SERVER_ERROR

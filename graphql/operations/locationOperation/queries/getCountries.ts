@@ -26,15 +26,9 @@ export const GET_ALL_COUNTRIES = gql`
           longitude
           emoji
           emojiU
+          __typeName
         }
-      }
-      ... on NotFoundError {
-        error {
-          message
-          extensions {
-            code
-          }
-        }
+        __typeName
       }
     }
   }

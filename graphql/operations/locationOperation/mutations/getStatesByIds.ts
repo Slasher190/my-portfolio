@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const GET_STATES_BY_COUNTRY = gql`
-  query GetStatesByCountry($input: Id) {
-    getStatesByCountry(input: $input) {
+export const GET_STATES_BY_IDS = gql`
+  mutation GetStatesByIds($input: Ids) {
+    getStatesByIds(input: $input) {
       ... on StateResponse {
         states {
           id
@@ -14,9 +14,9 @@ export const GET_STATES_BY_COUNTRY = gql`
           type
           latitude
           longitude
-          __typename
+          __typeName
         }
-        __typename
+        __typeName
       }
     }
   }
