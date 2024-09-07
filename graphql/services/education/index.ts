@@ -1,0 +1,1 @@
+export { educationMutations } from "./educationMutation";

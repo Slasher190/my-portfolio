@@ -1,15 +1,24 @@
+import { JwtPayload, verify } from "jsonwebtoken";
 import { NextApiRequest } from "next";
-import jwt from "jsonwebtoken";
+
+interface Decoded extends JwtPayload {
+  userId: number | string;
+}
 
 export const verifyToken = (req: NextApiRequest) => {
-  const token = req.cookies.token || "";
+  const token = req.cookies.token ?? "";
   try {
-    const decoded = jwt.verify(
+    const decoded = verify(
       token,
-      process.env.JWT_SECRET || "kgfjlkrg2gt412g45k4g51%"
+      process.env.JWT_SECRET ?? "kgfjlkrg2gt412g45k4g51%"
     );
-    // { userId: 41, iat: 1720368058, exp: 1720371658 } - decoded
-    return { user: decoded };
+
+    if (typeof decoded === "object" && "userId" in decoded) {
+      const { userId, iat, exp } = decoded as Decoded;
+      return { user: userId, iat, exp };
+    } else {
+      return { user: null };
+    }
   } catch (err) {
     return { user: null };
   }

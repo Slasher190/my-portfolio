@@ -1,10 +1,10 @@
 import { Context } from "@app/pages/api/graphql";
-import { User } from "@prisma/client";
 import {
   LoginInput,
   SignupInput,
   UserExperienceInput,
   UserProfileInput,
+  User,
 } from "@app/graphql/graphql";
 import { CustomError } from "@app/graphql/error";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
@@ -68,12 +68,11 @@ export const userMutations = {
 
       const token = jwt.sign(
         { userId: user.id },
-        process.env.JWT_SECRET || "kgfjlkrg2gt412g45k4g51%",
+        process.env.JWT_SECRET ?? "kgfjlkrg2gt412g45k4g51%",
         {
           expiresIn: process.env.JWT_EXPIRATION,
         }
       );
-
       res.setHeader(
         "Set-Cookie",
         `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
@@ -116,7 +115,6 @@ export const userMutations = {
           },
         };
       }
-
       const user = await context.prisma.user.findUnique({
         where: email ? { email } : { username },
         include: {
@@ -181,12 +179,11 @@ export const userMutations = {
       // }
       const token = jwt.sign(
         { userId: user.id },
-        process.env.JWT_SECRET || "kgfjlkrg2gt412g45k4g51%",
+        process.env.JWT_SECRET ?? "kgfjlkrg2gt412g45k4g51%",
         {
           expiresIn: process.env.JWT_EXPIRATION,
         }
       );
-
       res.setHeader(
         "Set-Cookie",
         `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
@@ -198,7 +195,7 @@ export const userMutations = {
       };
     } catch (error) {
       throw new CustomError(
-        "Internal server error",
+        `Internal server error: ${JSON.stringify(error)}`,
         ErrorType.INTERNAL_SERVER_ERROR
       );
     }

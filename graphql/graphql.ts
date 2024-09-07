@@ -199,23 +199,21 @@ export type LanguageResult =
 
 export type Location = {
   __typename?: "Location";
-  city?: Maybe<City>;
   cityId: Scalars["Int"]["output"];
   coordinates?: Maybe<Scalars["String"]["output"]>;
-  country?: Maybe<Country>;
   countryId: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
   locationType?: Maybe<LocationType>;
-  state?: Maybe<State>;
   stateId?: Maybe<Scalars["Int"]["output"]>;
 };
 
 export type LocationInput = {
-  cityId?: InputMaybe<Scalars["String"]["input"]>;
+  cityId?: InputMaybe<Scalars["Int"]["input"]>;
   coordinates?: InputMaybe<Scalars["String"]["input"]>;
-  countryId?: InputMaybe<Scalars["String"]["input"]>;
+  countryId?: InputMaybe<Scalars["Int"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
   locationType?: InputMaybe<LocationType>;
-  stateId?: InputMaybe<Scalars["String"]["input"]>;
+  stateId?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export enum LocationType {
@@ -487,9 +485,11 @@ export type UserEducationInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
   endDate?: InputMaybe<Scalars["String"]["input"]>;
   fieldOfStudy?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
   institution?: InputMaybe<Scalars["String"]["input"]>;
   location?: InputMaybe<LocationInput>;
   startDate?: InputMaybe<Scalars["String"]["input"]>;
+  userProfileId?: InputMaybe<Scalars["ID"]["input"]>;
 };
 
 export type UserEducationResponse = {
@@ -507,9 +507,11 @@ export type UserExperienceInput = {
   description?: InputMaybe<Scalars["String"]["input"]>;
   employmentType?: InputMaybe<EmploymentType>;
   endDate?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
   location?: InputMaybe<LocationInput>;
   startDate?: InputMaybe<Scalars["String"]["input"]>;
   title?: InputMaybe<Scalars["String"]["input"]>;
+  userProfileId?: InputMaybe<Scalars["ID"]["input"]>;
 };
 
 export type UserExperienceResponse = {
@@ -571,6 +573,7 @@ export type UserNotFoundError = {
 };
 
 export type UserPermissionInput = {
+  id?: InputMaybe<Scalars["ID"]["input"]>;
   isDateOfBirthVisible?: InputMaybe<Scalars["Boolean"]["input"]>;
   isEmailVisible?: InputMaybe<Scalars["Boolean"]["input"]>;
   isPhoneVisible?: InputMaybe<Scalars["Boolean"]["input"]>;
@@ -613,6 +616,7 @@ export type UserProfileInput = {
   experience?: InputMaybe<Array<UserExperienceInput>>;
   firstName?: InputMaybe<Scalars["String"]["input"]>;
   headline?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
   languages?: InputMaybe<Array<UserLanguageInput>>;
   lastName?: InputMaybe<Scalars["String"]["input"]>;
   middleName?: InputMaybe<Scalars["String"]["input"]>;
@@ -1389,14 +1393,12 @@ export type LocationResolvers<
   ParentType extends
     ResolversParentTypes["Location"] = ResolversParentTypes["Location"],
 > = {
-  city?: Resolver<Maybe<ResolversTypes["City"]>, ParentType, ContextType>;
   cityId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   coordinates?: Resolver<
     Maybe<ResolversTypes["String"]>,
     ParentType,
     ContextType
   >;
-  country?: Resolver<Maybe<ResolversTypes["Country"]>, ParentType, ContextType>;
   countryId?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   locationType?: Resolver<
@@ -1404,7 +1406,6 @@ export type LocationResolvers<
     ParentType,
     ContextType
   >;
-  state?: Resolver<Maybe<ResolversTypes["State"]>, ParentType, ContextType>;
   stateId?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
