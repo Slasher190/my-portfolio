@@ -68,6 +68,21 @@ model Education {
   UserProfile   UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 }
 
+// model Education {
+//   id              Int          @id @default(autoincrement())
+//   userProfileId   Int?         @unique
+//   institutionName String       @db.VarChar(255) // More descriptive than just 'institution'
+//   degreeTitle     String       @db.VarChar(255) // 'degreeTitle' is more descriptive and clearer than 'degree'
+//   major           String       @db.VarChar(255) // 'major' is a more common term in academic fields than 'fieldOfStudy'
+//   startDate       DateTime
+//   endDate         DateTime?
+//   description     String       @db.VarChar(255)
+//   location        Location?
+//   UserProfile     UserProfile? @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+//   gpa             Float?       // Optional GPA field if applicable
+//   honors          String?      @db.VarChar(255) // Additional field for honors or distinctions
+// }
+
 model Skill {
   id    Int         @id @default(autoincrement())
   name  String      @db.VarChar(255)

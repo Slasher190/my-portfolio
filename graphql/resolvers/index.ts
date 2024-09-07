@@ -5,6 +5,7 @@ import {
   locationMutation,
 } from "@app/graphql/services/locations";
 import { locationResolvers } from "@app/graphql/resolvers/locationResolver";
+import { educationResolvers } from "./educationResolver";
 
 export const resolvers = {
   Query: {
@@ -17,4 +18,5 @@ export const resolvers = {
   },
   ...userResolvers,
   ...locationResolvers,
+  ...educationResolvers,
 };

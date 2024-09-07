@@ -1533,7 +1533,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "city",
+            "name": "cityId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -1557,7 +1557,7 @@
             "deprecationReason": null
           },
           {
-            "name": "country",
+            "name": "countryId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -1581,7 +1581,7 @@
             "deprecationReason": null
           },
           {
-            "name": "state",
+            "name": "stateId",
             "description": null,
             "type": {
               "kind": "SCALAR",
