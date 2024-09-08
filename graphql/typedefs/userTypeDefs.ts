@@ -84,9 +84,9 @@ const userTypeDefs = `#graphql
     countryId: Int!
     stateId: Int
     cityId: Int!
-    country: Country
-    state: State
-    city: City
+    # country: Country
+    # state: State
+    # city: City
     coordinates: String
     locationType: LocationType
   }

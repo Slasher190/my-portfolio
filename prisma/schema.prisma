@@ -44,7 +44,7 @@ model UserProfile {
 
 model Experience {
   id             Int            @id @default(autoincrement())
-  userProfileId  Int?           @unique
+  userProfileId  Int?          
   title          String         @db.VarChar(255)
   company        String         @db.VarChar(255)
   startDate      DateTime
@@ -57,7 +57,7 @@ model Experience {
 
 model Education {
   id            Int          @id @default(autoincrement())
-  userProfileId Int?         @unique
+  userProfileId Int?  
   institution   String       @db.VarChar(255)
   degree        String       @db.VarChar(255)
   fieldOfStudy  String       @db.VarChar(255)
@@ -105,9 +105,9 @@ model Location {
   userProfileId    Int?          @unique
   userEducationId  Int?          @unique
   userExperienceId Int?          @unique
-  countryId        Int
+  countryId        Int?
   stateId          Int?
-  cityId           Int
+  cityId           Int?
   coordinates      String?       @db.VarChar(100)
   locationType     LocationType?
   userProfile      UserProfile?  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)

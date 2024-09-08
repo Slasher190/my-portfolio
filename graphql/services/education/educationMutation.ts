@@ -1,12 +1,12 @@
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 import { CustomError } from "@app/graphql/error";
-import { Education, UserEducationInput } from "@app/graphql/graphql";
+import { UserEducationInput } from "@app/graphql/graphql";
 import { Context } from "@app/pages/api/graphql";
 
-export const userMutations = {
+export const educationMutations = {
   addUserEducation: async (
     _parent: unknown,
-    args: { input: UserEducationInput },
+    args: { input: [UserEducationInput] },
     context: Context
   ) => {
     try {
@@ -25,76 +25,154 @@ export const userMutations = {
         institution,
         location,
         startDate,
-      } = args.input;
+        userProfileId,
+      } = args.input[0];
 
-      let locationData = undefined;
-      if (!location) {
+      // Validate missing fields
+      const missingFields = [];
+      if (!location) missingFields.push("location");
+      if (!startDate) missingFields.push("startDate");
+      if (!institution) missingFields.push("institution");
+      if (!degree) missingFields.push("degree");
+      if (!fieldOfStudy) missingFields.push("fieldOfStudy");
+      if (!userProfileId) missingFields.push("userProfileId");
+
+      if (missingFields.length > 0) {
         return {
           error: {
             __typename: "EducationInputError",
-            message: "Missing field: location",
+            message: `Missing fields: ${missingFields.join(", ")}`,
             extensions: {
               code: ErrorType.VALIDATION_ERROR,
             },
           },
         };
       }
+
+      // Handle location data
+      const locationData = {
+        create: {
+          cityId: location?.cityId,
+          stateId: location?.stateId,
+          countryId: location?.countryId,
+          coordinates: location?.coordinates,
+          locationType: location?.locationType,
+        },
+      };
+      // Create education entry
+      const addEducation = await context.prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          profile: {
+            update: {
+              education: {
+                create: {
+                  institution,
+                  degree,
+                  fieldOfStudy,
+                  startDate: startDate ? new Date(startDate) : null,
+                  endDate: endDate ? new Date(endDate) : null,
+                  description,
+                  location: locationData,
+                },
+              },
+            },
+          },
+        },
+        include: {
+          profile: {
+            include: {
+              education: {
+                include: {
+                  location: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return {
+        education: addEducation.profile.education,
+        __typeName: "UserEducationResponse",
+      };
+    } catch (error) {
+      throw new CustomError(
+        `Error: ${JSON.stringify(error)}`,
+        ErrorType.INTERNAL_SERVER_ERROR
+      );
+    }
+  },
+  updateUserEducations: async (
+    _parent: unknown,
+    args: { input: [UserEducationInput] },
+    context: Context
+  ) => {
+    try {
+      const userId = context.userId;
+      if (!userId) {
+        throw new CustomError(
+          "You're not allowed to access this resource",
+          ErrorType.AUTHENTICATION_ERROR
+        );
+      }
+
+      const {
+        id,
+        degree,
+        description,
+        endDate,
+        fieldOfStudy,
+        institution,
+        location,
+        startDate,
+        userProfileId,
+      } = args.input[0];
+
+      if (!id) {
+        return {
+          error: {
+            __typename: "EducationInputError",
+            message: `Missing fields: id`,
+            extensions: {
+              code: ErrorType.VALIDATION_ERROR,
+            },
+          },
+        };
+      }
+      const missingFields = [];
+      if (!startDate) missingFields.push("startDate");
+      if (!institution) missingFields.push("institution");
+      if (!degree) missingFields.push("degree");
+      if (!fieldOfStudy) missingFields.push("fieldOfStudy");
+
+      if (missingFields.length > 0) {
+        return {
+          error: {
+            __typename: "EducationInputError",
+            message: `Missing fields: ${missingFields.join(", ")}`,
+            extensions: {
+              code: ErrorType.VALIDATION_ERROR,
+            },
+          },
+        };
+      }
+
+      let locationData = undefined;
       if (location) {
         locationData = {
-          create: {
+          update: {
             cityId: location.cityId,
             stateId: location.stateId,
             countryId: location.countryId,
           },
         };
       }
-      if (!startDate) {
-        return {
-          error: {
-            __typename: "EducationInputError",
-            message: "Missing field: startDate",
-            extensions: {
-              code: ErrorType.VALIDATION_ERROR,
-            },
-          },
-        };
-      }
-      if (!institution) {
-        return {
-          error: {
-            __typename: "EducationInputError",
-            message: "Missing field: institution",
-            extensions: {
-              code: ErrorType.VALIDATION_ERROR,
-            },
-          },
-        };
-      }
-      if (!degree) {
-        return {
-          error: {
-            __typename: "EducationInputError",
-            message: "Missing field: degree",
-            extensions: {
-              code: ErrorType.VALIDATION_ERROR,
-            },
-          },
-        };
-      }
-      if (!fieldOfStudy) {
-        return {
-          error: {
-            __typename: "EducationInputError",
-            message: "Missing field: fieldOfStudy",
-            extensions: {
-              code: ErrorType.VALIDATION_ERROR,
-            },
-          },
-        };
-      }
-      const education: Education[] = await context.prisma.education.create({
+
+      const updatedEducation = await context.prisma.education.update({
+        where: { id: id, userProfileId: userProfileId },
         data: {
-          userProfileId: userId,
           degree,
           description,
           endDate: endDate ? new Date(endDate) : null,
@@ -104,13 +182,14 @@ export const userMutations = {
           location: locationData,
         },
       });
+
       return {
-        education,
+        education: [updatedEducation],
         __typeName: "UserEducationResponse",
       };
     } catch (error) {
       throw new CustomError(
-        `error: ${JSON.stringify(error)}`,
+        `Error: ${JSON.stringify(error)}`,
         ErrorType.INTERNAL_SERVER_ERROR
       );
     }

@@ -43,7 +43,7 @@ CREATE TABLE "UserProfile" (
 -- CreateTable
 CREATE TABLE "Experience" (
     "id" SERIAL NOT NULL,
-    "userProfileId" INTEGER NOT NULL,
+    "userProfileId" INTEGER,
     "title" VARCHAR(255) NOT NULL,
     "company" VARCHAR(255) NOT NULL,
     "startDate" TIMESTAMP(3) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE "Experience" (
 -- CreateTable
 CREATE TABLE "Education" (
     "id" SERIAL NOT NULL,
-    "userProfileId" INTEGER NOT NULL,
+    "userProfileId" INTEGER,
     "institution" VARCHAR(255) NOT NULL,
     "degree" VARCHAR(255) NOT NULL,
     "fieldOfStudy" VARCHAR(255) NOT NULL,
@@ -89,12 +89,12 @@ CREATE TABLE "UserSkill" (
 -- CreateTable
 CREATE TABLE "Location" (
     "id" SERIAL NOT NULL,
-    "userProfileId" INTEGER NOT NULL,
-    "userEducationId" INTEGER NOT NULL,
-    "userExperienceId" INTEGER NOT NULL,
-    "country" VARCHAR(50) NOT NULL,
-    "state" VARCHAR(50),
-    "city" VARCHAR(50) NOT NULL,
+    "userProfileId" INTEGER,
+    "userEducationId" INTEGER,
+    "userExperienceId" INTEGER,
+    "countryId" INTEGER,
+    "stateId" INTEGER,
+    "cityId" INTEGER,
     "coordinates" VARCHAR(100),
     "locationType" "LocationType",
 

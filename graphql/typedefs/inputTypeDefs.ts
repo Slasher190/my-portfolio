@@ -17,6 +17,7 @@ const inputTypeDefs = `#graphql
   }
 
   input UserProfileInput {
+    id: ID
     firstName: String
     middleName: String
     lastName: String
@@ -34,20 +35,24 @@ const inputTypeDefs = `#graphql
   }
 
   input LocationInput {
-    countryId: String
-    stateId: String
-    cityId: String
+    id: ID
+    countryId: Int
+    stateId: Int
+    cityId: Int
     coordinates: String
     locationType: LocationType
   }
 
   input UserPermissionInput {
+    id: ID
     isEmailVisible: Boolean
     isPhoneVisible: Boolean
     isDateOfBirthVisible: Boolean
   }
 
   input UserExperienceInput {
+    id: ID
+    userProfileId: ID
     title: String
     company: String
     startDate: String
@@ -58,6 +63,8 @@ const inputTypeDefs = `#graphql
   }
 
   input UserEducationInput {
+    id: ID,
+    userProfileId: ID
     institution: String
     degree: String
     fieldOfStudy: String

@@ -8,13 +8,12 @@ import { CustomError } from "@app/graphql/error";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { verifyToken } from "@app/pages/utils/tokenUtils";
-import { JwtPayload } from "jsonwebtoken";
 
 export type Context = {
   prisma: PrismaClient;
   req: NextApiRequest;
   res: NextApiResponse;
-  userId?: string | number | JwtPayload;
+  userId?: string | number;
 };
 
 const formatError = (
