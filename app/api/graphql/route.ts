@@ -6,14 +6,14 @@ import { typeDefs } from "@app/graphql/schema";
 import { resolvers } from "@app/graphql/resolvers";
 import { CustomError } from "@app/graphql/error";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { verifyToken } from "@app/pages/utils/tokenUtils";
+import { verifyToken } from "@app/utils/tokenUtils"; // Updated to work with NextRequest
+import { JwtPayload } from "jsonwebtoken";
+import { NextRequest } from "next/server"; // Import NextRequest for App Router
 
 export type Context = {
   prisma: PrismaClient;
-  req: NextApiRequest;
-  res: NextApiResponse;
-  userId?: string | number;
+  req: NextRequest;
+  userId?: string | number | JwtPayload;
 };
 
 const formatError = (
@@ -24,12 +24,11 @@ const formatError = (
     error instanceof GraphQLError &&
     error.originalError instanceof CustomError
   ) {
-    const customError = error.originalError;
+    const customError = error.originalError as CustomError;
     return {
       ...formattedError,
       message: customError.message,
       extensions: {
-        // ...formattedError.extensions,
         code: customError.extensions.code,
       },
     };
@@ -43,10 +42,19 @@ const apolloServer = new ApolloServer<Context>({
   formatError,
 });
 
-export default startServerAndCreateNextHandler(apolloServer, {
-  context: async (req, res) => {
-    const { user: userId } = verifyToken(req);
-    if (userId) return { req, res, prisma, userId };
-    else return { req, res, prisma };
+// Context function adjusted for App Router
+export const GET = startServerAndCreateNextHandler(apolloServer, {
+  context: async (req: NextRequest) => {
+    const { user: userId } = verifyToken(req); // Now works with NextRequest
+
+    return { req, prisma, userId: userId ?? undefined };
+  },
+});
+
+export const POST = startServerAndCreateNextHandler(apolloServer, {
+  context: async (req: NextRequest) => {
+    const { user: userId } = verifyToken(req); // Now works with NextRequest
+
+    return { req, prisma, userId: userId ?? undefined };
   },
 });

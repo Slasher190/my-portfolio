@@ -15,7 +15,7 @@ interface User {
 }
 
 // Initialize the GraphQL client
-const client = new GraphQLClient("https://your-graphql-endpoint.com", {
+const client = new GraphQLClient("http://localhost:3000/graphql", {
   headers: {
     Authorization: `Bearer ${process.env.GRAPHQL_API_KEY}`,
   },

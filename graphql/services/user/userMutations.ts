@@ -1,4 +1,4 @@
-import { Context } from "@app/pages/api/graphql";
+import { Context } from "@app/app/api/graphql";
 import {
   LoginInput,
   SignupInput,
@@ -10,6 +10,7 @@ import { CustomError } from "@app/graphql/error";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export const userMutations = {
   createUser: async (
@@ -18,7 +19,7 @@ export const userMutations = {
     context: Context
   ) => {
     const { email, password, username, confirmPassword } = args.input;
-    const { res } = context;
+
     try {
       if (!email && !username) {
         return {
@@ -73,10 +74,16 @@ export const userMutations = {
           expiresIn: process.env.JWT_EXPIRATION,
         }
       );
-      res.setHeader(
-        "Set-Cookie",
-        `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
-      );
+
+      cookies().set({
+        name: "token",
+        value: token,
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+      });
 
       return {
         __typename: "UserRegistrationSuccess",
@@ -103,6 +110,7 @@ export const userMutations = {
   ) => {
     const { email, username, password } = args.input;
     const { res } = context;
+
     try {
       if (!email && !username) {
         return {
@@ -115,6 +123,7 @@ export const userMutations = {
           },
         };
       }
+
       const user = await context.prisma.user.findUnique({
         where: email ? { email } : { username },
         include: {
@@ -146,6 +155,7 @@ export const userMutations = {
           permission: true,
         },
       });
+
       if (!user) {
         return {
           error: {
@@ -157,6 +167,7 @@ export const userMutations = {
           },
         };
       }
+
       const valid = await bcrypt.compare(password, user.password);
       if (!valid) {
         return {
@@ -169,14 +180,7 @@ export const userMutations = {
           },
         };
       }
-      // Feature will added in future
-      // if (user.suspended) {
-      //   throw new CustomError("User is suspended.", ErrorType.USER_SUSPENDED);
-      // }
 
-      // if (user.blocked) {
-      //   throw new CustomError("User is blocked.", ErrorType.USER_BLOCKED);
-      // }
       const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET ?? "kgfjlkrg2gt412g45k4g51%",
@@ -184,10 +188,16 @@ export const userMutations = {
           expiresIn: process.env.JWT_EXPIRATION,
         }
       );
-      res.setHeader(
-        "Set-Cookie",
-        `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60}; SameSite=Strict; Secure=${process.env.NODE_ENV === "production"}`
-      );
+
+      cookies().set({
+        name: "token",
+        value: token,
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+      });
 
       return {
         __typename: "UserLoginSuccess",
@@ -237,15 +247,14 @@ export const userMutations = {
       const userProfile = await context.prisma.userProfile.create({
         data: {
           userId: id,
-
-          firstName: firstName,
-          middleName: middleName,
-          lastName: lastName,
-          headline: headline,
-          summary: summary,
-          phoneNumber: phoneNumber,
+          firstName,
+          middleName,
+          lastName,
+          headline,
+          summary,
+          phoneNumber,
           dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
-          sex: sex,
+          sex,
           currentLocation: currentLocation
             ? {
                 create: {
@@ -257,8 +266,6 @@ export const userMutations = {
                 },
               }
             : undefined,
-
-          // Education
           education: education
             ? {
                 create: education.map((edu) => ({
@@ -282,8 +289,6 @@ export const userMutations = {
                 })),
               }
             : undefined,
-
-          // Experience
           experience: experience
             ? {
                 create: experience.map((exp) => ({
@@ -307,8 +312,6 @@ export const userMutations = {
                 })),
               }
             : undefined,
-
-          // Skills
           skills: skills
             ? {
                 create: skills.map((skill) => ({
@@ -322,8 +325,6 @@ export const userMutations = {
                 })),
               }
             : undefined,
-
-          // Languages
           languages: languages
             ? {
                 create: languages.map((lang) => ({
@@ -337,8 +338,6 @@ export const userMutations = {
                 })),
               }
             : undefined,
-
-          // Permissions
           permission: permission
             ? {
                 create: {
@@ -365,5 +364,7 @@ export const userMutations = {
     _parent: unknown,
     args: { input: UserExperienceInput },
     context: Context
-  ) => {},
+  ) => {
+    // Placeholder for future implementation
+  },
 };
