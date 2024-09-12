@@ -7,7 +7,7 @@ import {
   StateResponse,
 } from "@app/graphql/graphql";
 import { _ } from "@app/graphql/middileware/axios";
-import { Context } from "@app/pages/api/graphql";
+import { Context } from "@app/app/api/graphql";
 import { AxiosError } from "axios";
 import { GraphQLError } from "graphql";
 
