@@ -1,4 +1,4 @@
-import { Context } from "@app/pages/api/graphql";
+import { Context } from "@app/app/api/graphql";
 
 export const userQueries = {
   user: async (_parent: unknown, args: { id: string }, context: Context) => {

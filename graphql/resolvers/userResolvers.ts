@@ -13,7 +13,7 @@ export const userResolvers = {
       if (obj.user) {
         return "UserRegistrationSuccess";
       }
-      if (obj.error.message) {
+      if (obj.error?.message) {
         switch (obj.error.extensions?.code) {
           case ErrorType.USER_INPUT_ERROR:
             return "UserInputError";
@@ -34,10 +34,11 @@ export const userResolvers = {
         extensions?: { code: ErrorType };
       };
     }) {
+      console.log(obj);
       if (obj.user) {
         return "UserLoginSuccess";
       }
-      if (obj.error.message) {
+      if (obj.error?.message) {
         switch (obj.error.extensions?.code) {
           case ErrorType.USER_INPUT_ERROR:
             return "UserInputError";
