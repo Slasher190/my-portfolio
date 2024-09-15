@@ -11,6 +11,7 @@ export const educationMutations = {
   ) => {
     try {
       const userId = context.userId;
+      console.log(userId);
       if (!userId) {
         throw new CustomError(
           "You're not allowed to access this resource",
@@ -35,7 +36,6 @@ export const educationMutations = {
       if (!institution) missingFields.push("institution");
       if (!degree) missingFields.push("degree");
       if (!fieldOfStudy) missingFields.push("fieldOfStudy");
-      if (!userProfileId) missingFields.push("userProfileId");
 
       if (missingFields.length > 0) {
         return {
