@@ -8,8 +8,9 @@ export const verifyToken = (req: NextRequest) => {
       token,
       process.env.JWT_SECRET ?? "kgfjlkrg2gt412g45k4g51%"
     ) as JwtPayload;
+    const userId = decoded?.userId;
     // { userId: 41, iat: 1720368058, exp: 1720371658 } - decoded
-    return { user: decoded };
+    return { user: userId };
   } catch (err) {
     return { user: null };
   }
