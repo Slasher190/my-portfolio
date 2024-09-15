@@ -24,7 +24,7 @@ const formatError = (
     error instanceof GraphQLError &&
     error.originalError instanceof CustomError
   ) {
-    const customError = error.originalError as CustomError;
+    const customError = error.originalError;
     return {
       ...formattedError,
       message: customError.message,
@@ -45,7 +45,7 @@ const apolloServer = new ApolloServer<Context>({
 // Context function adjusted for App Router
 export const GET = startServerAndCreateNextHandler(apolloServer, {
   context: async (req: NextRequest) => {
-    const { user: userId } = verifyToken(req); // Now works with NextRequest
+    const { user: userId } = verifyToken(req);
 
     return { req, prisma, userId: userId ?? undefined };
   },
@@ -53,7 +53,7 @@ export const GET = startServerAndCreateNextHandler(apolloServer, {
 
 export const POST = startServerAndCreateNextHandler(apolloServer, {
   context: async (req: NextRequest) => {
-    const { user: userId } = verifyToken(req); // Now works with NextRequest
+    const { user: userId } = verifyToken(req);
 
     return { req, prisma, userId: userId ?? undefined };
   },

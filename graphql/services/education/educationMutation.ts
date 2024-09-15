@@ -1,7 +1,7 @@
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 import { CustomError } from "@app/graphql/error";
 import { UserEducationInput } from "@app/graphql/graphql";
-import { Context } from "@app/pages/api/graphql";
+import { Context } from "@app/app/api/graphql/route";
 
 export const educationMutations = {
   addUserEducation: async (
