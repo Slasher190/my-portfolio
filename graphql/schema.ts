@@ -22,7 +22,10 @@ export const typeDefs = `#graphql
     getCountries: CountryResult
     getStatesByCountry(input: Id): StateResult
     getCitiesByState(input: Id): CityResult
+    getUserExperiences(input: Id): UserExperienceResult
   }
+  
+  
   type Mutation {
     createUser(input: SignupInput!): UserRegistrationResult
     deleteUser(id: ID!): User

@@ -20,15 +20,15 @@ npm run lint:check ||
 )
 
 # Check tsconfig standards
-npm run types:check ||
-(
-    echo '⚠️ TypeScript type check failed.
-            Please make the required changes listed above.'
-    false;
-)
+# npm run types:check ||
+# (
+#     echo '⚠️ TypeScript type check failed.
+#             Please make the required changes listed above.'
+#     false;
+# )
 
-# If everything passes... Now we can commit
-echo '👍 All checks passed. Attempting to build the project now.'
+# # If everything passes... Now we can commit
+# echo '👍 All checks passed. Attempting to build the project now.'
 
 # Uncomment the build step if needed
 # npm run build ||

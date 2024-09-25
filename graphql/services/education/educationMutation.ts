@@ -117,7 +117,9 @@ export const educationMutations = {
           ErrorType.AUTHENTICATION_ERROR
         );
       }
+      //console.log("Hello");
 
+      const input = args.input[0];
       const {
         id,
         degree,
@@ -128,19 +130,10 @@ export const educationMutations = {
         location,
         startDate,
         userProfileId,
-      } = args.input[0];
+      } = input;
+      console.log("Hello");
+      console.log(input);
 
-      if (!id) {
-        return {
-          error: {
-            __typename: "EducationInputError",
-            message: `Missing fields: id`,
-            extensions: {
-              code: ErrorType.VALIDATION_ERROR,
-            },
-          },
-        };
-      }
       const missingFields = [];
       if (!startDate) missingFields.push("startDate");
       if (!institution) missingFields.push("institution");
@@ -163,9 +156,9 @@ export const educationMutations = {
       if (location) {
         locationData = {
           update: {
-            cityId: location.cityId,
-            stateId: location.stateId,
-            countryId: location.countryId,
+            cityId: location?.cityId,
+            stateId: location?.stateId,
+            countryId: location?.countryId,
           },
         };
       }

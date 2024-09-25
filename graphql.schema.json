@@ -12,7 +12,6 @@
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -23,7 +22,6 @@
         "kind": "OBJECT",
         "name": "City",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "country_code",
@@ -171,7 +169,6 @@
         "kind": "OBJECT",
         "name": "CityResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "cities",
@@ -203,7 +200,6 @@
         "kind": "UNION",
         "name": "CityResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -225,7 +221,6 @@
         "kind": "OBJECT",
         "name": "Country",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "capital",
@@ -493,7 +488,6 @@
         "kind": "OBJECT",
         "name": "CountryResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "countries",
@@ -525,7 +519,6 @@
         "kind": "UNION",
         "name": "CountryResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -547,7 +540,6 @@
         "kind": "OBJECT",
         "name": "Education",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "degree",
@@ -675,7 +667,6 @@
         "kind": "OBJECT",
         "name": "EducationInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -703,7 +694,6 @@
         "kind": "OBJECT",
         "name": "EducationNotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -731,7 +721,6 @@
         "kind": "ENUM",
         "name": "EmploymentType",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -779,7 +768,6 @@
         "kind": "INTERFACE",
         "name": "Error",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -813,7 +801,6 @@
         "kind": "OBJECT",
         "name": "ErrorExtensions",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -841,7 +828,6 @@
         "kind": "OBJECT",
         "name": "ErrorHandler",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "extensions",
@@ -887,7 +873,6 @@
         "kind": "OBJECT",
         "name": "Experience",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "company",
@@ -1019,7 +1004,6 @@
         "kind": "OBJECT",
         "name": "ExperienceInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -1047,7 +1031,6 @@
         "kind": "OBJECT",
         "name": "ExperienceNotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -1075,7 +1058,6 @@
         "kind": "OBJECT",
         "name": "Failure",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -1125,7 +1107,6 @@
         "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1136,7 +1117,6 @@
         "kind": "SCALAR",
         "name": "ID",
         "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1147,7 +1127,6 @@
         "kind": "INPUT_OBJECT",
         "name": "Id",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1171,7 +1150,6 @@
         "kind": "INPUT_OBJECT",
         "name": "Ids",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1203,7 +1181,6 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1214,7 +1191,6 @@
         "kind": "OBJECT",
         "name": "Language",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -1258,7 +1234,6 @@
         "kind": "INPUT_OBJECT",
         "name": "LanguageInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1282,7 +1257,6 @@
         "kind": "OBJECT",
         "name": "LanguageInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -1310,7 +1284,6 @@
         "kind": "OBJECT",
         "name": "LanguageNotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -1338,7 +1311,6 @@
         "kind": "OBJECT",
         "name": "LanguageResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "languages",
@@ -1370,7 +1342,6 @@
         "kind": "UNION",
         "name": "LanguageResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1397,7 +1368,6 @@
         "kind": "OBJECT",
         "name": "Location",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "cityId",
@@ -1493,7 +1463,6 @@
         "kind": "INPUT_OBJECT",
         "name": "LocationInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1577,7 +1546,6 @@
         "kind": "ENUM",
         "name": "LocationType",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1607,7 +1575,6 @@
         "kind": "INPUT_OBJECT",
         "name": "LoginInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1659,7 +1626,6 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "addUserEducation",
@@ -2210,7 +2176,6 @@
         "kind": "OBJECT",
         "name": "NotFound",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -2260,7 +2225,6 @@
         "kind": "OBJECT",
         "name": "NotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -2288,7 +2252,6 @@
         "kind": "INTERFACE",
         "name": "Operation",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -2348,7 +2311,6 @@
         "kind": "UNION",
         "name": "OperationStatus",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2375,7 +2337,6 @@
         "kind": "OBJECT",
         "name": "Permission",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -2451,7 +2412,6 @@
         "kind": "OBJECT",
         "name": "PermissionInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -2479,7 +2439,6 @@
         "kind": "OBJECT",
         "name": "PermissionNotUpdatedError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -2507,7 +2466,6 @@
         "kind": "ENUM",
         "name": "Proficiency",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2543,7 +2501,6 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "getAllSkillSet",
@@ -2649,6 +2606,31 @@
             "deprecationReason": null
           },
           {
+            "name": "getUserExepriences",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Id",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "UNION",
+              "name": "UserExperienceResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "user",
             "description": null,
             "args": [],
@@ -2686,7 +2668,6 @@
         "kind": "ENUM",
         "name": "Sex",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2716,7 +2697,6 @@
         "kind": "INPUT_OBJECT",
         "name": "SignupInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2792,7 +2772,6 @@
         "kind": "OBJECT",
         "name": "Skill",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -2836,7 +2815,6 @@
         "kind": "INPUT_OBJECT",
         "name": "SkillInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2860,7 +2838,6 @@
         "kind": "OBJECT",
         "name": "SkillInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -2888,7 +2865,6 @@
         "kind": "OBJECT",
         "name": "SkillNotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -2916,7 +2892,6 @@
         "kind": "OBJECT",
         "name": "SkillResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "skills",
@@ -2948,7 +2923,6 @@
         "kind": "UNION",
         "name": "SkillsResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2975,7 +2949,6 @@
         "kind": "OBJECT",
         "name": "State",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "country_code",
@@ -3099,7 +3072,6 @@
         "kind": "OBJECT",
         "name": "StateResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "states",
@@ -3131,7 +3103,6 @@
         "kind": "UNION",
         "name": "StateResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3153,7 +3124,6 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3164,7 +3134,6 @@
         "kind": "OBJECT",
         "name": "Successful",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -3214,7 +3183,6 @@
         "kind": "OBJECT",
         "name": "User",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "createdAt",
@@ -3330,7 +3298,6 @@
         "kind": "OBJECT",
         "name": "UserAlreadyExistError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -3358,7 +3325,6 @@
         "kind": "OBJECT",
         "name": "UserBlockedError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -3386,7 +3352,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserEducationInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3506,7 +3471,6 @@
         "kind": "OBJECT",
         "name": "UserEducationResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "education",
@@ -3538,7 +3502,6 @@
         "kind": "UNION",
         "name": "UserEducationResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3565,7 +3528,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserExperienceInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3685,7 +3647,6 @@
         "kind": "OBJECT",
         "name": "UserExperienceResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "experience",
@@ -3717,7 +3678,6 @@
         "kind": "UNION",
         "name": "UserExperienceResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3744,7 +3704,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3772,7 +3731,6 @@
         "kind": "OBJECT",
         "name": "UserInputError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -3800,7 +3758,6 @@
         "kind": "OBJECT",
         "name": "UserLanguage",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -3860,7 +3817,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserLanguageInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3900,7 +3856,6 @@
         "kind": "OBJECT",
         "name": "UserLanguageResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "languages",
@@ -3932,7 +3887,6 @@
         "kind": "UNION",
         "name": "UserLanguageResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3959,7 +3913,6 @@
         "kind": "UNION",
         "name": "UserLoginResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3996,7 +3949,6 @@
         "kind": "OBJECT",
         "name": "UserLoginSuccess",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "user",
@@ -4024,7 +3976,6 @@
         "kind": "OBJECT",
         "name": "UserNotFoundError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -4052,7 +4003,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserPermissionInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4112,7 +4062,6 @@
         "kind": "OBJECT",
         "name": "UserPermissionResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "permission",
@@ -4140,7 +4089,6 @@
         "kind": "UNION",
         "name": "UserPermissionResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4167,7 +4115,6 @@
         "kind": "OBJECT",
         "name": "UserProfile",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "currentLocation",
@@ -4419,7 +4366,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserProfileInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4643,7 +4589,6 @@
         "kind": "OBJECT",
         "name": "UserProfileResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "userProfile",
@@ -4671,7 +4616,6 @@
         "kind": "UNION",
         "name": "UserProfileResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4708,7 +4652,6 @@
         "kind": "UNION",
         "name": "UserRegistrationResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4735,7 +4678,6 @@
         "kind": "OBJECT",
         "name": "UserRegistrationSuccess",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "user",
@@ -4763,7 +4705,6 @@
         "kind": "OBJECT",
         "name": "UserResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "user",
@@ -4791,7 +4732,6 @@
         "kind": "UNION",
         "name": "UserResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4823,7 +4763,6 @@
         "kind": "OBJECT",
         "name": "UserSkill",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -4883,7 +4822,6 @@
         "kind": "INPUT_OBJECT",
         "name": "UserSkillInput",
         "description": null,
-        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4923,7 +4861,6 @@
         "kind": "OBJECT",
         "name": "UserSkillResponse",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "skills",
@@ -4955,7 +4892,6 @@
         "kind": "UNION",
         "name": "UserSkillResult",
         "description": null,
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4982,7 +4918,6 @@
         "kind": "OBJECT",
         "name": "UserSuspendedError",
         "description": null,
-        "isOneOf": null,
         "fields": [
           {
             "name": "error",
@@ -5010,7 +4945,6 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -5127,7 +5061,6 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5253,7 +5186,6 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -5321,7 +5253,6 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -5442,7 +5373,6 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -5538,7 +5468,6 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -5650,7 +5579,6 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
-        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -5854,18 +5782,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "isOneOf",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -5877,7 +5793,6 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
-        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5983,13 +5898,6 @@
             "deprecationReason": null
           }
         ]
-      },
-      {
-        "name": "oneOf",
-        "description": "Indicates exactly one field must be supplied and this field must not be `null`.",
-        "isRepeatable": false,
-        "locations": ["INPUT_OBJECT"],
-        "args": []
       },
       {
         "name": "skip",
