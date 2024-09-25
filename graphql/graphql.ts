@@ -377,6 +377,7 @@ export type Query = {
   getCountries?: Maybe<CountryResult>;
   getStatesByCountry?: Maybe<StateResult>;
   getUserById?: Maybe<UserResult>;
+  getUserExepriences?: Maybe<UserExperienceResult>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
 };
@@ -391,6 +392,10 @@ export type QueryGetStatesByCountryArgs = {
 
 export type QueryGetUserByIdArgs = {
   input: UserInput;
+};
+
+export type QueryGetUserExepriencesArgs = {
+  input?: InputMaybe<Id>;
 };
 
 export enum Sex {
@@ -1642,6 +1647,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryGetUserByIdArgs, "input">
+  >;
+  getUserExepriences?: Resolver<
+    Maybe<ResolversTypes["UserExperienceResult"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryGetUserExepriencesArgs>
   >;
   user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   users?: Resolver<

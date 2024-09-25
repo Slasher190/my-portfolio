@@ -1,4 +1,4 @@
-import { Context } from "@app/app/api/graphql";
+import { Context } from "@app/app/api/graphql/route";
 import {
   LoginInput,
   SignupInput,
