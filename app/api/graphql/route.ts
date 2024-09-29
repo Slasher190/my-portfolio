@@ -8,7 +8,11 @@ import { CustomError } from "@app/graphql/error";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import { verifyToken } from "@app/utils/tokenUtils"; // Updated to work with NextRequest
 import { JwtPayload } from "jsonwebtoken";
-import { NextRequest } from "next/server"; // Import NextRequest for App Router
+import { NextRequest } from "next/server"; 
+import { KeyvAdapter } from "@apollo/utils.keyvadapter";
+import Keyv from "keyv";
+import KeyvRedis from "@keyv/redis";
+import Redis from "ioredis";
 
 export type Context = {
   prisma: PrismaClient;
@@ -36,10 +40,15 @@ const formatError = (
   return formattedError;
 };
 
+const keyv = new Keyv({
+  store: new KeyvRedis("redis://localhost:6379"),
+});
+
 const apolloServer = new ApolloServer<Context>({
   typeDefs,
   resolvers,
   formatError,
+  cache: new KeyvAdapter(keyv),
 });
 
 // Context function adjusted for App Router
