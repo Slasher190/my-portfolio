@@ -187,4 +187,69 @@ export const educationMutations = {
       );
     }
   },
+  deleteUserEducation: async (
+    _parent: unknown,
+    args: { id: string; userProfileId: string },
+    context: Context
+  ) => {
+    try {
+      const userId = context.userId;
+      if (!userId) {
+        throw new CustomError(
+          "You're not allowed to access this resource",
+          ErrorType.AUTHENTICATION_ERROR
+        );
+      }
+
+      const { id, userProfileId } = args;
+
+      if (!id || !userProfileId) {
+        return {
+          error: {
+            __typename: "EducationInputError",
+            message: "Missing required fields: id or userProfileId",
+            extensions: {
+              code: ErrorType.VALIDATION_ERROR,
+            },
+          },
+        };
+      }
+
+      const educationToDelete = await context.prisma.education.findFirst({
+        where: {
+          id: id,
+          userProfileId: userProfileId,
+        },
+      });
+
+      if (!educationToDelete) {
+        return {
+          error: {
+            __typename: "EducationNotFoundError",
+            message: "Education record not found",
+            extensions: {
+              code: ErrorType.NOT_FOUND_ERROR,
+            },
+          },
+        };
+      }
+
+      const deletedEducation = await context.prisma.education.delete({
+        where: {
+          id: id,
+        },
+      });
+
+      return {
+        message: "Education record deleted successfully",
+        deletedEducation,
+        __typeName: "UserEducationDeleteResponse",
+      };
+    } catch (error) {
+      throw new CustomError(
+        `Error: ${JSON.stringify(error)}`,
+        ErrorType.INTERNAL_SERVER_ERROR
+      );
+    }
+  },
 };
