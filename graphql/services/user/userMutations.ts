@@ -2,7 +2,7 @@ import { Context } from "@app/app/api/graphql/route";
 import {
   LoginInput,
   SignupInput,
-  UserExperienceInput,
+  // UserExperienceInput,
   UserProfileInput,
   User,
 } from "@app/graphql/graphql";
@@ -109,7 +109,7 @@ export const userMutations = {
     context: Context
   ) => {
     const { email, username, password } = args.input;
-    const { res } = context;
+    // const { res } = context;
 
     try {
       if (!email && !username) {
@@ -360,11 +360,11 @@ export const userMutations = {
       );
     }
   },
-  updateUserExperiences: async (
-    _parent: unknown,
-    args: { input: UserExperienceInput },
-    context: Context
-  ) => {
-    // Placeholder for future implementation
-  },
+  // updateUserExperiences: async (
+  //   _parent: unknown,
+  //   args: { input: UserExperienceInput },
+  //   context: Context
+  // ) => {
+  //   // Placeholder for future implementation
+  // },
 };

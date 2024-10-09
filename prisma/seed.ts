@@ -140,9 +140,9 @@ async function main() {
 
   await prisma.user.create({
     data: {
-      email: "user1@myportfolio.com",
-      password: await bcrypt.hash("user1password", 10),
-      username: "user1",
+      email: "sudhi190@gmail.com",
+      password: await bcrypt.hash("8821@Sudhi190", 10),
+      username: "sudhi190",
       permission: {
         create: {
           isEmailVisible: true,

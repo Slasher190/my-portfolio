@@ -17,9 +17,9 @@ import {
 import { useAppDispatch, useAppSelector } from "@app/redux/store/hooks";
 
 const Authentication = () => {
-  const [loginUser] = useMutation(LOGIN_USER);
+  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
   const dispatch = useAppDispatch();
-  const { user, loading, error } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.user);
   const formik = useFormik<LoginInput>({
     initialValues: {
       email: "",
@@ -39,10 +39,10 @@ const Authentication = () => {
             },
           },
         });
-        if (data.createUser.user) {
-          dispatch(userMutationSuccess(data.createUser));
-        } else if (data.createUser.error) {
-          dispatch(userMutationError(data.createUser));
+        if (data.loginUser.user) {
+          dispatch(userMutationSuccess(data.loginUser));
+        } else if (data.loginUser.error || error) {
+          dispatch(userMutationError(data.loginUser));
         } else {
           console.error("Unexpected error");
         }
@@ -53,8 +53,10 @@ const Authentication = () => {
   });
 
   useEffect(() => {
-    console.log(user, error, "from redux");
-  }, [dispatch, user, error, loading]);
+    console.log(data, "data");
+    console.log(error, "error");
+    console.log(user, "user");
+  }, [data, dispatch, error, loading, user]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;

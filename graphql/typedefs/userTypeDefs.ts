@@ -175,6 +175,7 @@ const userTypeDefs = `#graphql
   union SkillsResult = SkillResponse | SkillNotFoundError | SkillInputError
   union LanguageResult = LanguageResponse | LanguageNotFoundError | LanguageInputError
   union OperationStatus = Successful | Failure | NotFound
+  union UserPageResult = UserResponse | UserNotFoundError | UserSuspendedError | UserBlockedError
 `;
 
 export default userTypeDefs;

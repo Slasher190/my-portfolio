@@ -272,7 +272,7 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationDeleteUserArgs = {
-  id: Scalars["ID"]["input"];
+  input: Scalars["ID"]["input"];
 };
 
 export type MutationDeleteUserEducationArgs = {
@@ -377,7 +377,8 @@ export type Query = {
   getCountries?: Maybe<CountryResult>;
   getStatesByCountry?: Maybe<StateResult>;
   getUserById?: Maybe<UserResult>;
-  getUserExepriences?: Maybe<UserExperienceResult>;
+  getUserDetailsByUsername?: Maybe<UserPageResult>;
+  getUserExperiences?: Maybe<UserExperienceResult>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
 };
@@ -394,7 +395,11 @@ export type QueryGetUserByIdArgs = {
   input: UserInput;
 };
 
-export type QueryGetUserExepriencesArgs = {
+export type QueryGetUserDetailsByUsernameArgs = {
+  input?: InputMaybe<Username>;
+};
+
+export type QueryGetUserExperiencesArgs = {
   input?: InputMaybe<Id>;
 };
 
@@ -577,6 +582,12 @@ export type UserNotFoundError = {
   error: ErrorHandler;
 };
 
+export type UserPageResult =
+  | UserBlockedError
+  | UserNotFoundError
+  | UserResponse
+  | UserSuspendedError;
+
 export type UserPermissionInput = {
   id?: InputMaybe<Scalars["ID"]["input"]>;
   isDateOfBirthVisible?: InputMaybe<Scalars["Boolean"]["input"]>;
@@ -690,6 +701,10 @@ export type UserSkillResult =
 export type UserSuspendedError = {
   __typename?: "UserSuspendedError";
   error: ErrorHandler;
+};
+
+export type Username = {
+  username: Scalars["String"]["input"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -823,6 +838,11 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = {
     | UserLoginSuccess
     | UserNotFoundError
     | UserSuspendedError;
+  UserPageResult:
+    | UserBlockedError
+    | UserNotFoundError
+    | UserResponse
+    | UserSuspendedError;
   UserPermissionResult:
     | PermissionInputError
     | PermissionNotUpdatedError
@@ -950,6 +970,9 @@ export type ResolversTypes = {
   >;
   UserLoginSuccess: ResolverTypeWrapper<UserLoginSuccess>;
   UserNotFoundError: ResolverTypeWrapper<UserNotFoundError>;
+  UserPageResult: ResolverTypeWrapper<
+    ResolversUnionTypes<ResolversTypes>["UserPageResult"]
+  >;
   UserPermissionInput: UserPermissionInput;
   UserPermissionResponse: ResolverTypeWrapper<UserPermissionResponse>;
   UserPermissionResult: ResolverTypeWrapper<
@@ -976,6 +999,7 @@ export type ResolversTypes = {
     ResolversUnionTypes<ResolversTypes>["UserSkillResult"]
   >;
   UserSuspendedError: ResolverTypeWrapper<UserSuspendedError>;
+  Username: Username;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1050,6 +1074,7 @@ export type ResolversParentTypes = {
   UserLoginResult: ResolversUnionTypes<ResolversParentTypes>["UserLoginResult"];
   UserLoginSuccess: UserLoginSuccess;
   UserNotFoundError: UserNotFoundError;
+  UserPageResult: ResolversUnionTypes<ResolversParentTypes>["UserPageResult"];
   UserPermissionInput: UserPermissionInput;
   UserPermissionResponse: UserPermissionResponse;
   UserPermissionResult: ResolversUnionTypes<ResolversParentTypes>["UserPermissionResult"];
@@ -1066,6 +1091,7 @@ export type ResolversParentTypes = {
   UserSkillResponse: UserSkillResponse;
   UserSkillResult: ResolversUnionTypes<ResolversParentTypes>["UserSkillResult"];
   UserSuspendedError: UserSuspendedError;
+  Username: Username;
 };
 
 export type CityResolvers<
@@ -1454,7 +1480,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes["User"]>,
     ParentType,
     ContextType,
-    RequireFields<MutationDeleteUserArgs, "id">
+    RequireFields<MutationDeleteUserArgs, "input">
   >;
   deleteUserEducation?: Resolver<
     Maybe<ResolversTypes["OperationStatus"]>,
@@ -1648,11 +1674,17 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryGetUserByIdArgs, "input">
   >;
-  getUserExepriences?: Resolver<
+  getUserDetailsByUsername?: Resolver<
+    Maybe<ResolversTypes["UserPageResult"]>,
+    ParentType,
+    ContextType,
+    Partial<QueryGetUserDetailsByUsernameArgs>
+  >;
+  getUserExperiences?: Resolver<
     Maybe<ResolversTypes["UserExperienceResult"]>,
     ParentType,
     ContextType,
-    Partial<QueryGetUserExepriencesArgs>
+    Partial<QueryGetUserExperiencesArgs>
   >;
   user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
   users?: Resolver<
@@ -1955,6 +1987,21 @@ export type UserNotFoundErrorResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserPageResultResolvers<
+  ContextType = any,
+  ParentType extends
+    ResolversParentTypes["UserPageResult"] = ResolversParentTypes["UserPageResult"],
+> = {
+  __resolveType: TypeResolveFn<
+    | "UserBlockedError"
+    | "UserNotFoundError"
+    | "UserResponse"
+    | "UserSuspendedError",
+    ParentType,
+    ContextType
+  >;
+};
+
 export type UserPermissionResponseResolvers<
   ContextType = any,
   ParentType extends
@@ -2220,6 +2267,7 @@ export type Resolvers<ContextType = any> = {
   UserLoginResult?: UserLoginResultResolvers<ContextType>;
   UserLoginSuccess?: UserLoginSuccessResolvers<ContextType>;
   UserNotFoundError?: UserNotFoundErrorResolvers<ContextType>;
+  UserPageResult?: UserPageResultResolvers<ContextType>;
   UserPermissionResponse?: UserPermissionResponseResolvers<ContextType>;
   UserPermissionResult?: UserPermissionResultResolvers<ContextType>;
   UserProfile?: UserProfileResolvers<ContextType>;

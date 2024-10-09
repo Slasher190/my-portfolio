@@ -5,32 +5,52 @@ export const LOGIN_USER = gql`
     loginUser(input: $input) {
       ... on UserLoginSuccess {
         user {
-          createdAt
           id
-          updatedAt
-          username
           email
+          username
+          createdAt
+          updatedAt
+          permission {
+            id
+            isEmailVisible
+            isPhoneVisible
+            isDateOfBirthVisible
+          }
           profile {
             id
-            headline
             firstName
-            __typename
+            middleName
+            lastName
+            headline
+            summary
+            phoneNumber
+            dateOfBirth
+            emailVerified
+            phoneNumberVerified
+            currentLocation {
+              id
+              countryId
+              stateId
+              cityId
+              coordinates
+              locationType
+            }
             experience {
               id
-              description
-              company
-              location {
-                coordinates
-                city
-                id
-                country
-                state
-                __typename
-              }
-              endDate
-              startDate
               title
-              __typename
+              company
+              startDate
+              endDate
+              description
+              location {
+                id
+                countryId
+                stateId
+                cityId
+                coordinates
+                locationType
+              }
+              employmentType
             }
             education {
               id
@@ -42,59 +62,65 @@ export const LOGIN_USER = gql`
               description
               location {
                 id
+                countryId
+                stateId
+                cityId
                 coordinates
-                country
-                state
-                __typename
+                locationType
               }
-              __typename
             }
-            dateOfBirth
-            currentLocation {
-              id
-              country
-              state
-              city
-              coordinates
-              __typename
-            }
-            lastName
-            middleName
-            permission {
-              id
-              isEmailVisible
-              isPhoneVisible
-              isDateOfBirthVisible
-              __typename
-            }
-            phoneNumber
             skills {
               id
-              name
+              skill {
+                id
+                name
+              }
               proficiency
-              __typename
             }
-            summary
+            languages {
+              id
+              language {
+                id
+                name
+              }
+              proficiency
+            }
+            sex
           }
         }
       }
       ... on UserInputError {
         error {
+          message
           extensions {
             code
           }
+        }
+      }
+      ... on UserSuspendedError {
+        error {
           message
+          extensions {
+            code
+          }
+        }
+      }
+      ... on UserBlockedError {
+        error {
+          message
+          extensions {
+            code
+          }
         }
       }
       ... on UserNotFoundError {
         error {
+          message
           extensions {
             code
           }
-          message
         }
       }
-      __typename
     }
   }
 `;
