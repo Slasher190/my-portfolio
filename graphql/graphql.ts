@@ -472,7 +472,7 @@ export type Successful = Operation & {
 export type User = {
   __typename?: "User";
   createdAt: Scalars["String"]["output"];
-  email: Scalars["String"]["output"];
+  email?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
   permission?: Maybe<Permission>;
   profile?: Maybe<UserProfile>;
@@ -1817,7 +1817,7 @@ export type UserResolvers<
     ResolversParentTypes["User"] = ResolversParentTypes["User"],
 > = {
   createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   permission?: Resolver<
     Maybe<ResolversTypes["Permission"]>,

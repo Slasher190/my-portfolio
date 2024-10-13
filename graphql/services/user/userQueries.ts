@@ -2,6 +2,7 @@ import { Context } from "@app/app/api/graphql/route";
 import { ErrorType } from "@app/graphql/constants/errorEnum";
 import { CustomError } from "@app/graphql/error";
 import { Username } from "@app/graphql/graphql";
+import { extractValidFields } from "@app/graphql/utils/filterValidFields";
 
 export const userQueries = {
   user: async (_parent: unknown, args: { id: string }, context: Context) => {
@@ -81,7 +82,7 @@ export const userQueries = {
 
       return {
         __typename: "UserResponse",
-        user,
+        user: extractValidFields(user),
       };
     } catch (error) {
       throw new CustomError(
