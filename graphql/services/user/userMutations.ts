@@ -91,7 +91,7 @@ export const userMutations = {
       };
     } catch (error) {
       throw new CustomError(
-        "Internal server error",
+        `Internal server error: ${JSON.stringify(error)}`,
         ErrorType.INTERNAL_SERVER_ERROR
       );
     }
@@ -110,7 +110,6 @@ export const userMutations = {
   ) => {
     const { email, username, password } = args.input;
     // const { res } = context;
-
     try {
       if (!email && !username) {
         return {

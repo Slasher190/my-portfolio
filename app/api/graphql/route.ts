@@ -43,18 +43,12 @@ const apolloServer = new ApolloServer<Context>({
 });
 
 // Context function adjusted for App Router
-export const GET = startServerAndCreateNextHandler(apolloServer, {
+const handler = startServerAndCreateNextHandler(apolloServer, {
   context: async (req: NextRequest) => {
     const { user: userId } = verifyToken(req);
-
     return { req, prisma, userId: userId ?? undefined };
   },
 });
 
-export const POST = startServerAndCreateNextHandler(apolloServer, {
-  context: async (req: NextRequest) => {
-    const { user: userId } = verifyToken(req);
-
-    return { req, prisma, userId: userId ?? undefined };
-  },
-});
+export const GET = handler;
+export const POST = handler;
