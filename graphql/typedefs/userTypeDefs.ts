@@ -1,7 +1,7 @@
 const userTypeDefs = `#graphql
   type User {
     id: ID!
-    email: String!
+    email: String
     username: String!
     createdAt: String!
     updatedAt: String!
