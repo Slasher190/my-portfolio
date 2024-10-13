@@ -66,7 +66,7 @@ export const userResolvers = {
     }) {
       console.log(obj);
       if (obj.user) {
-        return "UserLoginSuccess";
+        return "UserResponse";
       }
       if (obj.error?.message) {
         switch (obj.error.extensions?.code) {
