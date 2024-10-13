@@ -50,7 +50,37 @@ export const userResolvers = {
           case ErrorType.AUTHENTICATION_ERROR:
             return "UserNotFoundError";
           default:
+            return "UserNotFoundError";
+        }
+      }
+      return null;
+    },
+  },
+  UserPageResult: {
+    __resolveType(obj: {
+      user?: User;
+      error: {
+        message?: string;
+        extensions?: { code: ErrorType };
+      };
+    }) {
+      console.log(obj);
+      if (obj.user) {
+        return "UserResponse";
+      }
+      if (obj.error?.message) {
+        switch (obj.error.extensions?.code) {
+          case ErrorType.USER_INPUT_ERROR:
             return "UserInputError";
+          case ErrorType.USER_SUSPENDED:
+            return "UserSuspendedError";
+          case ErrorType.USER_BLOCKED:
+            return "UserBlockedError";
+          case ErrorType.USER_NOT_FOUND:
+          case ErrorType.AUTHENTICATION_ERROR:
+            return "UserNotFoundError";
+          default:
+            return "UserNotFoundError";
         }
       }
       return null;

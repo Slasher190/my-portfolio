@@ -15,6 +15,10 @@ const inputTypeDefs = `#graphql
   input UserInput {
     id: ID!
   }
+  
+  input Username {
+    username: String!
+  }
 
   input UserProfileInput {
     id: ID
