@@ -23,15 +23,15 @@ export const userQueries = {
   ) => {
     try {
       const { username } = args.input;
-
+      console.log(username, "username");
       if (!username) {
         return {
-          // error: {
-          __typename: "UserInputError",
-          message: "You must provide correct username.",
-          extensions: {
-            code: ErrorType.USER_INPUT_ERROR,
-            //  },
+          error: {
+            __typename: "UserInputError",
+            message: "You must provide correct username.",
+            extensions: {
+              code: ErrorType.USER_INPUT_ERROR,
+            },
           },
         };
       }
@@ -70,12 +70,12 @@ export const userQueries = {
 
       if (!user) {
         return {
-          // error: {
-          __typename: "UserNotFoundError",
-          message: "User not found.",
-          extensions: {
-            code: ErrorType.USER_NOT_FOUND,
-            //   },
+          error: {
+            __typename: "UserNotFoundError",
+            message: "User not found.",
+            extensions: {
+              code: ErrorType.USER_NOT_FOUND,
+            },
           },
         };
       }

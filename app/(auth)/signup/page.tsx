@@ -15,11 +15,13 @@ import {
   userMutationError,
 } from "@app/redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "@app/redux/store/hooks";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [createUser] = useMutation(CREATE_USER);
   const dispatch = useAppDispatch();
   const { user, loading, error } = useAppSelector((state) => state.user);
+  const router = useRouter();
   const { handleBlur, handleChange, handleSubmit, touched, errors, values } =
     useFormik<SignupInput>({
       initialValues: {
@@ -44,6 +46,7 @@ const Signup = () => {
           });
           if (data.createUser.user) {
             dispatch(userMutationSuccess(data.createUser));
+            router.push(`/profile/profile-info`);
           } else if (data.createUser.error) {
             dispatch(userMutationError(data.createUser));
           } else {
@@ -56,8 +59,9 @@ const Signup = () => {
     });
 
   useEffect(() => {
-    console.log(user, error, "from redux");
-  }, [dispatch, user, error, loading]);
+    console.log(user?.username, error, "from redux");
+    // if (user) router.push(`/profile/profile-info`);
+  }, [dispatch, user, error, loading, router]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{JSON.stringify(error)}</div>;
@@ -163,7 +167,7 @@ const Signup = () => {
           </form>
           <h1 className="text-gray-900 mb-4 mt-4 dark:text-gray-300">
             Already have an account?
-            <a href="#" className="text-blue-500 dark:text-blue-400">
+            <a href="/login" className="text-blue-500 dark:text-blue-400">
               {" "}
               Login here{" "}
             </a>
