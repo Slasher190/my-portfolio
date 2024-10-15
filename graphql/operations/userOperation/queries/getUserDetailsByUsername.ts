@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_USER_DETAILS_BY_USERNAME = gql`
-  query GetUserDetailsByUsername($input: Username!) {
+  query GetUserDetailsByUsername($input: Username) {
     getUserDetailsByUsername(input: $input) {
       ... on UserResponse {
         user {
@@ -86,6 +86,30 @@ export const GET_USER_DETAILS_BY_USERNAME = gql`
               proficiency
             }
             sex
+          }
+        }
+      }
+      ... on UserNotFoundError {
+        error {
+          message
+          extensions {
+            code
+          }
+        }
+      }
+      ... on UserSuspendedError {
+        error {
+          message
+          extensions {
+            code
+          }
+        }
+      }
+      ... on UserBlockedError {
+        error {
+          message
+          extensions {
+            code
           }
         }
       }
