@@ -1,13 +1,14 @@
 import React from "react";
 
-const About: React.FC = () => {
+const About: React.FC<{ about: string }> = ({ about }) => {
   return (
     <div className="flex justify-center flex-col lg:flex-row gap-6 lg:gap-16">
       <div className="flex flex-col gap-4 flex-[1.5]">
         <p className="text-[24px] font-semibold text-gray-900 dark:text-gray-100">
           About Me
         </p>
-        <p className="text-gray-500 dark:text-gray-300">
+        <p className="text-gray-500 dark:text-gray-300">{about ?? ""}</p>
+        {/* <p className="text-gray-500 dark:text-gray-300">
           As a full stack developer, I specialize in creating seamless,
           end-to-end web solutions. As a full stack developer, I specialize in
           creating seamless, end-to-end web solutions.
@@ -16,12 +17,7 @@ const About: React.FC = () => {
           As a full stack developer, I specialize in creating seamless,
           end-to-end web solutions. As a full stack developer, I specialize in
           creating seamless, end-to-end web solutions.
-        </p>
-        <p className="text-gray-500 dark:text-gray-300">
-          As a full stack developer, I specialize in creating seamless,
-          end-to-end web solutions. As a full stack developer, I specialize in
-          creating seamless, end-to-end web solutions.
-        </p>
+        </p> */}
         <p className="text-[24px] font-semibold text-gray-900 dark:text-gray-100">
           Read More
         </p>
