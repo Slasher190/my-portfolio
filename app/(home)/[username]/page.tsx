@@ -6,7 +6,12 @@ import Cover from "@app/components/Dashboard/Cover";
 import ExperienceCard from "@app/components/Dashboard/ExperienceCard";
 import ProfileOverview from "@app/components/Dashboard/ProfileOverview";
 import RecentCard from "@app/components/Dashboard/RecentCard";
-import { Experience, UserPageResult, UserProfile } from "@app/graphql/graphql";
+import {
+  Experience,
+  Sex,
+  UserPageResult,
+  UserProfile,
+} from "@app/graphql/graphql";
 import { GET_USER_DETAILS_BY_USERNAME } from "@app/graphql/operations/userOperation/queries/getUserDetailsByUsername";
 import {
   userMutationError,
@@ -68,8 +73,15 @@ const User: React.FC<IParams> = ({ params }) => {
         <Cover />
       </div>
       <div className="px-4 max-w-full md:px-10">
-        <ProfileOverview />
-        <About />
+        <ProfileOverview
+          firstName={profile?.firstName ?? ""}
+          middleName={profile?.middleName ?? ""}
+          lastName={profile?.lastName ?? ""}
+          headline={profile?.headline ?? ""}
+          id={profile?.id ?? ""}
+          sex={profile?.sex ?? Sex.Male}
+        />
+        <About about={profile?.summary ?? ""} />
         <div className="grid py-6 gap-6 grid-cols-1 md:grid-cols-3">
           {profile &&
             profile.experience &&

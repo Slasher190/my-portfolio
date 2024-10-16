@@ -28,7 +28,7 @@ model UserProfile {
   middleName          String?        @db.VarChar(50)
   lastName            String         @db.VarChar(50)
   headline            String?        @db.VarChar(255)
-  summary             String?        @db.VarChar(255)
+  summary             String?        @db.Text
   phoneNumber         String?
   emailVerified       Boolean?       @default(false)
   phoneNumberVerified Boolean?       @default(false)
@@ -44,7 +44,7 @@ model UserProfile {
 
 model Experience {
   id             Int            @id @default(autoincrement())
-  userProfileId  Int?          
+  userProfileId  Int?
   title          String         @db.VarChar(255)
   company        String         @db.VarChar(255)
   startDate      DateTime
@@ -57,7 +57,7 @@ model Experience {
 
 model Education {
   id            Int          @id @default(autoincrement())
-  userProfileId Int?  
+  userProfileId Int?
   institution   String       @db.VarChar(255)
   degree        String       @db.VarChar(255)
   fieldOfStudy  String       @db.VarChar(255)

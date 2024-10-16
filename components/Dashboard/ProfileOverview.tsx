@@ -1,8 +1,14 @@
+import { UserProfile } from "@app/graphql/graphql";
 import React from "react";
 import { FaBars, FaVideo } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 
-const ProfileOverview: React.FC = () => {
+const ProfileOverview: React.FC<UserProfile> = ({
+  firstName,
+  middleName,
+  lastName,
+  headline,
+}) => {
   return (
     <div className="flex flex-col gap-6 relative bottom-[35px] border-b-gray-400 pb-4  border-b">
       <div className="flex flex-wrap items-center gap-2 md:gap-6">
@@ -15,11 +21,9 @@ const ProfileOverview: React.FC = () => {
         </div>
         <div className="pt-3">
           <p className="text-[32px] font-semibold text-gray-900 dark:text-gray-100">
-            Abhishek Kumar Sharma
+            {`${firstName ?? ""} ${middleName ?? ""} ${lastName ?? ""}`}
           </p>
-          <p className="text-gray-700 dark:text-gray-300">
-            I&aposm a Full stack developer with zero knowledge.
-          </p>
+          <p className="text-gray-700 dark:text-gray-300">{headline}</p>
         </div>
         <div className="flex md:ml-auto pt-3 gap-6">
           <div className="w-[150px] cursor-pointer border-white border-[1.5px] bg-gray-600 gap-4 font-semibold py-2 rounded-[8px] flex justify-center items-center">
