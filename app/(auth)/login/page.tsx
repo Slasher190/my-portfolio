@@ -57,6 +57,7 @@ const Authentication = () => {
 
   useEffect(() => {
     // if (user) router.push(`/@${user?.username}`);
+    if (data?.loginUser?.error) throw new Error(data.loginUser.error.message);
   }, [data, dispatch, error, loading, user, router]);
 
   if (loading) return <div>Loading...</div>;

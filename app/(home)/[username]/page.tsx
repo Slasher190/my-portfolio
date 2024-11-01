@@ -27,7 +27,7 @@ interface IParams {
 }
 
 const User: React.FC<IParams> = ({ params }) => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user, error: userError } = useAppSelector((state) => state.user);
   const profile: UserProfile | undefined | null = user?.profile;
   const dispatch = useAppDispatch();
   const { data, loading, error } = useQuery<{
@@ -41,15 +41,6 @@ const User: React.FC<IParams> = ({ params }) => {
   });
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
-
-    if (error) {
-      console.error("Error fetching user details:", error);
-      return;
-    }
-
     if (data) {
       const result = data.getUserDetailsByUsername;
 
@@ -66,7 +57,10 @@ const User: React.FC<IParams> = ({ params }) => {
       }
     }
   }, [dispatch, data, loading, error]);
-
+  if (loading) return <p>Loading...</p>;
+  if (error || userError) {
+    return <p>{JSON.stringify(error || userError)}</p>;
+  }
   return (
     <div className="">
       <div>
