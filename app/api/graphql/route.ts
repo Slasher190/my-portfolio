@@ -8,12 +8,16 @@ import { CustomError } from "@app/graphql/error";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import { verifyToken } from "@app/utils/tokenUtils"; // Updated to work with NextRequest
 import { JwtPayload } from "jsonwebtoken";
-import { NextRequest } from "next/server"; // Import NextRequest for App Router
+import { NextRequest } from "next/server";
+import { KeyvAdapter } from "@apollo/utils.keyvadapter";
+import Keyv from "keyv";
+import KeyvRedis from "@keyv/redis";
 
 export type Context = {
   prisma: PrismaClient;
   req: NextRequest;
   userId?: string | number | JwtPayload;
+  cache: Keyv;
 };
 
 const formatError = (
@@ -36,17 +40,38 @@ const formatError = (
   return formattedError;
 };
 
+const keyv = new Keyv({
+  store: new KeyvRedis("redis://localhost:6379"),
+});
 const apolloServer = new ApolloServer<Context>({
   typeDefs,
   resolvers,
   formatError,
+  cache: new KeyvAdapter(keyv),
+  persistedQueries: {
+    ttl: 900, // 15 minutes
+  },
 });
+
+keyv.on("error", (err) => console.error("Redis connection error:", err));
+
+(async function testRedisConnection() {
+  try {
+    await keyv.set("testKey", { message: "Redis connection successful!" });
+    console.log("Data saved to Redis: testKey");
+
+    const testData = await keyv.get("testKey");
+    console.log("Retrieved from Redis:", testData);
+  } catch (err) {
+    console.error("Error interacting with Redis:", err);
+  }
+})();
 
 // Context function adjusted for App Router
 const handler = startServerAndCreateNextHandler(apolloServer, {
   context: async (req: NextRequest) => {
     const { user: userId } = verifyToken(req);
-    return { req, prisma, userId: userId ?? undefined };
+    return { req, prisma, userId: userId ?? undefined, cache: keyv };
   },
 });
 
