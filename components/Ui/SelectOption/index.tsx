@@ -1,48 +1,44 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-interface SelectOption {
+interface ISelectOption {
   value: string | number;
   label: string;
 }
 
-interface SelectProps {
+interface ISelectProps {
   label: string;
-  options: SelectOption[];
+  options: ISelectOption[];
   placeholder?: string;
   mode?: "single" | "multiple";
-  onChange?: (value: string | number | (string | number)[]) => void;
+  onChange: (value: string | number | (string | number)[]) => void;
   name: string;
+  value: string | number | (string | number)[];
 }
 
-const CustomSelect: React.FC<SelectProps> = ({
+const CustomSelect: React.FC<ISelectProps> = ({
   label,
   options,
   placeholder = "Select...",
   mode = "single",
+  value,
   onChange,
-  // name,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
-    []
-  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   const handleOptionClick = (option: string | number) => {
     if (mode === "multiple") {
-      if (selectedOptions.includes(option)) {
-        setSelectedOptions(selectedOptions.filter((opt) => opt !== option));
-      } else {
-        setSelectedOptions([...selectedOptions, option]);
-      }
-      onChange && onChange(selectedOptions);
+      const currentValue = Array.isArray(value) ? value : [];
+      const updatedValue = currentValue.includes(option)
+        ? currentValue.filter((opt) => opt !== option)
+        : [...currentValue, option];
+      onChange(updatedValue);
     } else {
-      setSelectedOptions([option]);
+      onChange(option);
       setIsDropdownOpen(false);
-      onChange && onChange(option);
     }
   };
 
@@ -52,7 +48,7 @@ const CustomSelect: React.FC<SelectProps> = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -65,6 +61,20 @@ const CustomSelect: React.FC<SelectProps> = ({
     option.label.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const renderSelectedOptions = () => {
+    if (mode === "multiple" && Array.isArray(value)) {
+      return value
+        .map(
+          (selectedValue) =>
+            options.find((opt) => opt.value === selectedValue)?.label
+        )
+        .filter(Boolean)
+        .join(", ");
+    }
+    const selectedOption = options.find((opt) => opt.value === value);
+    return selectedOption ? selectedOption.label : placeholder;
+  };
+
   return (
     <div ref={selectRef} className="mb-4 w-full relative">
       <label className="block text-gray-600 dark:text-gray-400 text-md font-bold mb-2">
@@ -74,13 +84,7 @@ const CustomSelect: React.FC<SelectProps> = ({
         className="w-full border border-slate-600 bg-light-background dark:bg-dark-surface text-gray-700 dark:text-gray-300 rounded-[7px] px-3 py-2 cursor-pointer"
         onClick={toggleDropdown}
       >
-        {selectedOptions.length > 0 ? (
-          selectedOptions
-            .map((option) => options.find((opt) => opt.value === option)?.label)
-            .join(", ")
-        ) : (
-          <span className="text-gray-400">{placeholder}</span>
-        )}
+        <span>{renderSelectedOptions()}</span>
       </div>
 
       {isDropdownOpen && (
@@ -99,7 +103,7 @@ const CustomSelect: React.FC<SelectProps> = ({
               <li
                 key={option.value}
                 className={`px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer ${
-                  selectedOptions.includes(option.value)
+                  Array.isArray(value) && value.includes(option.value)
                     ? "bg-gray-100 dark:bg-gray-700"
                     : ""
                 }`}

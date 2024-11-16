@@ -19,6 +19,7 @@ export interface BaseField<T extends FieldType> {
   type: T;
   label: string;
   optional?: boolean;
+  isRequired?: boolean;
 }
 
 export interface TextField extends BaseField<"text"> {
