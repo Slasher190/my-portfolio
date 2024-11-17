@@ -7,7 +7,7 @@ const ProfileInfo = () => {
   const { heading, fields } = skillsSection;
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div className="p-6 rounded-lg">
       <h1 className="text-2xl font-bold text-black dark:text-white mb-6 text-left">
         {heading}
       </h1>

@@ -1,24 +1,25 @@
 import { FieldType, Option } from "./userInformationForm";
 
-export interface BaseInput<T extends FieldType> {
+export interface IBaseInput<T extends FieldType> {
   type: T;
   label: string;
   name: string;
   options?: Option[];
   [key: string]: any;
+  disable?: boolean;
 }
 
 export interface InputProps
-  extends BaseInput<"email" | "text" | "password" | "date"> {}
+  extends IBaseInput<"email" | "text" | "password" | "date"> {}
 
-export interface MultiSelectProps extends BaseInput<"multiselect"> {
+export interface MultiSelectProps extends IBaseInput<"multiselect"> {
   options: Option[];
 }
 
-export interface SelectProps extends BaseInput<"select"> {
+export interface SelectProps extends IBaseInput<"select"> {
   options: Option[];
 }
 
-export interface TextareaProps extends BaseInput<"textarea"> {}
+export interface TextareaProps extends IBaseInput<"textarea"> {}
 
 export interface CheckboxProps {}

@@ -11,7 +11,7 @@ import MenuItem from "@app/components/Ui/MenuItem";
 import { FaUser, FaLock, FaBell, FaDollarSign } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import ProgressTab from "@app/components/ProgressTab";
-import CircularProgressBarButton from "@app/components/ButtonProgress";
+// import CircularProgressBarButton from "@app/components/ButtonProgress";
 // import SlideButton from "@app/components/SlideFlipper";
 
 const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -133,7 +133,7 @@ const ProfileLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                 />
               ))}
             </div>
-            <CircularProgressBarButton />
+            {/* <CircularProgressBarButton /> */}
             {/* <SlideButton direction="vertical" icon="fa-dribbble" label="Dribbble" /> */}
           </div>
         )}
