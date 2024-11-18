@@ -13,6 +13,7 @@ import { FaBars } from "react-icons/fa";
 import ThemeToggleIcon from "@app/components/ThemeToggleIcon";
 import FloatingSearch from "./FloatingSearch"; // Adjust the import path as needed
 import { useAppSelector } from "@app/redux/store/hooks";
+import FloatingProfile from "./FloatingProfile";
 
 interface NavbarProps {
   setMobile: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +22,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   return (
     <nav className="flex justify-between items-center h-[80px] w-full p-2 gap-3 md:p-8 bg-light-background dark:bg-dark-surface text-gray-600 dark:text-gray-400">
@@ -51,8 +53,18 @@ const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
         {/* <NavbarIcon Icon={AiOutlineFullscreen} /> */}
         <ThemeToggleIcon />
         <NavbarIcon Icon={AiOutlineBell} />
-        <NavbarIcon Icon={AiOutlineSetting} />
-        <NavbarIcon Icon={AiOutlineUser} />
+        <NavbarIcon
+          onClick={() => {
+            setIsProfileOpen(true);
+          }}
+          Icon={AiOutlineSetting}
+        />
+        <NavbarIcon
+          onClick={() => {
+            setIsProfileOpen(true);
+          }}
+          Icon={AiOutlineUser}
+        />
         <span className="flex font-semibold items-center">
           {user?.profile?.firstName}
         </span>
@@ -65,6 +77,11 @@ const Navbar: React.FC<NavbarProps> = ({ setMobile, mobile }) => {
       <FloatingSearch
         isModalOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
+      />
+
+      <FloatingProfile
+        isModalOpen={isProfileOpen}
+        closeModal={() => setIsProfileOpen(false)}
       />
     </nav>
   );
