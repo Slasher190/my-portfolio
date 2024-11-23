@@ -43,7 +43,7 @@ const Authentication = () => {
         });
         if (data.loginUser.user) {
           dispatch(userMutationSuccess(data.loginUser));
-          router.push(`/@${user?.username}`);
+          router.push(`/${user?.username}`);
         } else if (data.loginUser.error || error) {
           dispatch(userMutationError(data.loginUser));
         } else {
