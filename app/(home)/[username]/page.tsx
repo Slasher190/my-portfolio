@@ -33,7 +33,7 @@ const User: React.FC<IParams> = ({ params }) => {
   const { data, loading, error } = useQuery<{
     getUserDetailsByUsername: UserPageResult;
   }>(GET_USER_DETAILS_BY_USERNAME, {
-    skip: user?.username !== params.username,
+    skip: user?.username === params.username,
     variables: {
       input: {
         username: params.username,
